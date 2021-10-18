@@ -19,38 +19,42 @@ const Menu = () => {
                 id: 1,
                 name: "Thông tin cá nhân",
                 link: "/account/profile",
-                icon: "account__icon ti-user"
+                icon: "account__icon ti-user",
+                child: "/account/profile"
             },
             {
                 id: 2,
                 name: "Quản lý đơn hàng",
                 link: "/account/orders",
-                icon: "account__icon ti-briefcase"
+                icon: "account__icon ti-briefcase",
+                child: "/account/orders"
             },
             {
                 id: 3,
                 name: "Số điện chỉ",
                 link: "/account/address",
-                icon: "account__icon ti-location-pin"
+                icon: "account__icon ti-location-pin",
+                child: "/account/address"
             },
             {
                 id: 4,
                 name: "Thông tin thanh toán",
                 link: "/account/payment",
-                icon: "account__icon ti-credit-card"
+                icon: "account__icon ti-credit-card",
+                child: "/account/payment"
             },
             {
                 id: 5,
                 name: "Sản phẩm yêu thích",
                 link: "/account/favorites",
-                icon: "account__icon ti-heart"
+                icon: "account__icon ti-heart",
+                child: "/account/favorites"
             }
         ]
     })
-
-
     function toggleActiveStyle(index, link) {
-        if (menu.objects[index].link === link) {
+        const menu1 = menu.objects[index];
+        if (link.match(menu1.child)) {
             return "account__link account__link-active"
         } else {
             return "account__link"
