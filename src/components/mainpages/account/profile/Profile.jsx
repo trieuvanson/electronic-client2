@@ -32,7 +32,7 @@ const Profile = (props) => {
                             <div className="col-8 col-sm-12">
                                 <div className="profile">
                                     <h1>Thông tin tài khoản</h1>
-                                    <div className="profile-body">
+                                    <div className="box-group f-height">
                                         <div className="col-12">
                                             <form action="">
                                                 <div className="form-group-profile">
