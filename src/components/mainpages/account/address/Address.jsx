@@ -25,7 +25,7 @@ const Address = (props) => {
                             <Menu/>
                             <div className="col-8 col-sm-12">
                                 <div className="address">
-                                    <h1>Sổ điện chỉ ()</h1>
+                                    <h1>Sổ điện chỉ ({addresses.length})</h1>
                                     <div className="address-inner">
                                         <div className="new">
                                             <Link to="address/create" className="new-link">
@@ -41,7 +41,7 @@ const Address = (props) => {
                                                             {address.fullname}
                                                             {address.status ?
                                                                 <>
-                                                                    <i className="ti-check address-info__icon"/>:
+                                                                    <i className="ti-check address-info__icon"/>
                                                                     <span>Địa chỉ mặc định</span>
                                                                 </> : null
                                                             }

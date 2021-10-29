@@ -1,21 +1,19 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PaypalButton from "../PaypalButton"
 import {GlobalState} from "../../../../GlobalState";
-import {Link, Redirect} from "react-router-dom";
-import axios from "axios";
-import NotFound from "../../utils/not_found/NotFound";
-import CheckOutButton from "./CheckOutButton";
-
+import {Link, Redirect, useHistory} from "react-router-dom";
+import address from "address";
 
 const CheckOut = () => {
     const state = useContext(GlobalState)
     const [carts, setCarts] = state.cartApi.cart
     const [quantity, setQuantity] = useState(0);
     const [total, setTotal] = useState(0);
+    const [note, setNote] = useState("")
     const [addresses] = state.addressesApi.addresses
     const [selectPayment, setSelectPayment] = useState("")
-
-
+    const actionOrder = state.ordersApi.actionOrder;
+    const history = useHistory();
     useEffect(() => {
         const getTotal = () => {
             const total = carts.reduce((prev, item) => {
@@ -32,12 +30,29 @@ const CheckOut = () => {
     }, [carts])
 
     const tranSuccess = async (payment) => {
+        let address = "";
+            addresses.map(add => {
+            {
+                if (add.status) {
+                    address = add;
+                }
+            }
+        });
+        const od = {
+            "status": "Mới đặt",
+            "quantity": quantity,
+            "total": total,
+            "note": note,
+            "payment": "Thanh toán Paypal"
+        }
+        await actionOrder.addOrder(address, od)
+        setCarts([])
         alert("You have successfully placed an order.")
+        history.push("/")
     }
 
     const changePayment = (id) => {
         if (id === "paypal") {
-            console.log("PaypalButton")
             return <PaypalButton
                 total={Math.round(total / 22755 * 100) / 100}
                 tranSuccess={tranSuccess}/>
@@ -101,7 +116,7 @@ const CheckOut = () => {
                                             <div className="address-checkout">
                                                 {
                                                     addresses && addresses.map(address => (
-                                                        address.status ? <div className="address-info">
+                                                        address.status ? <div className="address-info" key={address.id}>
                                                             <div className="address-info__name">
                                                                 {address.fullname}
                                                             </div>
@@ -146,7 +161,7 @@ const CheckOut = () => {
                                             </li>
                                             {
                                                 carts && carts.map((cart) => (
-                                                    <li className="your-order__item">
+                                                    <li className="your-order__item" key={cart.id}>
                                                         <Link to={`/product/detail/${cart.product?.id}`}>
                                                             <span>{cart.product?.name} x{cart.quantity}</span>
                                                         </Link>

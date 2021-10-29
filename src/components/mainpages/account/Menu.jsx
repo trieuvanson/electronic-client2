@@ -65,7 +65,7 @@ const Menu = () => {
             <div className="account">
                 <ul className="account__list">
                     <li className="account__item">
-                        <img src={user.avatar} alt="avatar" class="account__img"/>
+                        <img src={user.avatar} alt="avatar" className="account__img"/>
                         <div className="account-info">
                             <h3>Tài khoản của</h3>
                             <p>{user && user.fullname}</p>

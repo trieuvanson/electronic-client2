@@ -68,7 +68,7 @@ function Cart() {
                         <a href="./index.html">home</a>
                         <span><i className='ti-angle-right'/></span>
                         <a>Cart</a>
-                        <span><i class='ti-angle-right'></i></span>
+                        <span><i className='ti-angle-right'></i></span>
                         <a href="./product-detail.html">Điện thoại</a>
                     </div>
                 </div>
@@ -89,7 +89,7 @@ function Cart() {
                                     <tbody>
                                     {
                                         carts && carts.map((cart) => (
-                                                <tr>
+                                                <tr key={cart.id}>
                                                     <td>
                                                         <div className="order-img">
                                                             <Link to={`/product/detail/${cart.product?.id}`}>
