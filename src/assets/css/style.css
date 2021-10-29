@@ -1248,8 +1248,8 @@ footer ul li a {
 }
 
 .collapsible {
-    background-color: #777;
-    color: white;
+    background-color: var(--background-color-main);
+    color: var(--black);
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -1262,7 +1262,7 @@ footer ul li a {
 
 .collapsible.active,
 .collapsible:hover {
-    background-color: #555;
+    background-color: var(--background-color-second);
 }
 
 .content {
@@ -1272,6 +1272,16 @@ footer ul li a {
     background-color: #f1f1f1;
 }
 
+.content-group {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.content-group label {
+    font-size: 1.5rem;
+}
 .collapse p {
     font-size: 1.6rem;
 }
