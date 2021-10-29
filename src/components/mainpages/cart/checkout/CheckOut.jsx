@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PaypalButton from "../PaypalButton"
 import {GlobalState} from "../../../../GlobalState";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import axios from "axios";
-
+import NotFound from "../../utils/not_found/NotFound";
+import CheckOutButton from "./CheckOutButton";
 
 
 const CheckOut = () => {
@@ -12,8 +13,7 @@ const CheckOut = () => {
     const [quantity, setQuantity] = useState(0);
     const [total, setTotal] = useState(0);
     const [addresses] = state.addressesApi.addresses
-
-
+    const [selectPayment, setSelectPayment] = useState("")
 
 
     useEffect(() => {
@@ -31,9 +31,35 @@ const CheckOut = () => {
         getTotal()
     }, [carts])
 
-    const tranSuccess = async(payment) => {
+    const tranSuccess = async (payment) => {
         alert("You have successfully placed an order.")
     }
+
+    const changePayment = (id) => {
+        if (id === "paypal") {
+            console.log("PaypalButton")
+            return <PaypalButton
+                total={Math.round(total / 22755 * 100) / 100}
+                tranSuccess={tranSuccess}/>
+        }
+    }
+
+    const [payment] = useState(
+        [
+            {
+                id: "paypal",
+                name: "Paypal",
+                value: "paypal",
+                htmlFor: "paypal"
+            },
+            {
+                id: "paycash",
+                name: "Thanh toán tiền mặt",
+                value: "paycash",
+                htmlFor: "paycash"
+            }
+        ]
+    )
 
 
     async function collapse() {
@@ -70,12 +96,12 @@ const CheckOut = () => {
                             <div className="payment-detail">
                                 <h3 className="checkout__heading">Chi tiết thanh toán</h3>
                                 <div className="checkout__border">
-                                    <div class="address">
-                                        <div class="address-inner">
-                                            <div class="address-checkout">
+                                    <div className="address">
+                                        <div className="address-inner">
+                                            <div className="address-checkout">
                                                 {
                                                     addresses && addresses.map(address => (
-                                                        address.status? <div className="address-info">
+                                                        address.status ? <div className="address-info">
                                                             <div className="address-info__name">
                                                                 {address.fullname}
                                                             </div>
@@ -88,7 +114,7 @@ const CheckOut = () => {
                                                         </div> : null
                                                     ))
                                                 }
-                                                <div class="address-action">
+                                                <div className="address-action">
                                                     <Link to="/account/address">Thay đổi</Link>
                                                 </div>
                                             </div>
@@ -130,9 +156,6 @@ const CheckOut = () => {
                                             }
 
 
-
-
-
                                             <li className="your-order__item your-order__total fw-bold">
                                                 <span>Total</span>
                                                 <p className="Total text-primary">${total}</p>
@@ -140,40 +163,39 @@ const CheckOut = () => {
                                         </ul>
 
                                         <div className="collapse">
-                                            <p>Chọn phương thức thanh toán</p>
-                                            <div className="collapse__div">
-                                                <button type="button" className="collapsible">Open Section 2</button>
-                                                <div className="content">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                                        enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                                        nisi ut aliquip ex ea commodo consequat.</p>
+                                            <div className="collapse">
+                                                <div className="collapse__div">
+                                                    <button type="button" className="collapsible">Chọn phương thức thanh
+                                                        toán
+                                                    </button>
+                                                    <div className="content">
+                                                        {
+                                                            payment.map((p, index) => (
+                                                                <div className="content-group" key={index}>
+                                                                    <input type="radio" id={p.id} name="pay"
+                                                                           value={p.value}
+                                                                           onChange={() => setSelectPayment(p.id)}/>
+                                                                    <label htmlFor={p.htmlFor}>{p.name}</label>
+                                                                </div>
+                                                            ))
+                                                        }
+
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <button type="button" className="collapsible">Open Section 3</button>
-                                            <div className="content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo consequat.</p>
-                                            </div>
-                                            <h2>Collapsibles</h2>
-                                            <p>A Collapsible:</p>
-                                            <button type="button" className="collapsible">Open Collapsible</button>
-                                            <div className="content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo consequat.</p>
                                             </div>
                                         </div>
 
                                         <div className="your-order-btn">
-                                            <PaypalButton
-                                                total={Math.round(total/22755 * 100) / 100}
-                                                tranSuccess={tranSuccess} />
-                                            {/*<a href="thankyou.html" className="btn-flat btn-hover your-order__btn">Place*/}
-                                            {/*    order</a>*/}
+                                            {
+                                                selectPayment === "paypal" ?
+                                                    <PaypalButton
+                                                        total={Math.round(total / 22755 * 100) / 100}
+                                                        tranSuccess={tranSuccess}/>
+                                                    :
+                                                    <Link to="*" className="btn-flat btn-hover your-order__btn"
+                                                          onClick={() => changePayment(payment.selected)}>Tiếp tục
+                                                    </Link>
+                                            }
                                         </div>
 
                                     </div>
