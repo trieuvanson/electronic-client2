@@ -143,31 +143,20 @@ const CheckOut = () => {
                                         </ul>
 
                                         <div className="collapse">
-                                            <p>Chọn phương thức thanh toán</p>
                                             <div className="collapse__div">
-                                                <button type="button" className="collapsible">Open Section 2</button>
+                                                <button type="button" className="collapsible">Chọn phương thức thanh
+                                                    toán
+                                                </button>
                                                 <div className="content">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                                        enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                                        nisi ut aliquip ex ea commodo consequat.</p>
+                                                    <div className="content-group">
+                                                        <input type="radio" id="paypal" name="pay" value="paypal"/>
+                                                            <label htmlFor="paypal">Paypal</label>
+                                                    </div>
+                                                    <div className="content-group">
+                                                        <input type="radio" id="paycash" name="pay" value="paycash"/>
+                                                            <label htmlFor="paycash">Thanh toán tiền mặt</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <button type="button" className="collapsible">Open Section 3</button>
-                                            <div className="content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo consequat.</p>
-                                            </div>
-                                            <h2>Collapsibles</h2>
-                                            <p>A Collapsible:</p>
-                                            <button type="button" className="collapsible">Open Collapsible</button>
-                                            <div className="content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo consequat.</p>
                                             </div>
                                         </div>
 
