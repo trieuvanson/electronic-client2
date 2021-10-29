@@ -48,7 +48,7 @@ function Header()  {
                             localStorage.getItem("isLogin")?
                                 <ul className="devided">
                                     <li className="dropdown">
-                                        <a href="">Xin chào {user.username} </a>
+                                        <a href="#">Xin chào {user.username} </a>
                                         <i className='ti-angle-down'/>
                                         <ul className="dropdown-content">
                                             <li><Link to="/account/profile">Cá nhân</Link></li>

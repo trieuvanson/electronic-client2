@@ -20,6 +20,7 @@ function UserApi(token) {
                             setIsAdmin(true)
                         }
                     })
+                    console.log(res.data)
                     setUser(res.data)
                     setIsLogged(true)
                 } catch (err) {

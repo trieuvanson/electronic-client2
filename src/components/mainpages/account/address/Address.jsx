@@ -1,9 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../Menu";
-import {GlobalState} from "../../../../GlobalState";
 import {Link} from "react-router-dom";
+import {GlobalState} from "../../../../GlobalState";
 
 const Address = (props) => {
+    const state = useContext(GlobalState)
+    const [addresses] = state.addressesApi.addresses
+
     return (
         <>
 
@@ -20,53 +23,42 @@ const Address = (props) => {
                     <div className="box">
                         <div className="row">
                             <Menu/>
-
                             <div className="col-8 col-sm-12">
                                 <div className="address">
-                                    <h1>Sổ điện chỉ</h1>
+                                    <h1>Sổ điện chỉ ()</h1>
                                     <div className="address-inner">
                                         <div className="new">
-                                            <Link to="/account/address/create" className="new-link">
+                                            <Link to="address/create" className="new-link">
                                                 <i className="ti-plus new-icon"/>
                                                 <span>Thêm địa chỉ</span>
                                             </Link>
                                         </div>
-                                        <div className="address-item">
-                                            <div className="address-info">
-                                                <div className="address-info__name">
-                                                    Tan Dai
-                                                    <i className="ti-check address-info__icon"></i>
-                                                    <span>Địa chỉ mặc định</span>
+                                        {
+                                            addresses && addresses.map(address => (
+                                                <div className="address-item">
+                                                    <div className="address-info">
+                                                        <div className="address-info__name">
+                                                            {address.fullname}
+                                                            {address.status ?
+                                                                <>
+                                                                    <i className="ti-check address-info__icon"/>:
+                                                                    <span>Địa chỉ mặc định</span>
+                                                                </> : null
+                                                            }
+                                                        </div>
+                                                        <div className="address-info__address">
+                                                            <span>Địa chỉ: </span> {address.address}
+                                                        </div>
+                                                        <div className="address-info__phone">
+                                                            <span>Địa chỉ: </span> {address.phone}
+                                                        </div>
+                                                    </div>
+                                                    <div className="address-action">
+                                                        <a href="">Chỉnh sửa</a>
+                                                    </div>
                                                 </div>
-                                                <div className="address-info__address">
-                                                    <span>Địa chỉ: </span> 228/2 KP 1B, p. An Phú, tx. Thuận An, BD
-                                                </div>
-                                                <div className="address-info__phone">
-                                                    <span>Địa chỉ: </span> 0987010358
-                                                </div>
-                                            </div>
-                                            <div className="address-action">
-                                                <a href="">Chỉnh sửa</a>
-                                            </div>
-                                        </div>
-                                        <div className="address-item">
-                                            <div className="address-info">
-                                                <div className="address-info__name">
-                                                    Tan Dai
-                                                    <i className="ti-check address-info__icon"></i>
-                                                    <span>Địa chỉ mặc định</span>
-                                                </div>
-                                                <div className="address-info__address">
-                                                    <span>Địa chỉ: </span> 228/2 KP 1B, p. An Phú, tx. Thuận An, BD
-                                                </div>
-                                                <div className="address-info__phone">
-                                                    <span>Địa chỉ: </span> 0987010358
-                                                </div>
-                                            </div>
-                                            <div className="address-action">
-                                                <a href="">Chỉnh sửa</a>
-                                            </div>
-                                        </div>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>

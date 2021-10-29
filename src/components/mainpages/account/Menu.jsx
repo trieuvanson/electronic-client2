@@ -1,14 +1,11 @@
 import React, {useContext, useState} from 'react';
 import {Link, useLocation} from "react-router-dom";
 import {GlobalState} from "../../../GlobalState";
+
 const Menu = () => {
     const state = useContext(GlobalState)
-
-
     const location = useLocation();
     const [user] = state.userAPI.personal
-
-
 
 
 
@@ -36,13 +33,13 @@ const Menu = () => {
                 icon: "account__icon ti-location-pin",
                 child: "/account/address"
             },
-            {
-                id: 4,
-                name: "Thông tin thanh toán",
-                link: "/account/payment",
-                icon: "account__icon ti-credit-card",
-                child: "/account/payment"
-            },
+            // {
+            //     id: 4,
+            //     name: "Thông tin thanh toán",
+            //     link: "/account/payment",
+            //     icon: "account__icon ti-credit-card",
+            //     child: "/account/payment"
+            // },
             {
                 id: 5,
                 name: "Sản phẩm yêu thích",
@@ -52,6 +49,7 @@ const Menu = () => {
             }
         ]
     })
+
     function toggleActiveStyle(index, link) {
         const menu1 = menu.objects[index];
         if (link.match(menu1.child)) {
@@ -65,7 +63,7 @@ const Menu = () => {
     return (
         <div className="col-4 col-sm-12">
             <div className="account">
-                <ul className="account__list" >
+                <ul className="account__list">
                     <li className="account__item">
                         <img src={user.avatar} alt="avatar" class="account__img"/>
                         <div className="account-info">

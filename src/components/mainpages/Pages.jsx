@@ -6,12 +6,13 @@ import Register from "./auth/Register";
 import NotFound from "./utils/not_found/NotFound";
 import ProductDetail from "./product_detail/ProductDetail";
 import Profile from "./account/profile/Profile";
-import Cart from "./cart/cart/Cart";
 import Address from "./account/address/Address";
 import AddressController from "./account/address/address_controller/AddressController";
-import Favorite from "./account/favorite/Favorite";
+import Favorite from "./account/favorites/Favorite";
 import Orders from "./account/order/Orders";
 import OrderController from "./account/order/order_controller/OrderController";
+import Cart from "./cart/Cart";
+import CheckOut from "./cart/checkout/CheckOut";
 
 
 function Pages() {
@@ -29,8 +30,8 @@ function Pages() {
             <Route path="/account/favorites" exact component={Favorite} />
             <Route path="/account/orders" exact component={Orders} />
             <Route path="/account/orders/detail" exact component={OrderController} />
-
-            <Route path="/cart" exact component={Cart} />
+                <Route path="/cart" exact component={Cart} />
+                <Route path="/cart/checkout" exact component={CheckOut} />
             <Route path="*" exact component={NotFound} />
         </Switch>
     )

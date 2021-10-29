@@ -1,10 +1,40 @@
-import React from 'react';
-import async from "async";
-const CheckOut = () => {
+import React, {useContext, useEffect, useState} from 'react';
+import PaypalButton from "../PaypalButton"
+import {GlobalState} from "../../../../GlobalState";
+import {Link} from "react-router-dom";
+import axios from "axios";
 
-    React.useEffect(() => {
+
+
+const CheckOut = () => {
+    const state = useContext(GlobalState)
+    const [carts, setCarts] = state.cartApi.cart
+    const [quantity, setQuantity] = useState(0);
+    const [total, setTotal] = useState(0);
+    const [addresses] = state.addressesApi.addresses
+
+
+
+
+    useEffect(() => {
+        const getTotal = () => {
+            const total = carts.reduce((prev, item) => {
+                return prev + (item.product?.sale_price * item.quantity)
+            }, 0)
+            const quantity = carts.reduce((prev, item) => {
+                return prev + (item.quantity)
+            }, 0)
+            setTotal(total)
+            setQuantity(quantity)
+        }
         collapse();
-    })
+        getTotal()
+    }, [carts])
+
+    const tranSuccess = async(payment) => {
+        alert("You have successfully placed an order.")
+    }
+
 
     async function collapse() {
         var coll = document.getElementsByClassName("collapsible");
@@ -36,64 +66,31 @@ const CheckOut = () => {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-12">
-                            <div className="checkout__login">
-                                <span>Phản hồi khách hàng</span>
-                                <a href="">nhấp vào đây</a>
-                                <span>để đăng nhập</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row">
                         <div className="col-6 col-md-6 col-sm-12">
                             <div className="payment-detail">
                                 <h3 className="checkout__heading">Chi tiết thanh toán</h3>
                                 <div className="checkout__border">
-                                    <div className="row">
-                                        <div className="form-group">
-                                            <div className="col-6">
-                                                <label className="form-label" htmlFor="firstname">
-                                                    First Name
-                                                    <span className="text-danger">*</span>
-                                                </label>
-                                                <input type="text" className="form-control" id="firstname"/>
-                                            </div>
-                                            <div className="col-6">
-                                                <label className="form-label" htmlFor="lastname">
-                                                    Last Name
-                                                    <span className="text-danger">*</span>
-                                                </label>
-                                                <input type="text" className="form-control" id="lastname"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="form-group">
-                                            <div className="col-12">
-                                                <label className="form-label" htmlFor="Address">
-                                                    Address
-                                                    <span className="text-danger">*</span>
-                                                </label>
-                                                <input type="text" className="form-control" id="Address"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="form-group">
-                                            <div className="col-6">
-                                                <label className="form-label" htmlFor="EmailAddress">
-                                                    Email Address
-                                                    <span className="text-danger">*</span>
-                                                </label>
-                                                <input type="text" className="form-control" id="EmailAddress"/>
-                                            </div>
-                                            <div className="col-6">
-                                                <label className="form-label" l="" htmlFor="Phone">
-                                                    Phone
-                                                    <span className="text-danger">*</span>
-                                                </label>
-                                                <input type="text" className="form-control" id="Phone"/>
+                                    <div class="address">
+                                        <div class="address-inner">
+                                            <div class="address-checkout">
+                                                {
+                                                    addresses && addresses.map(address => (
+                                                        address.status? <div className="address-info">
+                                                            <div className="address-info__name">
+                                                                {address.fullname}
+                                                            </div>
+                                                            <div className="address-info__address">
+                                                                <span>Địa chỉ: </span> {address.address}
+                                                            </div>
+                                                            <div className="address-info__phone">
+                                                                <span>Điện thoại: </span> {address.phone}
+                                                            </div>
+                                                        </div> : null
+                                                    ))
+                                                }
+                                                <div class="address-action">
+                                                    <Link to="/account/address">Thay đổi</Link>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -101,18 +98,11 @@ const CheckOut = () => {
                                         <div className="form-group">
                                             <div className="col-12">
                                                 <label className="form-label" htmlFor="OrderNotes">
-                                                    Order Notes
-                                                    <span className="text-danger">*</span>
+                                                    Ghi chú hoá đơn
                                                 </label>
                                                 <textarea name="" id="OrderNotes" cols="30" rows="10"
                                                           className="form-textarea"/>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="form-group">
-                                            <a href="#" className="payment-detail__link">Nhấn vào đây</a>
-                                            <h3 className="payment-detail__text">nếu bạn muốn tạo tài khoản?</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +110,7 @@ const CheckOut = () => {
                         </div>
                         <div className="col-6 col-md-6 col-sm-12">
                             <div className="your-order">
-                                <h3 className="checkout__heading">Your Order</h3>
+                                <h3 className="checkout__heading">Đơn hàng của bạn</h3>
                                 <div className="checkout__border">
                                     <div className="row">
                                         <ul className="your-order__list">
@@ -128,17 +118,24 @@ const CheckOut = () => {
                                                 <span>Product</span>
                                                 <p className="Total">Total</p>
                                             </li>
-                                            <li className="your-order__item">
-                                                <span>Product</span>
-                                                <p className="Total">$60.000</p>
-                                            </li>
-                                            <li className="your-order__item">
-                                                <span>Product</span>
-                                                <p className="Total">$60.000</p>
-                                            </li>
+                                            {
+                                                carts && carts.map((cart) => (
+                                                    <li className="your-order__item">
+                                                        <Link to={`/product/detail/${cart.product?.id}`}>
+                                                            <span>{cart.product?.name} x{cart.quantity}</span>
+                                                        </Link>
+                                                        <p className="Total">${cart.product?.sale_price * cart.quantity}</p>
+                                                    </li>
+                                                ))
+                                            }
+
+
+
+
+
                                             <li className="your-order__item your-order__total fw-bold">
                                                 <span>Total</span>
-                                                <p className="Total text-primary">$60.000</p>
+                                                <p className="Total text-primary">${total}</p>
                                             </li>
                                         </ul>
 
@@ -172,8 +169,11 @@ const CheckOut = () => {
                                         </div>
 
                                         <div className="your-order-btn">
-                                            <a href="thankyou.html" className="btn-flat btn-hover your-order__btn">Place
-                                                order</a>
+                                            <PaypalButton
+                                                total={Math.round(total/22755 * 100) / 100}
+                                                tranSuccess={tranSuccess} />
+                                            {/*<a href="thankyou.html" className="btn-flat btn-hover your-order__btn">Place*/}
+                                            {/*    order</a>*/}
                                         </div>
 
                                     </div>

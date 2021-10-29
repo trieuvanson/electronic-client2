@@ -13,7 +13,7 @@ const Orders = (props) => {
                         <div className="breadcumb">
                             <a href="index.html">home</a>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="login.html">Thông tin tài khoản</a>
+                            <a href="login.html">Quản lý đơn hàng</a>
                         </div>
                     </div>
 
@@ -23,7 +23,7 @@ const Orders = (props) => {
                             <Menu/>
                             {/*Bên phải*/}
                             <div className="col-8 col-sm-12">
-                                <h1>Đơn hàng của tôi</h1>
+                                <h1>Đơn hàng của tôi ()</h1>
                                 <div className="order-table overflow-scroll">
                                     <table>
                                         <thead>
@@ -38,7 +38,7 @@ const Orders = (props) => {
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <Link to="/account/orders/detail" className="order-link">987456</Link>
+                                                <Link to="orders/detail" className="order-link">987456</Link>
                                             </td>
                                             <td>
                                                 <div className="order-owner">

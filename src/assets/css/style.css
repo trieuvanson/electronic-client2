@@ -445,6 +445,7 @@ ul.devided>li:last-child {
     background-color: var(--background-color-main);
     transition: all 0.3s ease-in-out;
     border-radius: 3px;
+    min-height: 442px;
 }
 
 .product-card:hover {
@@ -485,6 +486,12 @@ ul.devided>li:last-child {
 .product-card-name {
     font-size: 20px;
     margin-bottom: 10px;
+    line-height: 3rem;
+    max-height: 6rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .product-card-price {
@@ -1116,7 +1123,17 @@ footer ul li a {
 }
 
 /* end Cart */
-
+.address-checkout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px;
+    background-color: var(--white);
+    margin-bottom: 10px;
+    border-radius: 3px;
+    max-height: 104px;
+    border: 1px solid #e0e4e8;
+}
 /* Checkout */
 .checkout__login {
     margin-top: 35px;
