@@ -445,6 +445,7 @@ ul.devided>li:last-child {
     background-color: var(--background-color-main);
     transition: all 0.3s ease-in-out;
     border-radius: 3px;
+    min-height: 442px;
 }
 
 .product-card:hover {
@@ -485,6 +486,12 @@ ul.devided>li:last-child {
 .product-card-name {
     font-size: 20px;
     margin-bottom: 10px;
+    line-height: 3rem;
+    max-height: 6rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .product-card-price {
@@ -1273,10 +1280,17 @@ footer ul li a {
 .your-order-btn {
     display: flex;
     width: 100%;
+    justify-content: center;
 }
 
 .your-order__btn {
-    margin: auto;
+    min-width: 250px;
+    max-height: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
 }
 
 /* end Checkout */
