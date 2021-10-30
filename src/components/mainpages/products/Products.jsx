@@ -1,8 +1,7 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {GlobalState} from "../../../GlobalState";
+import React, {useState, useContext, useEffect} from 'react'
 import Product from "./product/Product";
-import Loading from "../utils/loading/Loading";
 import {useLocation, useParams} from "react-router-dom";
+import {GlobalState} from "../../../GlobalState";
 function Products() {
     const state = useContext(GlobalState)
     const location = useLocation()
@@ -284,13 +283,13 @@ function Products() {
 
                             <div className="box">
                                 <ul className="pagination">
-                                    <li><a href="#"><i className='bx bxs-chevron-left'></i></a></li>
+                                    <li><a href="#"><i className='ti-angle-left'></i></a></li>
                                     <li><a href="#" className="active">1</a></li>
                                     <li><a href="#">2</a></li>
                                     <li><a href="#">3</a></li>
                                     <li><a href="#">4</a></li>
                                     <li><a href="#">5</a></li>
-                                    <li><a href="#"><i className='bx bxs-chevron-right'></i></a></li>
+                                    <li><a href="#"><i className='ti-angle-right'></i></a></li>
                                 </ul>
                             </div>
                         </div>

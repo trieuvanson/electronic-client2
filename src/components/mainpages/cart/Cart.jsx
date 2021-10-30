@@ -1,13 +1,25 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import axios from "axios";
-import {GlobalState} from "../../../../GlobalState";
-import Product from "../../products/product/Product";
+import {GlobalState} from "../../../GlobalState";
 
 function Cart() {
     const state = useContext(GlobalState)
     const [carts, setCarts] = state.cartApi.cart
     const actionCart = state.cartApi.actionCart
+    const [total, setTotal] = useState(0);
+
+
+
+
+    useEffect(() => {
+        const getTotal = () => {
+            const total = carts.reduce((prev, item) => {
+                return prev + (item.product?.sale_price * item.quantity)
+            }, 0)
+            setTotal(total)
+        }
+        getTotal()
+    })
 
 
     const increment = (id) =>{
@@ -56,7 +68,7 @@ function Cart() {
                         <a href="./index.html">home</a>
                         <span><i className='ti-angle-right'/></span>
                         <a>Cart</a>
-                        <span><i class='ti-angle-right'></i></span>
+                        <span><i className='ti-angle-right'></i></span>
                         <a href="./product-detail.html">Điện thoại</a>
                     </div>
                 </div>
@@ -77,7 +89,7 @@ function Cart() {
                                     <tbody>
                                     {
                                         carts && carts.map((cart) => (
-                                                <tr>
+                                                <tr key={cart.id}>
                                                     <td>
                                                         <div className="order-img">
                                                             <Link to={`/product/detail/${cart.product?.id}`}>
@@ -146,14 +158,13 @@ function Cart() {
                             <ul>
                                 <li className="subtotal">
                                     Subtotal
-                                    <span>$240.00</span>
+                                    <span>${total}</span>
                                 </li>
                                 <li className="cart-total">
                                     Total
-                                    <span>$240.00</span>
+                                    <span>${total}</span>
                                 </li>
-                                <Link to="" onClick={() => window.location.href = "/cart/checkout"}
-                                      className="proceed-btn">PROCEED TO CHECK OUT"</Link>
+                                <Link to="/cart/checkout" className="proceed-btn">PROCEED TO CHECK OUT"</Link>
                             </ul>
                         </div>
                     </div>

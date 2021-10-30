@@ -1,7 +1,6 @@
 import React, {useState, useContext} from 'react';
 import axios from "axios";
 import {LOCAL_LINK} from "../../../utils/hyperlink";
-import {GlobalState} from "../../../GlobalState";
 import {setLogin, setToken} from "../../../utils/Common";
 
 

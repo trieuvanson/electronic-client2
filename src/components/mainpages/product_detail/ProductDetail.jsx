@@ -1,25 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {GlobalState} from "../../../GlobalState";
 import Product from "../products/product/Product";
+import {GlobalState} from "../../../GlobalState";
 
 function ProductDetail() {
     const params = useParams();
     var [detail, setDetail] = useState([])
     const state = useContext(GlobalState)
     const [products] = state.productsApi.products
-    const [carts] = state.cartApi.cart
+    const [carts, setCarts] = state.cartApi.cart
     const [cart, setCart] = useState([]);
-
-
     const actionCart = state.cartApi.actionCart
-
+    let [value, setValue] = useState(cart.quantity || 1)
 
     useEffect(() => {
         getDetails();
-    }, [params.id, products])
-
-
+        getCart()
+    }, [params.id, products, carts])
     async function getDetails() {
         await products.forEach(product => {
             if (product.id == params.id) {
@@ -27,6 +24,26 @@ function ProductDetail() {
             }
         })
     }
+
+    const increment = () =>{
+        setValue(value+=1)
+    }
+
+    const decrement = () =>{
+        if (value > 1) {
+        }
+    }
+
+    async function getCart() {
+        await carts.forEach(cart => {
+            if (cart.product?.id == params.id) {
+                console.log(cart)
+                setCart(cart)
+            }
+        })
+    }
+
+
 
 
 
@@ -90,11 +107,11 @@ function ProductDetail() {
                                 <div className="product-info-price">${detail.sale_price}</div>
                                 <div className="product-quantity-wrapper">
                             <span className="product-quantity-btn">
-                                <i className='ti-minus'></i>
+                                <i className='ti-minus' onClick={() => decrement()} />
                             </span>
-                                    <span className="product-quantity">1</span>
+                                    <span className="product-quantity">{value}</span>
                                     <span className="product-quantity-btn">
-                                <i className='ti-plus'></i>
+                                <i className='ti-plus' onClick={() => increment()}/>
                             </span>
                                 </div>
                                 <div>

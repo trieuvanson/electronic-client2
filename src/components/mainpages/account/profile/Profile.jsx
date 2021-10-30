@@ -41,12 +41,14 @@ const Profile = (props) => {
                                                 </div>
                                                 <div className="form-group-profile">
                                                     <label htmlFor="name" className="profile-label">Tên</label>
-                                                    <input type="text" className="profile-input" id="fullname" name="fullname"
+                                                    <input type="text" className="profile-input" id="fullname"
+                                                           name="fullname"
                                                            value={user.fullname} onChange={onChangeInput} required/>
                                                 </div>
                                                 <div className="form-group-profile">
                                                     <label htmlFor="email" className="profile-label">Email</label>
-                                                    <input type="email" className="profile-input" id="email" name="email"
+                                                    <input type="email" className="profile-input" id="email"
+                                                           name="email"
                                                            value={user.email} onChange={onChangeInput} required/>
                                                 </div>
                                                 <div className="form-group-profile">
