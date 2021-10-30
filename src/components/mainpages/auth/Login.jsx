@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import axios from "axios";
 import {LOCAL_LINK} from "../../../utils/hyperlink";
 import {setLogin, setToken} from "../../../utils/Common";
+import {Link} from "react-router-dom";
 
 
 
@@ -34,9 +35,9 @@ function Login() {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="index.html">home</a>
+                            <Link to="/">home</Link>
                             <span><i className='ti-angle-right'></i></span>
-                            <a href="login.html">Đăng ký</a>
+                            <Link to="/login">Đăng nhập</Link>
                         </div>
                     </div>
 
@@ -66,7 +67,7 @@ function Login() {
                                         <input type="submit" value="Đăng Nhập" onClick={handlerLogin} required/>
                                     </div>
                                     <div className="input-form">
-                                        <p>Bạn chưa có tài khoản? <a href="register.html">Đăng ký</a></p>
+                                        <p>Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link></p>
                                     </div>
                                 </form>
                                 <h3>Đăng Nhập Bằng Mạng Xã Hội</h3>

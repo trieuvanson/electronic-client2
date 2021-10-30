@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../GlobalState";
+import {formatCash} from "../../../utils/CurrencyCommon";
 
 function Cart() {
     const state = useContext(GlobalState)
     const [carts, setCarts] = state.cartApi.cart
     const actionCart = state.cartApi.actionCart
     const [total, setTotal] = useState(0);
-
 
 
 
@@ -102,7 +102,7 @@ function Cart() {
                                                             </Link>
                                                         </div>
                                                     </td>
-                                                    <td>${cart.product?.sale_price}</td>
+                                                    <td>{formatCash(cart.product?.sale_price)}  <sup>đ</sup> </td>
                                                     <td>
                                                         <div className="order-quantity">
                                                             <div className="pro-qty">
@@ -116,7 +116,7 @@ function Cart() {
                                                     </td>
                                                     <td>
                                                         <div className="order-total">
-                                                            <span>${cart.product?.sale_price * cart.quantity}</span>
+                                                            <span>{formatCash(cart.product?.sale_price * cart.quantity)} <sup>đ</sup> </span>
                                                         </div>
                                                     </td>
                                                     <td className="order__close">
@@ -158,11 +158,11 @@ function Cart() {
                             <ul>
                                 <li className="subtotal">
                                     Subtotal
-                                    <span>${total}</span>
+                                    <span>{total} <sup>đ</sup> </span>
                                 </li>
                                 <li className="cart-total">
                                     Total
-                                    <span>${total}</span>
+                                    <span>{total} <sup>đ</sup> </span>
                                 </li>
                                 <Link to="/cart/checkout" className="proceed-btn">PROCEED TO CHECK OUT"</Link>
                             </ul>

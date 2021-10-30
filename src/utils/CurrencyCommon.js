@@ -1,4 +1,6 @@
-export function vnCurrency (x) {
-    x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-    return x
+export function formatCash(cash) {
+    const str = cash.toString();
+    return str.split('').reverse().reduce((prev, next, index) => {
+        return ((index % 3) ? next : (next + '.')) + prev
+    })
 }

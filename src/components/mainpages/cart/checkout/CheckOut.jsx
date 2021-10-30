@@ -165,7 +165,7 @@ const CheckOut = () => {
                                                         <Link to={`/product/detail/${cart.product?.id}`}>
                                                             <span>{cart.product?.name} x{cart.quantity}</span>
                                                         </Link>
-                                                        <p className="Total">${cart.product?.sale_price * cart.quantity}</p>
+                                                        <p className="Total">{cart.product?.sale_price * cart.quantity} <sup>đ</sup> </p>
                                                     </li>
                                                 ))
                                             }
@@ -173,7 +173,7 @@ const CheckOut = () => {
 
                                             <li className="your-order__item your-order__total fw-bold">
                                                 <span>Total</span>
-                                                <p className="Total text-primary">${total}</p>
+                                                <p className="Total text-primary">{total} <sup>đ</sup> </p>
                                             </li>
                                         </ul>
 
