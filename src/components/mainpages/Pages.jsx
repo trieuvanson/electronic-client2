@@ -13,6 +13,8 @@ import Orders from "./account/order/Orders";
 import OrderController from "./account/order/order_controller/OrderController";
 import Cart from "./cart/Cart";
 import CheckOut from "./cart/checkout/CheckOut";
+import Upload from "./upload/Upload";
+import Thankyou from "./utils/thankyou/Thankyou";
 
 
 function Pages() {
@@ -30,6 +32,8 @@ function Pages() {
             <Route path="/account/favorites" exact component={Favorite} />
             <Route path="/account/orders" exact component={Orders} />
             <Route path="/account/orders/detail" exact component={OrderController} />
+            <Route path="/account/checkout/success" exact component={Thankyou} />
+            <Route path="/upload" exact component={Upload} />
                 <Route path="/cart" exact component={Cart} />
                 <Route path="/cart/checkout" exact component={CheckOut} />
             <Route path="*" exact component={NotFound} />

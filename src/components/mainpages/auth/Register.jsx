@@ -1,8 +1,7 @@
 import React, {useState, useContext} from 'react';
 import axios from "axios";
 import {LOCAL_LINK} from "../../../utils/hyperlink";
-
-
+import {Link} from "react-router-dom";
 
 function Register() {
     const [user, setUser] = useState({
@@ -33,9 +32,9 @@ function Register() {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="index.html">home</a>
+                            <Link to="/">home</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="login.html">Đăng nhập</a>
+                            <Link to="/register">Đăng ký</Link>
                         </div>
                     </div>
 
@@ -76,7 +75,7 @@ function Register() {
                                         <input type="submit" value="Đăng ký"/>
                                     </div>
                                     <div className="input-form">
-                                        <p>Bạn đã có tài khoản <a href="login.html">đăng nhập</a> ngay</p>
+                                        <p>Bạn đã có tài khoản <Link to="/login">đăng nhập</Link> ngay</p>
                                     </div>
                                 </form>
 
