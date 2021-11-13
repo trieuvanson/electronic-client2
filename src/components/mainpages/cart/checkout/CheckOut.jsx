@@ -3,6 +3,7 @@ import PaypalButton from "../PaypalButton"
 import {GlobalState} from "../../../../GlobalState";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import address from "address";
+import {formatCash} from "../../../../utils/CurrencyCommon";
 
 const CheckOut = () => {
     const state = useContext(GlobalState)
@@ -47,8 +48,7 @@ const CheckOut = () => {
         }
         await actionOrder.addOrder(address, od)
         setCarts([])
-        alert("You have successfully placed an order.")
-        history.push("/")
+        history.push("/account/checkout/success")
     }
 
     const changePayment = (id) => {
@@ -165,7 +165,7 @@ const CheckOut = () => {
                                                         <Link to={`/product/detail/${cart.product?.id}`}>
                                                             <span>{cart.product?.name} x{cart.quantity}</span>
                                                         </Link>
-                                                        <p className="Total">{cart.product?.sale_price * cart.quantity} <sup>đ</sup> </p>
+                                                        <p className="Total">{formatCash(cart.product?.sale_price * cart.quantity)} <sup>đ</sup> </p>
                                                     </li>
                                                 ))
                                             }
@@ -173,7 +173,7 @@ const CheckOut = () => {
 
                                             <li className="your-order__item your-order__total fw-bold">
                                                 <span>Total</span>
-                                                <p className="Total text-primary">{total} <sup>đ</sup> </p>
+                                                <p className="Total text-primary">{formatCash(total)} <sup>đ</sup> </p>
                                             </li>
                                         </ul>
 

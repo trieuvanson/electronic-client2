@@ -162,7 +162,7 @@ function Cart() {
                                 </li>
                                 <li className="cart-total">
                                     Total
-                                    <span>{total} <sup>đ</sup> </span>
+                                    <span>{formatCash(total)} <sup>đ</sup> </span>
                                 </li>
                                 <Link to="/cart/checkout" className="proceed-btn">PROCEED TO CHECK OUT"</Link>
                             </ul>

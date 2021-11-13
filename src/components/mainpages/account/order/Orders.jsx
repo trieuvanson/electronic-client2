@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
+import {formatCash} from "../../../../utils/CurrencyCommon";
 
 
 const Orders = (props) => {
@@ -15,9 +16,9 @@ const Orders = (props) => {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="index.html">home</a>
+                            <Link to="/">home</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="login.html">Quản lý đơn hàng</a>
+                            <Link to="/account/orders">Quản lý đơn hàng</Link>
                         </div>
                     </div>
 
@@ -59,7 +60,7 @@ const Orders = (props) => {
                                                     </td>
                                                     <td>{o.created_at}</td>
                                                     <td>{o.payment}</td>
-                                                    <td>{o.total}đ</td>
+                                                    <td>{formatCash(o.total)} <sup>đ</sup> </td>
                                                     <td>
                                                         <span className="order-status order-ready">
                                                             {o.status}

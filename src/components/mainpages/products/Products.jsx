@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import Product from "./product/Product";
-import {useLocation, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import {GlobalState} from "../../../GlobalState";
 function Products() {
     const state = useContext(GlobalState)
@@ -25,9 +25,9 @@ function Products() {
             <div className="container">
                 <div className="box">
                     <div className="breadcumb">
-                        <a href="index.html">home</a>
+                        <Link to="/">home</Link>
                         <span><i className='ti-angle-right'/></span>
-                        <a href="products.html">all products</a>
+                        <Link to="/products">all products</Link>
                     </div>
                 </div>
                 <div className="box">

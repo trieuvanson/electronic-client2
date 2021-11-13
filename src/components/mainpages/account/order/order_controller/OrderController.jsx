@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../../Menu";
+import {Link} from "react-router-dom";
 
 const OrderController = (props) => {
 
@@ -9,9 +10,9 @@ const OrderController = (props) => {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="index.html">home</a>
+                            <Link to="/">home</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="login.html">Thông tin tài khoản</a>
+                            <Link to="/account/orders/detail">Đơn hàng của bạn</Link>
                         </div>
                     </div>
 

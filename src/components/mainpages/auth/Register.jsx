@@ -2,9 +2,6 @@ import React, {useState, useContext} from 'react';
 import axios from "axios";
 import {LOCAL_LINK} from "../../../utils/hyperlink";
 import {Link} from "react-router-dom";
-
-
-
 function Register() {
     const [user, setUser] = useState({
         fullname: "" ,username:"", password: "", email: ""
@@ -36,7 +33,7 @@ function Register() {
                         <div className="breadcumb">
                             <Link to="/">home</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <Link href="/register">Đăng ký</Link>
+                            <Link to="/register">Đăng ký</Link>
                         </div>
                     </div>
 
