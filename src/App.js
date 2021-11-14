@@ -14,10 +14,10 @@ function App() {
                 <Pages/>
 
             </Router>
-            <MessengerCustomerChat
+            {/* <MessengerCustomerChat
                 pageId="104628158689139"
                 appId="587032069214570"
-            />
+            /> */}
         </DataProvider>
     );
 }

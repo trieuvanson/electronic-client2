@@ -9,6 +9,21 @@ function Products() {
     const productAction = state.productsApi.productAction;
     const [products, setProducts] = state.productsApi.products;
 
+    console.log(products)
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(12)
+
+    const pages =[];
+
+    for(let i = 1; i < Math.ceil(products.length/itemsPerPage); i++) {
+        pages.push(i);
+    }
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+
     useEffect(() => {
         if(location.pathname.match("/products/brand/")) {
             productAction.getProductsByBrandId(params.id)
@@ -18,6 +33,20 @@ function Products() {
             productAction.getProducts()
         }
     }, [params.id])
+
+    const renderPageNumbers = pages && pages.map(number => {
+        return (
+            <li key = {number}>
+                <a href="#" id={number} className={number===currentPage? "active" : ""}
+                onClick={(e) => handleClickSetCurrentPage(e)}>{number}</a>
+            </li>
+        )
+    })
+
+    const handleClickSetCurrentPage = (e) => {
+        console.log(e.target.id)
+        setCurrentPage(Number(e.target.id))
+    }
 
 
     return (
@@ -272,7 +301,7 @@ function Products() {
                             <div className="box">
                                 <div className="row" id="products">
                                     {
-                                        products && products.map((product) => (
+                                        currentItems && currentItems.map((product) => (
                                                 <Product key={product.id} product={product}/>
                                             )
                                         )
@@ -283,13 +312,9 @@ function Products() {
 
                             <div className="box">
                                 <ul className="pagination">
-                                    <li><a href="#"><i className='ti-angle-left'></i></a></li>
-                                    <li><a href="#" className="active">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><i className='ti-angle-right'></i></a></li>
+                                    <li><a href="#" onClick={() => Number(currentPage+1)}><i className='ti-angle-left'></i></a></li>
+                                    {renderPageNumbers}
+                                    <li><a href="#" onClick={() => currentPage+1}><i className='ti-angle-right'></i></a></li>
                                 </ul>
                             </div>
                         </div>
