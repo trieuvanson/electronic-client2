@@ -79,10 +79,10 @@ function Cart() {
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Giá thành</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -139,14 +139,14 @@ function Cart() {
                 <div className="row">
                     <div className="col-4">
                         <div className="cart-buttons">
-                            <Link to="/products" className="btn-flat btn-hover continue-shop">Continue shopping</Link>
+                            <Link to="/products" className="btn-flat btn-hover continue-shop">Tiếp tục mua hàng</Link>
                         </div>
 
                         <div className="discount-coupon">
-                            <h6>Discount Codes</h6>
+                            <h6>Mã giảm giá</h6>
                             <form action="" className="coupon-form">
-                                <input type="text" placeholder="Enter your code"/>
-                                <button type="submit" className="site-btn coupon-btn">Appy</button>
+                                <input type="text" placeholder="Nhập mã giảm giá"/>
+                                <button type="submit" className="site-btn coupon-btn">Áp dụng</button>
                             </form>
                         </div>
                     </div>
@@ -157,14 +157,14 @@ function Cart() {
                         <div className="proceed-checkout">
                             <ul>
                                 <li className="subtotal">
-                                    Subtotal
+                                    Tổng phụ
                                     <span>{formatCash(total)} <sup>đ</sup> </span>
                                 </li>
                                 <li className="cart-total">
-                                    Total
+                                    Tổng cộng
                                     <span>{formatCash(total)} <sup>đ</sup> </span>
                                 </li>
-                                <Link to="/cart/checkout" className="proceed-btn">PROCEED TO CHECK OUT"</Link>
+                                <Link to="/cart/checkout" className="proceed-btn">Đi đến thanh toán</Link>
                             </ul>
                         </div>
                     </div>

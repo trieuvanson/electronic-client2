@@ -11,11 +11,12 @@ function ProductsApi() {
     }
 
     const getProductsByBrandId = async (brandId) => {
-        await axios.get(`${LOCAL_LINK}/api/product/brand/${brandId}`).then(res => {setProducts(res.data)})
+        const res = await axios.get(`${LOCAL_LINK}/api/product/brand/${brandId}`)
+        return res.data
     }
 
     const getProductsByCategoryId = async (categoryId) => {
-        await axios.get(`${LOCAL_LINK}/api/product/category/${categoryId}`).then(res => {setProducts(res.data)})
+        return await axios.get(`${LOCAL_LINK}/api/product/category/${categoryId}`)
     }
 
     useEffect(() => {

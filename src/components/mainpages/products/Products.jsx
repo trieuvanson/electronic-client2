@@ -10,31 +10,32 @@ function Products() {
     const params = useParams()
     const productAction = state.productsApi.productAction;
     const [products, setProducts] = state.productsApi.products;
-
-    console.log(products)
-
-    const [currentPage, setCurrentPage] = useState(1)
-    const [itemsPerPage, setItemsPerPage] = useState(12)
-
-    const pages =[];
-
-    for(let i = 1; i < Math.ceil(products.length/itemsPerPage); i++) {
-        pages.push(i);
-    }
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-
     useEffect(() => {
         if(location.pathname.match("/products/brand/")) {
             productAction.getProductsByBrandId(params.id)
+            console.log(productAction.getProductsByBrandId(params.id))
         } else  if(location.pathname.match("/products/category/")) {
             productAction.getProductsByCategoryId(params.id)
         } else {
             productAction.getProducts()
         }
-    }, [params.id])
+    }, [params.id, location.pathname])
+
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(12)
+
+    const pages =[];
+    const productslength = Math.ceil(products.length/itemsPerPage);
+    console.log(productslength)
+
+
+    for(let i = 0; i < productslength; i++) {
+        pages.push(i+1);
+    }
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
     const renderPageNumbers = pages && pages.map(number => {
         return (
@@ -44,6 +45,8 @@ function Products() {
             </li>
         )
     })
+const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+    
 
     const handleClickSetCurrentPage = (e) => {
         console.log(e.target.id)
