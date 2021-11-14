@@ -13,7 +13,6 @@ function Products() {
     useEffect(() => {
         if(location.pathname.match("/products/brand/")) {
             productAction.getProductsByBrandId(params.id)
-            console.log(productAction.getProductsByBrandId(params.id))
         } else  if(location.pathname.match("/products/category/")) {
             productAction.getProductsByCategoryId(params.id)
         } else {
@@ -27,8 +26,6 @@ function Products() {
 
     const pages =[];
     const productslength = Math.ceil(products.length/itemsPerPage);
-    console.log(productslength)
-
 
     for(let i = 0; i < productslength; i++) {
         pages.push(i+1);
