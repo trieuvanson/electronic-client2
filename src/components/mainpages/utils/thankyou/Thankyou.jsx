@@ -1,4 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
+import {Link} from "react-router-dom"
 function Thankyou() {
 
 
@@ -18,7 +19,7 @@ function Thankyou() {
                             <span className="thankyou__icon"><i className="ti-check"></i></span>
                             <h3 className="thankyou__text">Cảm ơn bạn !</h3>
                             <p className="thankyou__dir">Đơn đặt hàng của bạn đã được hoàn thành một cách thành công.</p>
-                            <button className="btn-flat btn-hover">Quay lại trang chủ</button>
+                            <Link to="/" className="btn-flat btn-hover">Quay lại trang chủ</Link>
                         </div>
                     </div>
                 </div>

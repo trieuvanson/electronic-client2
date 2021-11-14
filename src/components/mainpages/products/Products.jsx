@@ -2,6 +2,8 @@ import React, {useState, useContext, useEffect} from 'react'
 import Product from "./product/Product";
 import {Link, useLocation, useParams} from "react-router-dom";
 import {GlobalState} from "../../../GlobalState";
+import {formatCash} from "../../../utils/CurrencyCommon";
+
 function Products() {
     const state = useContext(GlobalState)
     const location = useLocation()
