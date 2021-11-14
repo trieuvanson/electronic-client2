@@ -20,10 +20,6 @@ function ProductsApi() {
         setProducts(res.data)
     }
 
-    useEffect(() => {
-        // getProducts()
-    }, [])
-
 
     return {
         products: [products, setProducts],
