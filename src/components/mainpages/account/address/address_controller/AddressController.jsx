@@ -1,20 +1,100 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../../Menu";
+import {GlobalState} from "../../../../../GlobalState";
+import {useHistory, useLocation, useParams} from "react-router-dom";
 
 const AddressController = () => {
-    const [address, setAddress] = useState({
-        fullname:"", phone: "", address: "", type: true, status: false
-    })
-    const onChangeInput = e =>{
-        const {name, value} = e.target;
-        if (name.match("type")) {
-            setAddress({...address, [name]:value})
-        } else {
-            setAddress({...address, [name]:value})
+    const state = useContext(GlobalState)
+    const location = useLocation();
+    const params = useParams();
+    const [addresses] = state.addressesApi.address
+    const action = state.addressesApi.action
+    const history = useHistory();
+
+    // const [fullname, setFullname] = useState("");
+    // const [phone, setPhone] = useState("");
+    // const [address, setAddress] = useState("");
+    // const [type, setType] = useState(true);
+    // const [status, setStatus] = useState(false);
+
+
+    const [detail, setDetail] = useState({fullname: "", phone: "", address: "", type: true, status: false})
+
+    useEffect(() => {
+        if (location.pathname.match("update")) {
+            getAddress()
         }
-        console.log(address)
+    }, [location.pathname, params.id, addresses])
+
+    function getAddress() {
+            addresses.forEach(add => {
+                console.log(add.id)
+                if (add.id == params.id) {
+                    setDetail(add)
+                }
+            })
+
     }
 
+
+    const onChangeInput = e => {
+        const {name, value} = e.target;
+        if (name === "type") {
+            if (e.target.id === "HOME") setDetail({...detail, [name]: true})
+            else setDetail({...detail, [name]: false})
+        } else if (name === "status") setDetail({...detail, [name]: !detail.status})
+        else
+        {
+            setDetail({...detail, [name]: value})
+        }
+    }
+
+    // const onChangeInput = e => {
+    //     const {name, value} = e.target;
+    //     switch (name) {
+    //         case "fullname" :
+    //             setFullname(value)
+    //             break
+    //         case "phone" :
+    //             setPhone(value)
+    //             break
+    //         case "address" :
+    //             setAddress(value)
+    //             break
+    //         case "type" :
+    //             if (e.target.id === "HOME") setType(true)
+    //             else setType(false)
+    //             break
+    //         case "status" :
+    //             setStatus(!status)
+    //             break
+    //     }
+    // }
+
+    const addAddress = item => {
+        action.addAddress(item)
+        history.push("/account/address")
+        window.location.reload()
+    }
+
+    const updateAddress = (id,item) => {
+        action.updateAddress(id,item)
+        history.push("/account/address")
+        window.location.reload()
+
+    }
+    const modify = () => {
+        if (location.pathname.match("create")) return (
+            <div className="profile-btn">
+                <button onClick={() => addAddress(detail)} className="btn-flat btn-hover btn-profile">Lưu</button>
+            </div>
+        )
+        else return (
+            <div className="profile-btn">
+                <button onClick={() => updateAddress(detail.id,detail)} className="btn-flat btn-hover btn-profile">Cập nhật</button>
+            </div>
+        )
+    }
 
 
     return (
@@ -42,8 +122,9 @@ const AddressController = () => {
                                             <form action="">
                                                 <div className="form-group-profile">
                                                     <label htmlFor="name" className="profile-label">Họ và tên</label>
-                                                    <input type="text" className="profile-input" name = "fullname"
-                                                           onChange={onChangeInput} value={address.fullname}  id="name" required/>
+                                                    <input type="text" className="profile-input" name="fullname"
+                                                           onChange={onChangeInput} value={detail.fullname} id="name"
+                                                           required/>
                                                 </div>
                                                 {/*<div className="form-group-profile">*/}
                                                 {/*    <label htmlFor="company" className="profile-label">Công ty</label>*/}
@@ -51,64 +132,41 @@ const AddressController = () => {
                                                 {/*           placeholder="Nhập công ty"/>*/}
                                                 {/*</div>*/}
                                                 <div className="form-group-profile">
-                                                    <label htmlFor="phone" className="profile-label">Số điện thoại</label>
+                                                    <label htmlFor="phone" className="profile-label">Số điện
+                                                        thoại</label>
                                                     <input type="text" className="profile-input"
-                                                           onChange={onChangeInput} value={address.phone} name = "phone" id="phone" required/>
+                                                           onChange={onChangeInput} value={detail.phone} name="phone"
+                                                           id="phone" required/>
                                                 </div>
-                                                {/*<div className="form-group-profile">*/}
-                                                {/*    <label htmlFor="country" className="profile-label">Tỉnh/ Thành*/}
-                                                {/*        phố</label>*/}
-                                                {/*    <select className="form-select">*/}
-                                                {/*        <option value="">Chọn Tỉnh/Thành phố</option>*/}
-                                                {/*        <option value="">Hồ chí minh</option>*/}
-                                                {/*        <option value="">hà nội</option>*/}
-                                                {/*        <option value="">vũng tàu</option>*/}
-                                                {/*    </select>*/}
-                                                {/*</div>*/}
-                                                {/*<div className="form-group-profile">*/}
-                                                {/*    <label htmlFor="country" className="profile-label">Quận*/}
-                                                {/*        huyện</label>*/}
-                                                {/*    <select className="form-select">*/}
-                                                {/*        <option value="">Chọn Quận/Huyện</option>*/}
-                                                {/*        <option value="">Quận 12</option>*/}
-                                                {/*    </select>*/}
-                                                {/*</div>*/}
-                                                {/*<div className="form-group-profile">*/}
-                                                {/*    <label htmlFor="country" className="profile-label">Chọn Phường*/}
-                                                {/*        xã</label>*/}
-                                                {/*    <select className="form-select">*/}
-                                                {/*        <option value="">Chọn Phường/Xã</option>*/}
-                                                {/*        <option value="">Phường 11</option>*/}
-                                                {/*    </select>*/}
-                                                {/*</div>*/}
                                                 <div className="form-group-profile">
                                                     <label htmlFor="phone" className="profile-label">Địa chỉ</label>
                                                     <textarea rows="5" cols="60"
-                                                              onChange={onChangeInput} value={address.address} name = "address" className="profile-textarea"/>
+                                                              onChange={onChangeInput} value={detail.address}
+                                                              name="address" className="profile-textarea"/>
                                                 </div>
                                                 <div className="form-group-profile">
                                                     <label htmlFor="" className="profile-label">Loại địa chỉ</label>
-                                                    <input type="radio"  name="type"
-                                                           onClick={onChangeInput} value={true} id="deliveryAddressType"/>
+                                                    <input type="radio" checked={detail.type} name="type"
+                                                           onClick={onChangeInput} id="HOME"/>
                                                     <label className="address-delivery"
-                                                           htmlFor="deliveryAddressType">Nhà riêng/ Chung cư</label>
-                                                    <span className="checkmark" />
+                                                           htmlFor="HOME">Nhà riêng/ Chung cư</label>
+                                                    <span className="checkmark"/>
                                                     <input type="radio" name="type"
-                                                           onClick={onChangeInput} value={false} id="deliveryAddressType2"/>
+                                                           onClick={onChangeInput} checked={!detail.type}
+                                                           id="COMPANY"/>
                                                     <label className="address-delivery"
-                                                           htmlFor="deliveryAddressType2">Cơ quan/ Công ty</label>
-                                                    <span className="checkmark" />
+                                                           htmlFor="COMPANY">Cơ quan/ Công ty</label>
+                                                    <span className="checkmark"/>
                                                 </div>
                                                 <div className="form-group-profile">
                                                     <label htmlFor="" className="profile-label"/>
-                                                    <input type="checkbox" name="status" id="default"
-                                                           onChange={onChangeInput} value={!address.status}/>
-                                                    <label className="address-delivery" htmlFor="default">Đặt làm địa chỉ mặc định</label>
+                                                    <input checked={detail.status} type="checkbox" name="status" id="status"
+                                                           onChange={onChangeInput}/>
+                                                    <label className="address-delivery" htmlFor="default">Đặt làm địa
+                                                        chỉ mặc định</label>
                                                 </div>
+                                                {modify()}
 
-                                                <div className="profile-btn">
-                                                    <button className="btn-flat btn-hover btn-profile">Cập nhập</button>
-                                                </div>
                                             </form>
                                         </div>
                                     </div>

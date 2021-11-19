@@ -10,7 +10,7 @@ import Address from "./account/address/Address";
 import AddressController from "./account/address/address_controller/AddressController";
 import Favorite from "./account/favorites/Favorite";
 import Orders from "./account/order/Orders";
-import OrderController from "./account/order/order_controller/OrderController";
+import OrderDetail from "./account/order/order_controller/OrderDetail";
 import Cart from "./cart/Cart";
 import CheckOut from "./cart/checkout/CheckOut";
 import Upload from "./upload/Upload";
@@ -29,9 +29,10 @@ function Pages() {
             <Route path="/account/profile" exact component={Profile} />
             <Route path="/account/address" exact component={Address} />
             <Route path="/account/address/create" exact component={AddressController} />
+            <Route path="/account/address/update/:id" exact component={AddressController} />
             <Route path="/account/favorites" exact component={Favorite} />
             <Route path="/account/orders" exact component={Orders} />
-            <Route path="/account/orders/detail" exact component={OrderController} />
+            <Route path="/account/orders/:id" exact component={OrderDetail} />
             <Route path="/account/checkout/success" exact component={Thankyou} />
             <Route path="/upload" exact component={Upload} />
                 <Route path="/cart" exact component={Cart} />

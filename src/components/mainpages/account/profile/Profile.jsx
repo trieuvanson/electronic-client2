@@ -1,15 +1,30 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../Menu";
 import {GlobalState} from "../../../../GlobalState";
+import {useHistory} from "react-router-dom";
 
 const Profile = (props) => {
     const state = useContext(GlobalState)
     const [user, setUser] = state.userAPI.personal
-
+    const action = state.userAPI.action
+    const history = useHistory();
     const onChangeInput = e => {
         const {name, value} = e.target;
-        setUser({...user, [name]: value})
+        if (name === "gender") {
+            if (e.target.id === "male") setUser({...user, [name]: true})
+            else setUser({...user, [name]: false})
+        } else {
+            setUser({...user, [name]: value})
+            console.log(user)
+        }
     }
+
+    const updateProfile = () => {
+        action.updateProfile(user)
+        history.push("/account/profile")
+        window.location.reload()
+    }
+
     const [error, setError] = useState("Invalid password");
     const [loading, setLoading] = useState(false);
     return (
@@ -54,54 +69,38 @@ const Profile = (props) => {
                                                 <div className="form-group-profile">
                                                     <label htmlFor="phone" className="profile-label">Số điện
                                                         thoại</label>
-                                                    <input type="text" className="profile-input" id="phone"
+                                                    <input type="text" name="phone" className="profile-input" id="phone"
                                                            value={user.phone} onChange={onChangeInput} required/>
                                                 </div>
                                                 <div className="form-group-profile">
                                                     <label htmlFor="" className="profile-label">Giới tính</label>
-                                                    <input type="radio" checked={user.gender}
-                                                           onChange={onChangeInput} name="radio" id="male"/>
+                                                    <input type="radio" name="gender" checked={user.gender}
+                                                           onClick={onChangeInput}   id="male"/>
                                                     <label className="profile-gender" htmlFor="male">Nam</label>
                                                     <span className="checkmark"/>
                                                     <input type="radio" checked={!user.gender}
-                                                           onChange={onChangeInput} name="radio" id="female"/>
+                                                         onClick={onChangeInput}  name="gender" id="female"/>
                                                     <label className="profile-gender" htmlFor="female">Nữ</label>
                                                     <span className="checkmark"/>
                                                 </div>
                                                 <div className="form-group-profile">
-                                                    <label htmlFor="phone" className="profile-label">Ngày sinh</label>
+                                                        <label htmlFor="phone" className="profile-label">Ngày sinh</label>
 
-                                                    <select className="profile-select">
-                                                        <option value="">1</option>
-                                                        <option value="">2</option>
-                                                        <option value="">3</option>
-                                                        <option value="">4</option>
-                                                    </select>
-
-                                                    <select className="profile-select">
-                                                        <option value="">Tháng 1</option>
-                                                        <option value="">Tháng 2</option>
-                                                        <option value="">Tháng 3</option>
-                                                        <option value="">Tháng 4</option>
-                                                    </select>
-
-                                                    <select className="profile-select">
-                                                        <option value="">2021</option>
-                                                        <option value="">2020</option>
-                                                        <option value="">2019</option>
-                                                        <option value="">2018</option>
-                                                    </select>
+                                                    <input type="date" className="profile-input" id="birthday"
+                                                           name="birthday" value={user.birthday} onChange={onChangeInput} required/>
 
                                                 </div>
                                                 <div className="form-group-profile">
-                                                    <label htmlFor="phone" className="profile-label">Địa chỉ</label>
+                                                    <label htmlFor="address" className="profile-label">Địa chỉ</label>
                                                     <textarea rows="5" cols="60" className="profile-textarea"
+                                                              id="address"
+                                                              name="address"
                                                               value={user.address}
                                                               onChange={onChangeInput}/>
                                                 </div>
 
                                                 <div className="profile-btn">
-                                                    <button onClick={"handlerSave"}
+                                                    <button onClick={() => updateProfile}
                                                             className="btn-flat btn-hover btn-profile">Lưu
                                                     </button>
                                                 </div>

@@ -17,6 +17,10 @@ function ProductDetail() {
         getDetails();
         getCart()
     }, [params.id, products, carts])
+
+
+
+
     async function getDetails() {
         await products.forEach(product => {
             if (product.id == params.id) {

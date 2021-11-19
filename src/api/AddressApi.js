@@ -14,6 +14,7 @@ function AddressApi(token, info) {
                             headers: {Authorization: `Bearer ${token}`}
                         }
                     ).then(res => {
+                        console.log(res.data)
                         setAddress(res.data)
                     })
 
@@ -25,9 +26,52 @@ function AddressApi(token, info) {
         }
     }, [token, user])
 
+    const addAddress = async (item) => {
+        const address = JSON.stringify({
+            "fullname": item.fullname,
+            "phone": item.phone,
+            "address": item.address,
+            "type": item.type,
+            "status": item.status,
+            "user": {
+                "username": user.username
+            }
+        });
+
+        await axios.post(`${LOCAL_LINK}/api/address/`, address, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+    const updateAddress = async (id,item) => {
+        const address = JSON.stringify({
+            "fullname": item.fullname,
+            "phone": item.phone,
+            "address": item.address,
+            "type": item.type,
+            "status": item.status,
+            "user": {
+                "username": user.username
+            }
+        });
+
+        await axios.put(`${LOCAL_LINK}/api/address/${id}`, address, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+
+
 
     return {
-        addresses: [address, setAddress]
+        address: [address, setAddress],
+        action: {addAddress, updateAddress,}
     }
 }
 

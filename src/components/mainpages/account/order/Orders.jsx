@@ -8,8 +8,6 @@ import {formatCash} from "../../../../utils/CurrencyCommon";
 const Orders = (props) => {
     const state = useContext(GlobalState)
     const [order] = state.ordersApi.order
-    console.log(order)
-
     return (
         <>
             <div className="bg-light">
@@ -47,11 +45,11 @@ const Orders = (props) => {
                                             order && order.map((o, index) => (
                                                 <tr key={o.id}>
                                                     <td>
-                                                        <Link to="orders/detail"
+                                                        <Link to={`orders/${o.id}`}
                                                               className="order-link">#{++index}</Link>
                                                     </td>
                                                     <td>
-                                                        <Link to="orders/detail"
+                                                        <Link to={`orders/${o.id}`}
                                                               className="order-link">
                                                         <div className="order-owner">
                                                             <span>{o.address?.fullname}</span>
@@ -60,7 +58,7 @@ const Orders = (props) => {
                                                     </td>
                                                     <td>{o.created_at}</td>
                                                     <td>{o.payment}</td>
-                                                    <td>{formatCash(o.total)} <sup>đ</sup> </td>
+                                                    <td>{o?formatCash(o.total):null} <sup>đ</sup> </td>
                                                     <td>
                                                         <span className="order-status order-ready">
                                                             {o.status}

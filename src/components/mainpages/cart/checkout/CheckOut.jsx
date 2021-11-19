@@ -11,7 +11,7 @@ const CheckOut = () => {
     const [quantity, setQuantity] = useState(0);
     const [total, setTotal] = useState(0);
     const [note, setNote] = useState("")
-    const [addresses] = state.addressesApi.addresses
+    const [addresses] = state.addressesApi.address
     const [selectPayment, setSelectPayment] = useState("")
     const actionOrder = state.ordersApi.actionOrder;
     const history = useHistory();
@@ -29,46 +29,63 @@ const CheckOut = () => {
         collapse();
         getTotal()
     }, [carts])
-
-    const tranSuccess = async (payment) => {
-        let address = "";
-            addresses.map(add => {
-            {
-                if (add.status) {
-                    address = add;
-                }
+    const od = {
+        "status": "Mới đặt",
+        "quantity": quantity,
+        "total": total,
+        "note": note,
+        "payment": "Thanh toán Paypal"
+    }
+    let address = "";
+    addresses.map(add => {
+        {
+            if (add.status) {
+                address = add;
             }
-        });
-        const od = {
-            "status": "Mới đặt",
-            "quantity": quantity,
-            "total": total,
-            "note": note,
-            "payment": "Thanh toán Paypal"
         }
+    });
+    const tranSuccess = async (payment) => {
         await actionOrder.addOrder(address, od)
         setCarts([])
         history.push("/account/checkout/success")
     }
 
-    const changePayment = (id) => {
-        if (id === "paypal") {
-            return <PaypalButton
-                total={Math.round(total / 22755 * 100) / 100}
-                tranSuccess={tranSuccess}/>
-        }
+
+
+    const onPayCash = async () => {
+        await actionOrder.addOrder(address, od)
+        setCarts([])
+        history.push("/account/checkout/success")
     }
+
+    // const changePayment = () => {
+    //     if (selectPayment === "paypal") {
+    //         return (
+    //             <PaypalButton 
+    //             total={Math.round(total / 22755 * 100) / 100}
+    //             tranSuccess={tranSuccess}/>
+    //         )
+    //     } else {
+    //         return (
+    //             <Link to="/account/checkout/success" className="btn-flat btn-hover your-order__btn">
+    //                 Tiếp tục
+    //             </Link>
+    //         )
+    //     }
+    // }
 
     const [payment] = useState(
         [
             {
                 id: "paypal",
+                checked: true,
                 name: "Paypal",
                 value: "paypal",
                 htmlFor: "paypal"
             },
             {
                 id: "paycash",
+                checked: null,
                 name: "Thanh toán tiền mặt",
                 value: "paycash",
                 htmlFor: "paycash"
@@ -207,9 +224,9 @@ const CheckOut = () => {
                                                         total={Math.round(total / 22755 * 100) / 100}
                                                         tranSuccess={tranSuccess}/>
                                                     :
-                                                    <Link to="*" className="btn-flat btn-hover your-order__btn"
-                                                          onClick={() => changePayment(payment.selected)}>Tiếp tục
-                                                    </Link>
+                                                    <button disabled={selectPayment === "paycash"?false:true} className="btn-flat btn-hover your-order__btn"
+                                                            onClick={() => onPayCash()}>Tiếp tục
+                                                    </button>
                                             }
                                         </div>
 

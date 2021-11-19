@@ -1,5 +1,5 @@
-import React, {useState, useContext} from 'react';
-import {Link} from "react-router-dom";
+import React, {useState, useContext, useEffect} from 'react';
+import {Link, useHistory} from "react-router-dom";
 import {GlobalState} from "../../GlobalState";
 function Header()  {
     const state = useContext(GlobalState);
@@ -10,6 +10,13 @@ function Header()  {
     const [carts] = state.cartApi.cart
     const [categories] = state.categoriesApi.categories
     const [brands] = state.categoriesApi.brands
+    const history = useHistory();
+    const [keywords, setKeywords] = state.productsApi.keywords;
+    // const [keywords, setKeywords] = useState("");
+
+    const search = (keywords) => {
+        history.push(`/?timkiem=${keywords}`)
+    }
 
     const handlerLogout = () => {
         localStorage.clear();
@@ -73,8 +80,8 @@ function Header()  {
                     <div className="mid-header container">
                         <Link to=""  className="logo">Smart Things</Link>
                         <div className="search">
-                            <input type="text" placeholder="Search"/>
-                            <i className='ti-search'></i>
+                            <input type="text" name="timkiem" value={keywords} onChange={(e) => setKeywords(e.target.value)} placeholder="Tìm kiếm"/>
+                            <i className='ti-search' onClick={() => search(keywords)}></i>
                         </div>
                         <ul className="user-menu">
                             <li><a href="#"><i className='ti-bell'></i></a></li>

@@ -20,7 +20,6 @@ function UserApi(token) {
                             setIsAdmin(true)
                         }
                     })
-                    console.log(res.data)
                     setUser(res.data)
                     setIsLogged(true)
                 } catch (err) {
@@ -33,11 +32,22 @@ function UserApi(token) {
         }
     }, [token])
 
+    const updateProfile = async (user) => {
+        console.log(user)
+        await axios.put(`${LOCAL_LINK}/api/user/`, user, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
 
     return {
         isLogged: [isLogged, setIsLogged],
         isAdmin: [isAdmin, setIsAdmin],
-        personal: [user, setUser]
+        personal: [user, setUser],
+        action: {updateProfile}
     }
 }
 

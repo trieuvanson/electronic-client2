@@ -5,7 +5,7 @@ import {GlobalState} from "../../../../GlobalState";
 
 const Address = (props) => {
     const state = useContext(GlobalState)
-    const [addresses] = state.addressesApi.addresses
+    const [address] = state.addressesApi.address
 
     return (
         <>
@@ -25,7 +25,7 @@ const Address = (props) => {
                             <Menu/>
                             <div className="col-8 col-sm-12">
                                 <div className="address">
-                                    <h1>Sổ điện chỉ ({addresses.length})</h1>
+                                    <h1>Sổ điện chỉ ({address.length})</h1>
                                     <div className="address-inner">
                                         <div className="new">
                                             <Link to="address/create" className="new-link">
@@ -34,7 +34,7 @@ const Address = (props) => {
                                             </Link>
                                         </div>
                                         {
-                                            addresses && addresses.map(address => (
+                                            address && address.map(address => (
                                                 <div className="address-item">
                                                     <div className="address-info">
                                                         <div className="address-info__name">
@@ -54,7 +54,7 @@ const Address = (props) => {
                                                         </div>
                                                     </div>
                                                     <div className="address-action">
-                                                        <a href="">Chỉnh sửa</a>
+                                                        <Link to={`address/update/${address.id}`}>Chỉnh sửa</Link>
                                                     </div>
                                                 </div>
                                             ))

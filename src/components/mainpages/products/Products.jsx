@@ -1,34 +1,40 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Product from "./product/Product";
 import {Link, useLocation, useParams} from "react-router-dom";
 import {GlobalState} from "../../../GlobalState";
-import {formatCash} from "../../../utils/CurrencyCommon";
+import Loading from "../utils/loading/Loading";
 
 function Products() {
     const state = useContext(GlobalState)
     const location = useLocation()
     const params = useParams()
-    const productAction = state.productsApi.productAction;
+    const action = state.productsApi.productAction;
     const [products, setProducts] = state.productsApi.products;
+    const [keywords] = state.productsApi.keywords
     useEffect(() => {
-        if(location.pathname.match("/products/brand/")) {
-            productAction.getProductsByBrandId(params.id)
-        } else  if(location.pathname.match("/products/category/")) {
-            productAction.getProductsByCategoryId(params.id)
+        if (location.pathname.match("/products/brand/")) {
+            action.getProductsByBrandId(params.id)
+        } else if (location.pathname.match("/products/category/")) {
+            action.getProductsByCategoryId(params.id)
+        } else if (location.search.match("/?timkiem=")) {
+            action.findProductsByKeywords(keywords)
         } else {
-            productAction.getProducts()
+            action.getProducts()
         }
-    }, [params.id, location.pathname])
+    }, [params.id, location.pathname, keywords])
+
+    
+
 
 
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(12)
 
-    const pages =[];
-    const productslength = Math.ceil(products.length/itemsPerPage);
+    const pages = [];
+    const productslength = Math.ceil(products.length / itemsPerPage);
 
-    for(let i = 0; i < productslength; i++) {
-        pages.push(i+1);
+    for (let i = 0; i < productslength; i++) {
+        pages.push(i + 1);
     }
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -36,14 +42,14 @@ function Products() {
 
     const renderPageNumbers = pages && pages.map(number => {
         return (
-            <li key = {number}>
-                <a href="#" id={number} className={number===currentPage? "active" : ""}
-                onClick={(e) => handleClickSetCurrentPage(e)}>{number}</a>
+            <li key={number}>
+                <a href="#" id={number} className={number === currentPage ? "active" : ""}
+                   onClick={(e) => handleClickSetCurrentPage(e)}>{number}</a>
             </li>
         )
     })
-const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-    
+    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+
 
     const handleClickSetCurrentPage = (e) => {
         console.log(e.target.id)
@@ -308,15 +314,17 @@ const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
                                             )
                                         )
                                     }
-                                    {/*{products.length === 0 && <Loading/>}*/}
+                                    {currentItems.length === 0 && <Loading/>}
                                 </div>
                             </div>
 
                             <div className="box">
                                 <ul className="pagination">
-                                    <li><a href="#" onClick={() => Number(currentPage+1)}><i className='ti-angle-left'></i></a></li>
+                                    <li><a href="#" onClick={() => setCurrentPage(currentPage - 1)}><i
+                                        className='ti-angle-left'></i></a></li>
                                     {renderPageNumbers}
-                                    <li><a href="#" onClick={() => currentPage+1}><i className='ti-angle-right'></i></a></li>
+                                    <li><a href="#" onClick={() => setCurrentPage(currentPage + 1)}><i
+                                        className='ti-angle-right'></i></a></li>
                                 </ul>
                             </div>
                         </div>

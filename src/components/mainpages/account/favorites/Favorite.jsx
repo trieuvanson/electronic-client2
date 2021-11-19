@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
+import {formatCash} from "../../../../utils/CurrencyCommon";
 
 const Favorite = () => {
     const state = useContext(GlobalState)
@@ -55,7 +56,7 @@ const Favorite = () => {
                                                             </div>
                                                         </div>
                                                         <div className="wish-footer">
-                                                            <div className="wish-price">{favorite.product.sale_price}<sup>đ</sup></div>
+                                                            <div className="wish-price">{formatCash(favorite.product.sale_price)}<sup>đ</sup></div>
                                                         </div>
                                                     </li>
                                                 )

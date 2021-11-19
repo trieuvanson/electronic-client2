@@ -9,6 +9,7 @@ function OrdersApi(token, info) {
     useEffect(() => {
         if (token && user) {
             getOrdersByUsername();
+            getOrderDetails();
         }
     }, [token, user])
 
@@ -19,6 +20,19 @@ function OrdersApi(token, info) {
                 }
             )
             setOrder(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    const getOrderDetails = async (orderId) => {
+        try {
+            const res = await axios.get(`${LOCAL_LINK}/api/order/order-details/`, {
+                    headers: {Authorization: `Bearer ${token}`}
+                }
+            )
+            setOrderDetails(res.data)
         } catch (err) {
             console.log(err)
         }
