@@ -33,7 +33,6 @@ const AddressController = () => {
                     setDetail(add)
                 }
             })
-
     }
 
 

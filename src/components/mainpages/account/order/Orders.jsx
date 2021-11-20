@@ -8,6 +8,12 @@ import {formatCash} from "../../../../utils/CurrencyCommon";
 const Orders = (props) => {
     const state = useContext(GlobalState)
     const [order] = state.ordersApi.order
+
+    const sortOrderByUpdate_at = () => {
+        return order.sort((a,b) => {
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        })
+    }
     return (
         <>
             <div className="bg-light">
@@ -42,7 +48,7 @@ const Orders = (props) => {
                                         <tbody>
 
                                         {
-                                            order && order.map((o, index) => (
+                                            order && sortOrderByUpdate_at().map((o, index) => (
                                                 <tr key={o.id}>
                                                     <td>
                                                         <Link to={`orders/${o.id}`}

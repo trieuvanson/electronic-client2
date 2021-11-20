@@ -16,7 +16,7 @@ const OrderDetail = (props) => {
         getOrderDetailsByOrderId();
     }, [params.id, order])
 
-    console.log(detail)
+    console.log(orderDetailsByOrder)
     async function getOrderDetailsByOrderId() {
         const newArray = [];
         await orderDetails.forEach(oddt => {
@@ -110,7 +110,7 @@ const OrderDetail = (props) => {
                                             <tbody>
                                             {
                                                 orderDetailsByOrder && orderDetailsByOrder.map((oddt, index) => (
-                                                    <tr>
+                                                    <tr key={oddt.id}>
                                                         <td>
                                                             <div className="order-owner">
                                                                 <Link to ={`/product/detail/${oddt.product?.id}`}>
@@ -122,7 +122,6 @@ const OrderDetail = (props) => {
                                                         <td>{formatCash(oddt.price)}<sup>đ</sup></td>
                                                         <td>{oddt.quantity}</td>
                                                         <td>{formatCash(oddt.price*oddt.quantity)}<sup>đ</sup></td>
-
                                                     </tr>
                                                 ))
                                             }
