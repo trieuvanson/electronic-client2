@@ -14,7 +14,7 @@ function Product ({product}) {
             <div className="product-card">
                 <div className="product-card-img">
                     <img src={product.thumbnail} alt=""/>
-                    <img src={product.thumbnail2} alt=""/>
+                    <img src={product.thumbnail} alt=""/>
                 </div>
                 <div className="product-card-info">
                     <div className="product-btn">
@@ -28,12 +28,14 @@ function Product ({product}) {
                             <i className='ti-heart'/>
                         </button>
                     </div>
+                    {/**/}
                     <div className="product-card-name">
                         {product.name}
                     </div>
+                    {/*Tét from máter*/}
                     <div className="product-card-price">
-                        <span><del>{formatCash(product.regular_price)} <sup>đ</sup> </del></span>
-                        <span className="curr-price">{formatCash(product.sale_price)} <sup>đ</sup> </span>
+                        <span><del>{product.regular_price} <sup>đ</sup> </del></span>
+                        <span className="curr-price">{product.sale_price} <sup>đ</sup> </span>
                     </div>
                 </div>
             </div>
