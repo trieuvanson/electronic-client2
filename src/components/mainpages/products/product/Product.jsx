@@ -14,7 +14,7 @@ function Product ({product}) {
             <div className="product-card">
                 <div className="product-card-img">
                     <img src={product.thumbnail} alt=""/>
-                    <img src={product.thumbnail} alt=""/>
+                    <img src={product.thumbnail2} alt=""/>
                 </div>
                 <div className="product-card-info">
                     <div className="product-btn">
