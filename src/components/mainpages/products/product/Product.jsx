@@ -28,6 +28,7 @@ function Product ({product}) {
                             <i className='ti-heart'/>
                         </button>
                     </div>
+                    {/**/}
                     <div className="product-card-name">
                         {product.name}
                     </div>
