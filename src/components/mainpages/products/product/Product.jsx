@@ -32,7 +32,7 @@ function Product ({product}) {
                     <div className="product-card-name">
                         {product.name}
                     </div>
-                    {/*Tét from máter*/}
+
                     <div className="product-card-price">
                         <span><del>{product.regular_price} <sup>đ</sup> </del></span>
                         <span className="curr-price">{product.sale_price} <sup>đ</sup> </span>
