@@ -73,26 +73,27 @@ function Products() {
                             <div className="box filter-toggle-box">
                                 <button className="btn-flat btn-hover" id="filter-close">close</button>
                             </div>
+                            {/*<div className="box">*/}
+                            {/*<span className="filter-header">*/}
+                            {/*    Categories*/}
+                            {/*</span>*/}
+                            {/*    <ul className="filter-list">*/}
+                            {/*        <li><a href="#">Wireless</a></li>*/}
+                            {/*        <li><a href="#">In-ear headphone</a></li>*/}
+                            {/*        <li><a href="#">Over-ear headphone</a></li>*/}
+                            {/*        <li><a href="#">sport headphone</a></li>*/}
+                            {/*    </ul>*/}
+                            {/*</div>*/}
                             <div className="box">
                             <span className="filter-header">
-                                Categories
-                            </span>
-                                <ul className="filter-list">
-                                    <li><a href="#">Wireless</a></li>
-                                    <li><a href="#">In-ear headphone</a></li>
-                                    <li><a href="#">Over-ear headphone</a></li>
-                                    <li><a href="#">sport headphone</a></li>
-                                </ul>
-                            </div>
-                            <div className="box">
-                            <span className="filter-header">
-                                Price
+                                Khoảng giá
                             </span>
                                 <div className="price-range">
                                     <input type="text"/>
                                     <span>-</span>
                                     <input type="text"/>
                                 </div>
+                                <button>Áp dụng</button>
                             </div>
                             <div className="box">
                                 <ul className="filter-list">
@@ -100,7 +101,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="status1"/>
                                             <label htmlFor="status1">
-                                                On sale
+                                                Sale nhiều
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -109,7 +110,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="status2"/>
                                             <label htmlFor="status2">
-                                                In stock
+                                                Còn hàng
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -118,7 +119,16 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="status3"/>
                                             <label htmlFor="status3">
-                                                Featured
+                                                Nổi bật
+                                                <i className='ti-check'></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="group-checkbox">
+                                            <input type="checkbox" id="status3"/>
+                                            <label htmlFor="status3">
+                                                Bán chạy
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -127,14 +137,14 @@ function Products() {
                             </div>
                             <div className="box">
                             <span className="filter-header">
-                                Brands
+                                Nhãn hiệu
                             </span>
                                 <ul className="filter-list">
                                     <li>
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember1"/>
                                             <label htmlFor="remember1">
-                                                JBL
+                                                Samsung
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -143,7 +153,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember2"/>
                                             <label htmlFor="remember2">
-                                                Beat
+                                                iPhone
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -152,7 +162,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember3"/>
                                             <label htmlFor="remember3">
-                                                Logitech
+                                                Xiaomi
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -161,7 +171,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember4"/>
                                             <label htmlFor="remember4">
-                                                Samsung
+                                                Huawei
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -179,14 +189,14 @@ function Products() {
                             </div>
                             <div className="box">
                             <span className="filter-header">
-                                Colors
+                                Màu sắc
                             </span>
                                 <ul className="filter-list">
                                     <li>
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember6"/>
                                             <label htmlFor="remember6">
-                                                Red
+                                                Đỏ
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -195,7 +205,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember7"/>
                                             <label htmlFor="remember7">
-                                                Blue
+                                                Xanh
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -204,7 +214,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember8"/>
                                             <label htmlFor="remember8">
-                                                White
+                                                Trắng
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -213,88 +223,7 @@ function Products() {
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="remember9"/>
                                             <label htmlFor="remember9">
-                                                Pink
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember10"/>
-                                            <label htmlFor="remember10">
-                                                Yellow
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="box">
-                            <span className="filter-header">
-                                rating
-                            </span>
-                                <ul className="filter-list">
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember11"/>
-                                            <label htmlFor="remember11">
-                                            <span className="rating">
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                            </span>
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember12"/>
-                                            <label htmlFor="remember12">
-                                            <span className="rating">
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                            </span>
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember13"/>
-                                            <label htmlFor="remember13">
-                                            <span className="rating">
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                            </span>
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember14"/>
-                                            <label htmlFor="remember14">
-                                            <span className="rating">
-                                                <i className='ti-star'></i>
-                                                <i className='ti-star'></i>
-                                            </span>
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember15"/>
-                                            <label htmlFor="remember15">
-                                            <span className="rating">
-                                                <i className='ti-star'></i>
-                                            </span>
+                                                Vàng
                                                 <i className='ti-check'></i>
                                             </label>
                                         </div>
@@ -317,16 +246,21 @@ function Products() {
                                     {currentItems.length === 0 && <Loading/>}
                                 </div>
                             </div>
+                            {
+                                renderPageNumbers.length<0?
+                                    <div className="box">
+                                        <ul className="pagination">
+                                            <li><a href="#" onClick={() => setCurrentPage(currentPage - 1)}><i
+                                                className='ti-angle-left'></i></a></li>
+                                            {renderPageNumbers}
+                                            <li><a href="#" onClick={() => setCurrentPage(currentPage + 1)}><i
+                                                className='ti-angle-right'></i></a></li>
+                                        </ul>
+                                    </div>
+                                    :
+                                    null
+                            }
 
-                            <div className="box">
-                                <ul className="pagination">
-                                    <li><a href="#" onClick={() => setCurrentPage(currentPage - 1)}><i
-                                        className='ti-angle-left'></i></a></li>
-                                    {renderPageNumbers}
-                                    <li><a href="#" onClick={() => setCurrentPage(currentPage + 1)}><i
-                                        className='ti-angle-right'></i></a></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>

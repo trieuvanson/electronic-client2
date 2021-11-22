@@ -4,7 +4,7 @@ import Products from "./products/Products";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import NotFound from "./utils/not_found/NotFound";
-import ProductDetail from "./product_detail/ProductDetail";
+import ProductDetail from "./products/product_detail/ProductDetail";
 import Profile from "./account/profile/Profile";
 import Address from "./account/address/Address";
 import AddressController from "./account/address/address_controller/AddressController";
@@ -14,13 +14,16 @@ import OrderDetail from "./account/order/order_controller/OrderDetail";
 import Cart from "./cart/Cart";
 import CheckOut from "./cart/checkout/CheckOut";
 import Upload from "./upload/Upload";
-import Thankyou from "./utils/thankyou/Thankyou";
+import Thanksyou from "./utils/thanksyou/Thanksyou";
+import Home from "./home/index";
+
 
 
 function Pages() {
     return (
         <Switch>
-            <Route path={["/products", "/"]} exact component={Products} />
+            <Route path={["/", "/home"]} exact component={Home} />
+            <Route path={["/products"]} exact component={Products} />
             <Route path={"/products/brand/:id"} exact component={Products} />
             <Route path={"/products/category/:id"} exact component={Products} />
             <Route path="/product/detail/:id" exact component={ProductDetail} />
@@ -33,7 +36,7 @@ function Pages() {
             <Route path="/account/favorites" exact component={Favorite} />
             <Route path="/account/orders" exact component={Orders} />
             <Route path="/account/orders/:id" exact component={OrderDetail} />
-            <Route path="/account/checkout/success" exact component={Thankyou} />
+            <Route path="/account/checkout/success" exact component={Thanksyou} />
             <Route path="/upload" exact component={Upload} />
                 <Route path="/cart" exact component={Cart} />
                 <Route path="/cart/checkout" exact component={CheckOut} />

@@ -4,6 +4,7 @@ import {DataProvider} from "./GlobalState"
 import Header from "./components/header/Header";
 import Pages from "./components/mainpages/Pages";
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import Footer from "./components/footer/Footer";
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
             <Router>
                 <Header/>
                 <Pages/>
-
+                <Footer/>
             </Router>
             {/* <MessengerCustomerChat
                 pageId="104628158689139"

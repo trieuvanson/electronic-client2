@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {Link} from "react-router-dom"
-function Thankyou() {
+function Thanksyou() {
 
 
     return (
@@ -30,4 +30,4 @@ function Thankyou() {
     )
 }
 
-export default Thankyou
+export default Thanksyou
