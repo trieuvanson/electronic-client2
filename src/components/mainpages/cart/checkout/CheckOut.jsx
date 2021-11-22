@@ -58,21 +58,21 @@ const CheckOut = () => {
         history.push("/account/checkout/success")
     }
 
-    // const changePayment = () => {
-    //     if (selectPayment === "paypal") {
-    //         return (
-    //             <PaypalButton 
-    //             total={Math.round(total / 22755 * 100) / 100}
-    //             tranSuccess={tranSuccess}/>
-    //         )
-    //     } else {
-    //         return (
-    //             <Link to="/account/checkout/success" className="btn-flat btn-hover your-order__btn">
-    //                 Tiếp tục
-    //             </Link>
-    //         )
-    //     }
-    // }
+    const changePayment = () => {
+        if (selectPayment === "paypal") {
+            return (
+                <PaypalButton
+                    total={Math.round(total / 22755 * 100) / 100}
+                    tranSuccess={tranSuccess}/>
+            )
+        } else if (selectPayment === "paycash") {
+            return (
+                <button onClick={() => onPayCash()} className="btn-flat btn-hover your-order__btn">
+                    Tiếp tục
+                </button>
+            )
+        }
+    }
 
     const [payment] = useState(
         [
@@ -218,16 +218,7 @@ const CheckOut = () => {
                                         </div>
 
                                         <div className="your-order-btn">
-                                            {
-                                                selectPayment === "paypal" ?
-                                                    <PaypalButton
-                                                        total={Math.round(total / 22755 * 100) / 100}
-                                                        tranSuccess={tranSuccess}/>
-                                                    :
-                                                    <button disabled={selectPayment === "paycash"?false:true} className="btn-flat btn-hover your-order__btn"
-                                                            onClick={() => onPayCash()}>Tiếp tục
-                                                    </button>
-                                            }
+                                            {changePayment()}
                                         </div>
 
                                     </div>

@@ -23,9 +23,6 @@ function Products() {
         }
     }, [params.id, location.pathname, keywords])
 
-    
-
-
 
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(12)
@@ -253,14 +250,16 @@ function Products() {
                                 </div>
                             </div>
                             {
-                                renderPageNumbers.length<0?
+                                renderPageNumbers.length > 0 ?
                                     <div className="box">
                                         <ul className="pagination">
-                                            <li><a href="#" onClick={() => setCurrentPage(currentPage - 1)}><i
-                                                className='ti-angle-left'></i></a></li>
+                                            <li><Link to="#"
+                                                      onClick={() => currentPage <= 0 ? setCurrentPage(currentPage - 1) : null}><i
+                                                className='ti-angle-left'/></Link></li>
                                             {renderPageNumbers}
-                                            <li><a href="#" onClick={() => setCurrentPage(currentPage + 1)}><i
-                                                className='ti-angle-right'></i></a></li>
+                                            <li><Link to="#"
+                                                      onClick={() => currentPage <= renderPageNumbers.length - 1 ? setCurrentPage(currentPage + 1) : null}><i
+                                                className='ti-angle-right'/></Link></li>
                                         </ul>
                                     </div>
                                     :

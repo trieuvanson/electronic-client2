@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {GlobalState} from "../../../GlobalState";
 import {Link} from "react-router-dom";
+
 const Promotion = () => {
     const state = useContext(GlobalState)
     const [brands] = state.categoriesApi.brands
@@ -23,40 +24,25 @@ const Promotion = () => {
     }
 
 
-
-
-
-
     return (
         <div className="promotion">
             <div className="row">
-                <div className="col-4 col-md-12 col-sm-12">
-                    <div className="promotion-box">
-                        <div className="text">
-                            <h3>Điện thoại</h3>
-                            <button className="btn-flat btn-hover"><span>shop collection</span></button>
-                        </div>
-                        <img src="./images/product22.jpg" alt=""/>
-                    </div>
-                </div>
-                <div className="col-4 col-md-12 col-sm-12">
-                    <div className="promotion-box">
-                        <div className="text">
-                            <h3>Điện thoại</h3>
-                            <button className="btn-flat btn-hover"><span>shop collection</span></button>
-                        </div>
-                        <img src="./images/product23.jpg" alt=""/>
-                    </div>
-                </div>
-                <div className="col-4 col-md-12 col-sm-12">
-                    <div className="promotion-box">
-                        <div className="text">
-                            <h3>Điện thoại</h3>
-                            <button className="btn-flat btn-hover"><span>shop collection</span></button>
-                        </div>
-                        <img src="./images/product24.jpg" alt=""/>
-                    </div>
-                </div>
+                {
+                    brands && promotion.map((item, index) => {
+                        return (
+                            <div className="col-4 col-md-12 col-sm-12" key={index}>
+                                <div className="promotion-box">
+                                    <div className="text">
+                                        <h3>{item.name}</h3>
+                                        <Link to={`/products/brand/${item.id}`}
+                                              className="btn-flat btn-hover"><span>shop collection</span></Link>
+                                    </div>
+                                    <img src="./images/product22.jpg" alt=""/>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
             </div>
         </div>
     );
