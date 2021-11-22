@@ -1,19 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import Product from "../products/product/Product";
-import {GlobalState} from "../../../GlobalState";
+import Product from "../product/Product";
+import {GlobalState} from "../../../../GlobalState";
 
 function ProductDetail() {
-    const params = useParams();
-    var [detail, setDetail] = useState([])
     const state = useContext(GlobalState)
+    const params = useParams();
+    const action = state.productsApi.productAction
     const [products] = state.productsApi.products
+    var [detail, setDetail] = useState([])
     const [carts, setCarts] = state.cartApi.cart
     const [cart, setCart] = useState([]);
     const actionCart = state.cartApi.actionCart
     let [value, setValue] = useState(cart.quantity || 1)
-
     useEffect(() => {
+        if (products) {
+            action.getProducts()
+        }
         getDetails();
         getCart()
     }, [params.id, products, carts])

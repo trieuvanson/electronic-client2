@@ -14,7 +14,6 @@ function AddressApi(token, info) {
                             headers: {Authorization: `Bearer ${token}`}
                         }
                     ).then(res => {
-                        console.log(res.data)
                         setAddress(res.data)
                     })
 

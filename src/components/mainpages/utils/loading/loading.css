@@ -1,6 +1,7 @@
 .load-page{
     background: #fff;
     overflow: hidden;
+    margin: 0 auto;
 }
 .loader{
     width: 300px;
