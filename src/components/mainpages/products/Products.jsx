@@ -73,17 +73,23 @@ function Products() {
                             <div className="box filter-toggle-box">
                                 <button className="btn-flat btn-hover" id="filter-close">close</button>
                             </div>
-                            {/*<div className="box">*/}
-                            {/*<span className="filter-header">*/}
-                            {/*    Categories*/}
-                            {/*</span>*/}
-                            {/*    <ul className="filter-list">*/}
-                            {/*        <li><a href="#">Wireless</a></li>*/}
-                            {/*        <li><a href="#">In-ear headphone</a></li>*/}
-                            {/*        <li><a href="#">Over-ear headphone</a></li>*/}
-                            {/*        <li><a href="#">sport headphone</a></li>*/}
-                            {/*    </ul>*/}
-                            {/*</div>*/}
+                            <div className="box">
+                                <span className="filter-header">
+                                    Sắp xếp
+                                </span>
+                                <div className="form-group">
+                                    <select name="" id="" className="form-select">
+                                        <option value="">Mới nhất</option>
+                                        <option value="">Cũ nhất</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <select name="" id="" className="form-select">
+                                        <option value="">Gía cao tới thấp</option>
+                                        <option value="">Gía thấp tới cao</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div className="box">
                             <span className="filter-header">
                                 Khoảng giá
@@ -93,7 +99,7 @@ function Products() {
                                     <span>-</span>
                                     <input type="text"/>
                                 </div>
-                                <button>Áp dụng</button>
+                                <button className="btn mt-10">Áp dụng</button>
                             </div>
                             <div className="box">
                                 <ul className="filter-list">

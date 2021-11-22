@@ -1,6 +1,6 @@
 :root {
   --main-bg-color: #fff;
-  --second-bg-color: #e1e0e0;
+  --second-bg-color: #f4f3f3;
   --third-bg-color: #fefdfd;
   --background-color-main: #3797A4;
   --background-color-second: #8BCDCD;
@@ -84,6 +84,21 @@ img {
 
 .text-red {
   color: var(--red);
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  background-color: var(--background-color-main);
+  color: var(--btn-color);
+  padding: 10px 12px;
+  font-size: 15px;
+  outline: 0;
+  font-weight: 600;
 }
 
 .btn-flat {
