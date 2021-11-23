@@ -40,8 +40,8 @@ function Products() {
     const renderPageNumbers = pages && pages.map(number => {
         return (
             <li key={number}>
-                <a href="#" id={number} className={number === currentPage ? "active" : ""}
-                   onClick={(e) => handleClickSetCurrentPage(e)}>{number}</a>
+                <Link to="#" id={number} className={number === currentPage ? "active" : ""}
+                   onClick={(e) => handleClickSetCurrentPage(e)}>{number}</Link>
             </li>
         )
     })
@@ -49,10 +49,23 @@ function Products() {
 
 
     const handleClickSetCurrentPage = (e) => {
-        console.log(e.target.id)
         setCurrentPage(Number(e.target.id))
+        window.scroll(0,0)
     }
 
+    const next = () => {
+        if (currentPage <= renderPageNumbers.length - 1) {
+            setCurrentPage(currentPage + 1)
+            window.scroll(0,0)
+        }
+    }
+
+    const prev = () => {
+        if (currentPage <= 0) {
+            setCurrentPage(currentPage - 1)
+            window.scroll(0,0)
+        }
+    }
 
     return (
         <div className="bg-light">
@@ -254,11 +267,11 @@ function Products() {
                                     <div className="box">
                                         <ul className="pagination">
                                             <li><Link to="#"
-                                                      onClick={() => currentPage <= 0 ? setCurrentPage(currentPage - 1) : null}><i
+                                                      onClick={() => prev()}><i
                                                 className='ti-angle-left'/></Link></li>
                                             {renderPageNumbers}
                                             <li><Link to="#"
-                                                      onClick={() => currentPage <= renderPageNumbers.length - 1 ? setCurrentPage(currentPage + 1) : null}><i
+                                                      onClick={() => next()}><i
                                                 className='ti-angle-right'/></Link></li>
                                         </ul>
                                     </div>
