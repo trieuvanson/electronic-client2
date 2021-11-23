@@ -30,7 +30,7 @@ const CheckOut = () => {
         getTotal()
     }, [carts])
     const od = {
-        "status": "Mới đặt",
+        "status": "Đang chờ xử lý",
         "quantity": quantity,
         "total": total,
         "note": note,

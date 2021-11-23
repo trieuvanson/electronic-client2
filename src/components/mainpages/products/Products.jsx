@@ -10,19 +10,20 @@ function Products() {
     const params = useParams()
     const action = state.productsApi.productAction;
     const [products, setProducts] = state.productsApi.products;
-    const [keywords] = state.productsApi.keywords
+    const query = new URLSearchParams(location.search);
+    const search = query.get("timkiem")||"";
     useEffect(() => {
         if (location.pathname.match("/products/brand/")) {
             action.getProductsByBrandId(params.id)
         } else if (location.pathname.match("/products/category/")) {
             action.getProductsByCategoryId(params.id)
-        } else if (location.search.match("/?timkiem=")) {
-            action.findProductsByKeywords(keywords)
+        } else if (search) {
+            console.log(search)
+            action.findProductsByKeywords(search)
         } else {
             action.getProducts()
         }
-    }, [params.id, location.pathname, keywords])
-
+    }, [params.id, location, search])
 
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(12)
@@ -61,7 +62,7 @@ function Products() {
     }
 
     const prev = () => {
-        if (currentPage <= 0) {
+        if (currentPage > 1) {
             setCurrentPage(currentPage - 1)
             window.scroll(0,0)
         }
@@ -95,8 +96,8 @@ function Products() {
                                 </div>
                                 <div className="form-group">
                                     <select name="" id="" className="form-select">
-                                        <option value="">Gía cao tới thấp</option>
-                                        <option value="">Gía thấp tới cao</option>
+                                        <option value="">Giá cao tới thấp</option>
+                                        <option value="">Giá thấp tới cao</option>
                                     </select>
                                 </div>
                             </div>

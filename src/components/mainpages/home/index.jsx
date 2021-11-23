@@ -23,6 +23,7 @@ export default function Home() {
     const getBestSeller = products.filter(product => product.best_seller === true)
     const getFeature = products.filter(product => product.features === true)
 
+    console.log(getFeature)
 
     return (
         <>

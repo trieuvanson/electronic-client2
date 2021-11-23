@@ -5,7 +5,6 @@ import {useLocation} from "react-router-dom";
 
 function ProductsApi() {
     const [products, setProducts] = useState([]);
-    const [keywords, setKeywords] = useState("");
     const getProducts = async () => {
         const res = await axios.get(`${LOCAL_LINK}/api/product/`)
         setProducts(res.data)
@@ -29,7 +28,6 @@ function ProductsApi() {
 
     return {
         products: [products, setProducts],
-        keywords: [keywords, setKeywords],
         productAction: {getProductsByCategoryId, getProductsByBrandId, getProducts, findProductsByKeywords}
     }
 }
