@@ -1,11 +1,10 @@
 import React, {useContext, useState} from 'react';
-import {GlobalState} from "../../../GlobalState";
 import {Link} from "react-router-dom";
-const Slides = () => {
-    const state = useContext(GlobalState)
-    const [slides] = state.categoriesApi.slides
+import {formatCash} from "../../../utils/CurrencyCommon";
+const Slides = (props) => {
+    const slides = props.item
     const [current, setCurrent] = useState(0);
-    const length = slides.length;
+    const length = slides?.length;
     const nextSlide = () => {
         setCurrent(current === length - 1 ? 0 : current + 1);
     };
@@ -14,9 +13,9 @@ const Slides = () => {
         setCurrent(current === 0 ? length - 1 : current - 1);
     };
 
-    // if (!Array.isArray(numbers) || numbers.length <= 0) {
-    //     return null;
-    // }
+    if (!Array.isArray(slides) || slides.length <= 0) {
+        return null;
+    }
     return (
         <div className="hero">
         <div className="slider">
@@ -28,7 +27,7 @@ const Slides = () => {
                                 <div className="info">
                                     <div className="info-content">
                                         <h3 className="top-down">
-                                            {/*{slide}*/}
+                                            {formatCash(slide.product?.sale_price)} <sup>đ</sup>
                                         </h3>
                                         <h2 className="top-down trans-delay-0-2">
                                             {slide.product?.name}
