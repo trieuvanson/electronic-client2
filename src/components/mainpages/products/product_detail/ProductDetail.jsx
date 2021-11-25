@@ -123,7 +123,7 @@ function ProductDetail() {
                             </span>
                                 </div>
                                 <div>
-                                    <button className="btn-flat btn-hover">add to cart</button>
+                                    <button className="btn-flat btn-hover">Thêm vào giỏ</button>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@ function ProductDetail() {
                                     {detail.description}
                                 </p>
                                 <img src={detail.thumbnail} alt=""/>
-                                <p>
+                                {/*<p>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis accusantium officia,
                                     quae fuga in exercitationem aliquam labore ex doloribus repellendus beatae facilis
                                     ipsam. Veritatis vero obcaecati iste atque aspernatur ducimus.
@@ -157,11 +157,11 @@ function ProductDetail() {
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi ullam quam fugit
                                     veniam ipsum recusandae incidunt, ex ratione, magnam labore ad tenetur officia!
                                     In, totam. Molestias sapiente deserunt animi porro?
-                                </p>
+                                </p>*/}
                             </div>
                         </div>
                     </div>
-                    <div className="box">
+                    {/*<div className="box">
                         <div className="box-header">
                             review
                         </div>
@@ -293,7 +293,7 @@ function ProductDetail() {
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div>*/}
                     <div className="box">
                         <div className="box-header">
                             Sản phẩm liên quan
