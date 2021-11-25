@@ -33,7 +33,6 @@ function UserApi(token) {
     }, [token])
 
     const updateProfile = async (user) => {
-        console.log(user)
         await axios.put(`${LOCAL_LINK}/api/user/`, user, {
             headers: {
                 Authorization: `Bearer ${token}`,

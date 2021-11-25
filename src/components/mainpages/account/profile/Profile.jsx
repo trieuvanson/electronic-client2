@@ -15,7 +15,6 @@ const Profile = (props) => {
             else setUser({...user, [name]: false})
         } else {
             setUser({...user, [name]: value})
-            console.log(user)
         }
     }
 
@@ -100,7 +99,7 @@ const Profile = (props) => {
                                                 </div>
 
                                                 <div className="profile-btn">
-                                                    <button onClick={() => updateProfile}
+                                                    <button onClick={() => updateProfile()}
                                                             className="btn-flat btn-hover btn-profile">Lưu
                                                     </button>
                                                 </div>
