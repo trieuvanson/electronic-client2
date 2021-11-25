@@ -6,7 +6,6 @@ import Pages from "./components/mainpages/Pages";
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import Footer from "./components/footer/Footer";
 
-
 function App() {
     return (
         <DataProvider>

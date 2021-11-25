@@ -164,7 +164,7 @@ function Cart() {
                                     Tổng cộng
                                     <span>{formatCash(total)} <sup>đ</sup> </span>
                                 </li>
-                                <Link to="/cart/checkout" className="proceed-btn">Đi đến thanh toán</Link>
+                                <Link to={carts.length>0?"/cart/checkout":"#"} className="proceed-btn">Đi đến thanh toán</Link>
                             </ul>
                         </div>
                     </div>

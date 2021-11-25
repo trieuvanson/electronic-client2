@@ -16,15 +16,15 @@ function Header()  {
     const [search, setSearch] = useState(query.get("timkiem") || "");
 
     const onSubmit = (e) => {
-        e.preventDefault();
-
         if (search.length === 0) return;
-        if (!new RegExp(/^[A-Za-z0-9\s]{3,}$/).test(search)) return;
+        const regex = "^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9\\s]{3,}$";
+        if (!new RegExp(regex).test(search)) return;
 
         history.push({
             pathname: `/products`,
-            search: `?timkiem=${search}`,
+            search: `?timkiem=${search}&filter_time=newsest&price=price-desc`,
         });
+        window.location.reload()
     };
 
     useEffect(() => {
@@ -96,14 +96,17 @@ function Header()  {
                 <div className="bg-primary">
                     <div className="mid-header container">
                         <Link to=""  className="logo">Smart Things</Link>
-                        <div className="search">
-                            <input type="text" name="timkiem"
-                                   onFocus={(e) => e.target.select()}
-                                   value={search}
-                                   onChange={(e) => setSearch(e.target.value)}
-                                   placeholder="Tìm kiếm"/>
-                            <i className='ti-search' onClick={onSubmit}/>
-                        </div>
+                        <form onSubmit={onSubmit}>
+                            <div className="search">
+                                <input type="text" name="timkiem"
+                                       onFocus={(e) => e.target.select()}
+                                       value={search}
+                                       onChange={(e) => setSearch(e.target.value)}
+                                       placeholder="Tìm kiếm"/>
+                                <i className='ti-search' onClick={onSubmit}/>
+                            </div>
+                        </form>
+
                         <ul className="user-menu">
                             <li><a href="#"><i className='ti-bell'></i></a></li>
                             <li>
@@ -122,7 +125,7 @@ function Header()  {
                             <li><Link to="">Trang Chủ</Link></li>
                             {/*mega menu*/}
                             <li className="mega-dropdown">
-                                <Link to="/products">
+                                <Link to="/products/">
                                     Sản Phẩm
                                     <i className='ti-angle-down'/>
                                 </Link>
