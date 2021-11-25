@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Product from "../product/Product";
 import {GlobalState} from "../../../../GlobalState";
+import {formatCash} from "../../../../utils/CurrencyCommon";
 
 function ProductDetail() {
     const state = useContext(GlobalState)
@@ -105,13 +106,13 @@ function ProductDetail() {
                                 <i className='ti-star'/>
                             </span>
                                 </div>
-                                <p className="product-description">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo libero alias officiis
-                                    dolore doloremque eveniet culpa dignissimos, itaque, cum animi excepturi sed
-                                    veritatis
-                                    asperiores soluta, nisi atque quae illum. Ipsum.
-                                </p>
-                                <div className="product-info-price">${detail.sale_price}</div>
+                                {/*<p className="product-description">*/}
+                                {/*    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo libero alias officiis*/}
+                                {/*    dolore doloremque eveniet culpa dignissimos, itaque, cum animi excepturi sed*/}
+                                {/*    veritatis*/}
+                                {/*    asperiores soluta, nisi atque quae illum. Ipsum.*/}
+                                {/*</p>*/}
+                                <div className="product-info-price">{detail.sale_price?formatCash(detail.sale_price):null} <sup>đ</sup></div>
                                 <div className="product-quantity-wrapper">
                             <span className="product-quantity-btn">
                                 <i className='ti-minus' onClick={() => decrement()} />

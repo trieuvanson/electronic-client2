@@ -15,8 +15,6 @@ const OrderDetail = (props) => {
         getDetails()
         getOrderDetailsByOrderId();
     }, [params.id, order])
-
-    console.log(orderDetailsByOrder)
     async function getOrderDetailsByOrderId() {
         const newArray = [];
         await orderDetails.forEach(oddt => {
@@ -131,7 +129,7 @@ const OrderDetail = (props) => {
                                             <ul className="order-detail__list">
                                                 <li className="order-detail__item">
                                                     <p>Tạm tính</p>
-                                                    <span>{detail.subTotal?formatCash(detail.subTotal):null}<sup>đ</sup> </span>
+                                                    <span>{detail.subTotal>=0?formatCash(detail.subTotal):null}<sup>đ</sup> </span>
                                                 </li>
                                                 {/*<li className="order-detail__item">*/}
                                                 {/*    <p>Phí vận chuyển</p>*/}
