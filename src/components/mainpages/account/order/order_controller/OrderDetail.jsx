@@ -32,6 +32,8 @@ const OrderDetail = (props) => {
         })
     }
 
+
+
     return (
         <>
             <div className="bg-light">

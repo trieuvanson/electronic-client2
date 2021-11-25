@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {DataProvider} from "./GlobalState"
 import Header from "./components/header/Header";
 import Pages from "./components/mainpages/Pages";
-import MessengerCustomerChat from 'react-messenger-customer-chat';
+// import MessengerCustomerChat from 'react-messenger-customer-chat';
 import Footer from "./components/footer/Footer";
 
 function App() {
