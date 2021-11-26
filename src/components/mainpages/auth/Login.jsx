@@ -3,7 +3,8 @@ import axios from "axios";
 import {LOCAL_LINK} from "../../../utils/hyperlink";
 import {setLogin, setToken} from "../../../utils/Common";
 import {Link} from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
@@ -22,10 +23,12 @@ function Login() {
             await axios.post(`${LOCAL_LINK}/api/login`, user).then(res => {
                 setLogin(true)
                 setToken(res.data.tokens)
+                toast("Đăng nhập thành công!")
             })
             window.location.href ="/"
         } catch (error) {
-            alert(error.response);
+            toast("Tài khoản hoặc mật khẩu không chính xác!")
+
         }
     }
 
