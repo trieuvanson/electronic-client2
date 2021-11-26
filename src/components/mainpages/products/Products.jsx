@@ -124,24 +124,24 @@ function Products() {
                             </div>
                             <div className="box">
                                 <ul className="filter-list">
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="status1"/>
-                                            <label htmlFor="status1">
-                                                Sale nhiều
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="status2"/>
-                                            <label htmlFor="status2">
-                                                Còn hàng
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
+                                    {/*<li>*/}
+                                    {/*    <div className="group-checkbox">*/}
+                                    {/*        <input type="checkbox" id="status1"/>*/}
+                                    {/*        <label htmlFor="status1">*/}
+                                    {/*            Sale nhiều*/}
+                                    {/*            <i className='ti-check'></i>*/}
+                                    {/*        </label>*/}
+                                    {/*    </div>*/}
+                                    {/*</li>*/}
+                                    {/*<li>*/}
+                                    {/*    <div className="group-checkbox">*/}
+                                    {/*        <input type="checkbox" id="status2"/>*/}
+                                    {/*        <label htmlFor="status2">*/}
+                                    {/*            Còn hàng*/}
+                                    {/*            <i className='ti-check'></i>*/}
+                                    {/*        </label>*/}
+                                    {/*    </div>*/}
+                                    {/*</li>*/}
                                     <li>
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="status3"/>
@@ -214,49 +214,49 @@ function Products() {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="box">
-                            <span className="filter-header">
-                                Màu sắc
-                            </span>
-                                <ul className="filter-list">
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember6"/>
-                                            <label htmlFor="remember6">
-                                                Đỏ
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember7"/>
-                                            <label htmlFor="remember7">
-                                                Xanh
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember8"/>
-                                            <label htmlFor="remember8">
-                                                Trắng
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember9"/>
-                                            <label htmlFor="remember9">
-                                                Vàng
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            {/*<div className="box">*/}
+                            {/*<span className="filter-header">*/}
+                            {/*    Màu sắc*/}
+                            {/*</span>*/}
+                            {/*    <ul className="filter-list">*/}
+                            {/*        <li>*/}
+                            {/*            <div className="group-checkbox">*/}
+                            {/*                <input type="checkbox" id="remember6"/>*/}
+                            {/*                <label htmlFor="remember6">*/}
+                            {/*                    Đỏ*/}
+                            {/*                    <i className='ti-check'></i>*/}
+                            {/*                </label>*/}
+                            {/*            </div>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <div className="group-checkbox">*/}
+                            {/*                <input type="checkbox" id="remember7"/>*/}
+                            {/*                <label htmlFor="remember7">*/}
+                            {/*                    Xanh*/}
+                            {/*                    <i className='ti-check'></i>*/}
+                            {/*                </label>*/}
+                            {/*            </div>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <div className="group-checkbox">*/}
+                            {/*                <input type="checkbox" id="remember8"/>*/}
+                            {/*                <label htmlFor="remember8">*/}
+                            {/*                    Trắng*/}
+                            {/*                    <i className='ti-check'></i>*/}
+                            {/*                </label>*/}
+                            {/*            </div>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <div className="group-checkbox">*/}
+                            {/*                <input type="checkbox" id="remember9"/>*/}
+                            {/*                <label htmlFor="remember9">*/}
+                            {/*                    Vàng*/}
+                            {/*                    <i className='ti-check'></i>*/}
+                            {/*                </label>*/}
+                            {/*            </div>*/}
+                            {/*        </li>*/}
+                            {/*    </ul>*/}
+                            {/*</div>*/}
                         </div>
                         <div className="col-9 col-md-12">
                             <div className="box filter-toggle-box">

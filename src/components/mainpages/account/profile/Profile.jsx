@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../Menu";
 import {GlobalState} from "../../../../GlobalState";
 import {useHistory} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = (props) => {
     const state = useContext(GlobalState)
@@ -18,10 +20,11 @@ const Profile = (props) => {
         }
     }
 
-    const updateProfile = () => {
+    const updateProfile = (e) => {
+        e.preventDefault()
         action.updateProfile(user)
+        toast.success("Cập nhật thông tin cá nhân thành công!")
         history.push("/account/profile")
-        window.location.reload()
     }
 
     const [error, setError] = useState("Invalid password");
@@ -99,7 +102,7 @@ const Profile = (props) => {
                                                 </div>
 
                                                 <div className="profile-btn">
-                                                    <button onClick={() => updateProfile()}
+                                                    <button onClick={updateProfile}
                                                             className="btn-flat btn-hover btn-profile">Lưu
                                                     </button>
                                                 </div>
@@ -113,6 +116,7 @@ const Profile = (props) => {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </>
     );
 }

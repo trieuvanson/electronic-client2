@@ -47,29 +47,6 @@ const AddressController = () => {
             setDetail({...detail, [name]: value})
         }
     }
-
-    // const onChangeInput = e => {
-    //     const {name, value} = e.target;
-    //     switch (name) {
-    //         case "fullname" :
-    //             setFullname(value)
-    //             break
-    //         case "phone" :
-    //             setPhone(value)
-    //             break
-    //         case "address" :
-    //             setAddress(value)
-    //             break
-    //         case "type" :
-    //             if (e.target.id === "HOME") setType(true)
-    //             else setType(false)
-    //             break
-    //         case "status" :
-    //             setStatus(!status)
-    //             break
-    //     }
-    // }
-
     const addAddress = item => {
         action.addAddress(item)
         history.push("/account/address")

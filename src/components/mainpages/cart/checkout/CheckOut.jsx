@@ -116,11 +116,11 @@ const CheckOut = () => {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="index.html">home</a>
-                            <span><i className='ti-angle-right'></i></span>
-                            <a href="cart.html">cart</a>
-                            <span><i className='ti-angle-right'></i></span>
-                            <a href="checkout.html">Checkout</a>
+                            <Link to="/">Trang chủ</Link>
+                            <span><i className='ti-angle-right'/></span>
+                            <Link to="/cart">Giỏ hàng</Link>
+                            <span><i className='ti-angle-right'/></span>
+                            <Link to="#">Xác nhận</Link>
                         </div>
                     </div>
                     <div className="row">
@@ -173,8 +173,8 @@ const CheckOut = () => {
                                     <div className="row">
                                         <ul className="your-order__list">
                                             <li className="your-order__item fw-bold">
-                                                <span>Product</span>
-                                                <p className="Total">Total</p>
+                                                <span>Sản phẩm</span>
+                                                <p className="Total">Tạm tính</p>
                                             </li>
                                             {
                                                 carts && carts.map((cart) => (
@@ -189,7 +189,7 @@ const CheckOut = () => {
 
 
                                             <li className="your-order__item your-order__total fw-bold">
-                                                <span>Total</span>
+                                                <span>Tổng cộng</span>
                                                 <p className="Total text-primary">{formatCash(total)} <sup>đ</sup> </p>
                                             </li>
                                         </ul>
