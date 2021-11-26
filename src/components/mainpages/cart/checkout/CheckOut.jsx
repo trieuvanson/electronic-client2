@@ -194,6 +194,13 @@ const CheckOut = () => {
                                             </li>
                                         </ul>
 
+                                        <div className="discount-coupon">
+                                            <form action="" className="coupon-form">
+                                                <input type="text" placeholder="Nhập mã giảm giá nếu có"/>
+                                                <button type="submit" className="site-btn coupon-btn">Áp dụng</button>
+                                            </form>
+                                        </div>
+
                                         <div className="collapse">
                                             <div className="collapse">
                                                 <div className="collapse__div">
