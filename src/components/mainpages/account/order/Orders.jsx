@@ -3,6 +3,7 @@ import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
+import {updateQueryString} from "../../../../utils/updateQueryString";
 
 
 const Orders = (props) => {
@@ -14,13 +15,59 @@ const Orders = (props) => {
             return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         })
     }
+
+
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
+
+    const pages = [];
+    const productslength = Math.ceil(sortOrderByUpdate_at().length / itemsPerPage);
+
+    for (let i = 0; i < productslength; i++) {
+        pages.push(i + 1);
+    }
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+    const renderPageNumbers = pages && pages.map(number => {
+        return (
+            <li key={number}>
+                <Link to={"#"} id={number}
+                      className={number === currentPage ? "active" : ""}
+                      onClick={(e) => handleClickSetCurrentPage(e)}>{number}</Link>
+            </li>
+        )
+    })
+    const currentItems = sortOrderByUpdate_at().slice(indexOfFirstItem, indexOfLastItem);
+
+    console.log(currentItems)
+
+    const handleClickSetCurrentPage = (e) => {
+        setCurrentPage(Number(e.target.id))
+        window.scroll(0, 0)
+    }
+
+    const next = () => {
+        if (currentPage <= renderPageNumbers.length - 1) {
+            setCurrentPage(currentPage + 1)
+            window.scroll(0, 0)
+        }
+    }
+
+    const prev = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1)
+            window.scroll(0, 0)
+        }
+    }
     return (
         <>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <Link to="/">home</Link>
+                            <Link to="/">Trang chủ</Link>
                             <span><i className='ti-angle-right'/></span>
                             <Link to="/account/orders">Quản lý đơn hàng</Link>
                         </div>
@@ -48,7 +95,7 @@ const Orders = (props) => {
                                         <tbody>
 
                                         {
-                                            order && sortOrderByUpdate_at().map((o, index) => (
+                                            order && currentItems.map((o, index) => (
                                                 <tr key={o.id}>
                                                     <td>
                                                         <Link to={`orders/${o.id}`}
@@ -73,6 +120,7 @@ const Orders = (props) => {
                                                 </tr>
                                             ))
                                         }
+
 
                                         {/*<tr>*/}
                                         {/*    <td>*/}
@@ -135,6 +183,22 @@ const Orders = (props) => {
                                         {/*</tr>*/}
                                         </tbody>
                                     </table>
+                                    {
+                                        renderPageNumbers.length > 0 ?
+                                            <div className="box">
+                                                <ul className="pagination">
+                                                    <li><Link to="#"
+                                                              onClick={() => prev()}><i
+                                                        className='ti-angle-left'/></Link></li>
+                                                    {renderPageNumbers}
+                                                    <li><Link to="#"
+                                                              onClick={() => next()}><i
+                                                        className='ti-angle-right'/></Link></li>
+                                                </ul>
+                                            </div>
+                                            :
+                                            null
+                                    }
                                 </div>
                                 <div className="">
                                     <img src="./images/mascot_fail.svg" alt="mascot" className="order-noCart__img"/>

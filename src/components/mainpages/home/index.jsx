@@ -15,7 +15,7 @@ export default function Home() {
     const location = useLocation()
     useEffect(() => {
         if (location.pathname.match("/") || location.pathname.match("/home")) {
-            productAction.getProducts()
+            productAction.getProductsByLink("/products/")
         }
     }, [products, location])
     const getPromotion = brands.filter(brand => brand.name.match("Điện Thoại") || brand.name.match("Laptop") || brand.name.match("Máy tính bảng"))

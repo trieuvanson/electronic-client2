@@ -139,7 +139,7 @@ const OrderDetail = (props) => {
                                                 {/*</li>*/}
                                                 <li className="order-detail__item">
                                                     <p>Giảm giá</p>
-                                                    <span>{detail.discount>=0?formatCash(detail.discount):null} <sup>đ</sup> </span>
+                                                    <span>{detail?.discount?.discount>=0?formatCash(detail?.discount?.discount):0} <sup>đ</sup> </span>
                                                 </li>
                                                 <li className="order-detail__item">
                                                     <p>Tổng cộng</p>

@@ -14,9 +14,9 @@ const Address = (props) => {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="index.html">home</a>
-                            <span><i className='ti-angle-right'></i></span>
-                            <a href="address.html">Sổ địa chỉ</a>
+                            <Link to="/">Trang chủ</Link>
+                            <span><i className='ti-angle-right'/></span>
+                            <Link to="#">Sổ địa chỉ</Link>
                         </div>
                     </div>
 

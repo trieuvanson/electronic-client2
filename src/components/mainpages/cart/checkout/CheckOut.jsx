@@ -2,8 +2,10 @@ import React, {useContext, useEffect, useState} from 'react';
 import PaypalButton from "../PaypalButton"
 import {GlobalState} from "../../../../GlobalState";
 import {Link, Redirect, useHistory} from "react-router-dom";
-import address from "address";
 import {formatCash} from "../../../../utils/CurrencyCommon";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const CheckOut = () => {
     const state = useContext(GlobalState)
@@ -15,6 +17,9 @@ const CheckOut = () => {
     const [selectPayment, setSelectPayment] = useState("")
     const actionOrder = state.ordersApi.actionOrder;
     const history = useHistory();
+    const [code, setCode] = state.discountsApi.code
+    const [discount, setDiscount] = state.discountsApi.discounts
+    const actionDiscount = state.discountsApi.action
     useEffect(() => {
         const getTotal = () => {
             const total = carts.reduce((prev, item) => {
@@ -32,8 +37,10 @@ const CheckOut = () => {
     const od = {
         "status": "Đang chờ xử lý",
         "quantity": quantity,
-        "total": total,
+        "subTotal": total,
+        "total": discount?.discount>=0?total - discount?.discount:total,
         "note": note,
+        "discount": discount?discount:null,
         "payment": "Thanh toán Paypal"
     }
     let address = "";
@@ -48,6 +55,10 @@ const CheckOut = () => {
         await actionOrder.addOrder(address, od)
         setCarts([])
         history.push("/account/checkout/success")
+    }
+    const getDiscount = (e) => {
+        e.preventDefault()
+        actionDiscount.getDiscountByCode()
     }
 
 
@@ -188,16 +199,24 @@ const CheckOut = () => {
                                             }
 
 
+                                            <li className="subtotal">
+                                                Tổng phụ
+                                                <span>{formatCash(total)} <sup>đ</sup> </span>
+                                            </li>
+                                            <li className="subtotal">
+                                                Giảm giá
+                                                <span>{discount?.discount>=0?formatCash(discount?.discount):0} <sup>đ</sup> </span>
+                                            </li>
                                             <li className="your-order__item your-order__total fw-bold">
                                                 <span>Tổng cộng</span>
-                                                <p className="Total text-primary">{formatCash(total)} <sup>đ</sup> </p>
+                                                <p className="Total text-primary">{discount.discount>=0?formatCash(total-discount?.discount):formatCash(total)} <sup>đ</sup> </p>
                                             </li>
                                         </ul>
 
                                         <div className="discount-coupon">
                                             <form action="" className="coupon-form">
-                                                <input type="text" placeholder="Nhập mã giảm giá nếu có"/>
-                                                <button type="submit" className="site-btn coupon-btn">Áp dụng</button>
+                                                <input type="text" name={"code"} onChange={(e) => setCode(e.target.value)} placeholder="Nhập mã giảm giá nếu có"/>
+                                                <button onClick={getDiscount} className="site-btn coupon-btn">Áp dụng</button>
                                             </form>
                                         </div>
 
@@ -218,12 +237,10 @@ const CheckOut = () => {
                                                                 </div>
                                                             ))
                                                         }
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div className="your-order-btn">
                                             {changePayment()}
                                         </div>
@@ -236,6 +253,7 @@ const CheckOut = () => {
 
                 </div>
             </div>
+            <ToastContainer/>
         </>
     );
 }

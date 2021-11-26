@@ -42,11 +42,13 @@ function OrdersApi(token, info) {
         const order = JSON.stringify({
             "status": od.status,
             "quantity": od.quantity,
+            "subTotal": od.subTotal,
             "total": od.total,
             "note": od.note,
             "payment": od.payment,
             "user": user,
-            "address": address
+            "address": address,
+            "discount": od.discount,
         });
         await axios.post(`${LOCAL_LINK}/api/order/`, order, {
             headers: {

@@ -8,9 +8,7 @@ function Cart() {
     const [carts, setCarts] = state.cartApi.cart
     const actionCart = state.cartApi.actionCart
     const [total, setTotal] = useState(0);
-    const [code, setCode] = state.discountsApi.code
-    const [discount, setDiscount] = state.discountsApi.discounts
-    const actionDiscount = state.discountsApi.action
+
     useEffect(() => {
         const getTotal = () => {
             const total = carts.reduce((prev, item) => {
@@ -19,13 +17,8 @@ function Cart() {
             setTotal(total)
         }
         getTotal()
-        console.log(discount)
     })
 
-    const getDiscount = (e) => {
-        e.preventDefault()
-        actionDiscount.getDiscountByCode()
-    }
 
     const increment = (id) =>{
         carts.forEach(item => {
@@ -142,16 +135,9 @@ function Cart() {
                 <div className="row">
                     <div className="col-4">
                         <div className="cart-buttons">
-                            <Link to="/products" className="btn-flat btn-hover continue-shop">Tiếp tục mua hàng</Link>
+                            <Link to="/products/" className="btn-flat btn-hover continue-shop">Tiếp tục mua hàng</Link>
                         </div>
 
-                        <div className="discount-coupon">
-                            <h6>Mã giảm giá</h6>
-                            <form action="" className="coupon-form">
-                                <input type="text" name={"code"} onChange={(e) => setCode(e.target.value)} placeholder="Nhập mã giảm giá"/>
-                                <button onClick={getDiscount} type="submit" className="site-btn coupon-btn">Áp dụng</button>
-                            </form>
-                        </div>
                     </div>
 
                     <div className="col-4"></div>
@@ -159,17 +145,9 @@ function Cart() {
                     <div className="col-4">
                         <div className="proceed-checkout">
                             <ul>
-                                <li className="subtotal">
-                                    Tổng phụ
-                                    <span>{formatCash(total)} <sup>đ</sup> </span>
-                                </li>
-                                <li className="subtotal">
-                                    Giảm giá
-                                    <span>{discount?.discount>=0?formatCash(discount?.discount):0} <sup>đ</sup> </span>
-                                </li>
                                 <li className="cart-total">
                                     Tổng cộng
-                                    <span>{discount?.discount>=0?formatCash(total-discount?.discount):formatCash(total)} <sup>đ</sup> </span>
+                                    <span>{formatCash(total)} <sup>đ</sup> </span>
                                 </li>
                                 <Link to={carts.length>0?"/cart/checkout":"#"} className="proceed-btn">Đi đến thanh toán</Link>
                             </ul>

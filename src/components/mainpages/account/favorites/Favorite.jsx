@@ -3,18 +3,25 @@ import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Favorite = () => {
     const state = useContext(GlobalState)
     const [favorites] = state.favoriteApi.favorites
     const actionFavorite = state.favoriteApi.actionFavorite;
+
+    const removeFavorite = (e, favorite) => {
+        e.preventDefault();
+        actionFavorite.deleteFavorite(favorite.id, favorite?.user?.username)
+            .then(toast.success(`Đã xoá ${favorite.product?.name} khỏi danh sách yêu thích`))
+    }
     return (
         <>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <Link to="/">home</Link>
+                            <Link to="/">Trang chủ</Link>
                             <span><i className='ti-angle-right'/></span>
                             <Link to="/account/favorites">Sản phẩm yêu thích</Link>
                         </div>
@@ -33,7 +40,7 @@ const Favorite = () => {
                                             favorites && favorites.map(favorite => {
                                                 return (
                                                     <li className="wish-item">
-                                                        <button className="btn-delete" onClick={() => actionFavorite.deleteFavorite(favorite.id, favorite.user?.username)}>X</button>
+                                                        <button className="btn-delete" onClick={(e) => removeFavorite(e, favorite)}>X</button>
                                                         <div className="wish-img">
                                                             <Link to={`/product/detail/${favorite.product?.id}`}>
                                                                 <img src={favorite.product?.thumbnail} alt="ảnh"/>
@@ -69,6 +76,7 @@ const Favorite = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </>
     );
 }

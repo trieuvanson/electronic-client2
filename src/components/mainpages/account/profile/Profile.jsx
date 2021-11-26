@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../Menu";
 import {GlobalState} from "../../../../GlobalState";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,9 +35,9 @@ const Profile = (props) => {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="index.html">home</a>
+                            <Link to="/">Trang chủ</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="login.html">Thông tin tài khoản</a>
+                            <Link to="#">Thông tin tài khoản</Link>
                         </div>
                     </div>
 

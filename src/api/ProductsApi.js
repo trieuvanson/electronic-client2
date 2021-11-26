@@ -5,20 +5,20 @@ import {useLocation} from "react-router-dom";
 
 function ProductsApi() {
     const [products, setProducts] = useState([]);
-    const getProducts = async () => {
-        const res = await axios.get(`${LOCAL_LINK}/api/products/`)
-        setProducts(res.data)
-    }
-
-    const getProductsByBrandId = async (brandId) => {
-        const res =  await axios.get(`${LOCAL_LINK}/api/products/brand/${brandId}`)
-        setProducts(res.data)
-    }
-
-    const getProductsByCategoryId = async (categoryId) => {
-        const res = await axios.get(`${LOCAL_LINK}/api/products/category/${categoryId}`)
-        setProducts(res.data)
-    }
+    // const getProducts = async () => {
+    //     const res = await axios.get(`${LOCAL_LINK}/api/products/`)
+    //     setProducts(res.data)
+    // }
+    //
+    // const getProductsByBrandId = async (brandId) => {
+    //     const res =  await axios.get(`${LOCAL_LINK}/api/products/brand/${brandId}`)
+    //     setProducts(res.data)
+    // }
+    //
+    // const getProductsByCategoryId = async (categoryId) => {
+    //     const res = await axios.get(`${LOCAL_LINK}/api/products/category/${categoryId}`)
+    //     setProducts(res.data)
+    // }
 
     const findProductsByKeywordsAndFilter = async (keywords, filter) => {
         const res = await axios.get(`${LOCAL_LINK}/api/products?timkiem=${keywords}&filter=${filter}`)
@@ -36,8 +36,7 @@ function ProductsApi() {
     }
     return {
         products: [products, setProducts],
-        productAction: {getProductsByCategoryId, getProductsByBrandId, getProducts,
-            getProductsBetweenPrice, findProductsByKeywordsAndFilter, getProductsByLink}
+        productAction: {getProductsBetweenPrice, findProductsByKeywordsAndFilter, getProductsByLink}
     }
 }
 

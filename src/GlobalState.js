@@ -8,7 +8,6 @@ import CategoriesApi from "./api/CategoriesApi";
 import AddressApi from "./api/AddressApi";
 import OrdersApi from "./api/OrdersApi";
 import DiscountsApi from "./api/DiscountsApi";
-
 export const GlobalState = createContext({})
 
 export const DataProvider = ({children}) =>{
