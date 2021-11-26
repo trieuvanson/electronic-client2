@@ -2,12 +2,22 @@ import React, {useContext} from 'react';
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Product ({product}) {
     const state = useContext(GlobalState)
     const actionCart = state.cartApi.actionCart
     const actionFavorite = state.favoriteApi.actionFavorite
+
+    const addToCart = () => {
+        actionCart.addCart(product, 1)
+        toast.success(`${product.name} được thêm vào giỏ hàng`)
+    }
+    const addToFavorite = () => {
+        actionFavorite.addFavorite(product)
+        toast.success(`${product.name} được thêm vào yêu thích`)
+    }
 
     return (
         <div className="col-4 col-md-6 col-sm-12">
@@ -21,10 +31,10 @@ function Product ({product}) {
                         <Link to={`/product/detail/${product.id}`}
                               className="btn-flat btn-hover btn-shop-now">shop now
                         </Link>
-                        <button className="btn-flat btn-hover btn-cart-add" onClick={() => actionCart.addCart(product, 1)}>
+                        <button className="btn-flat btn-hover btn-cart-add" onClick={() => addToCart()}>
                             <i className='ti-shopping-cart'/>
                         </button>
-                        <button className="btn-flat btn-hover btn-cart-add" onClick={() => actionFavorite.addFavorite(product)}>
+                        <button className="btn-flat btn-hover btn-cart-add" onClick={() => addToFavorite()}>
                             <i className='ti-heart'/>
                         </button>
                     </div>
@@ -39,6 +49,7 @@ function Product ({product}) {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

@@ -75,7 +75,6 @@ function OrdersApi(token, info) {
     }
 
 
-
     // const deleteCartItem = async (id, username) => {
     //     await axios.delete(`${LOCAL_LINK}/api/cart/${id}&${username}`, {
     //         headers: {Authorization: `Bearer ${token}`}

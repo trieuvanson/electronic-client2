@@ -7,6 +7,7 @@ import FavoritesApi from "./api/FavoritesApi";
 import CategoriesApi from "./api/CategoriesApi";
 import AddressApi from "./api/AddressApi";
 import OrdersApi from "./api/OrdersApi";
+import DiscountsApi from "./api/DiscountsApi";
 
 export const GlobalState = createContext({})
 
@@ -29,7 +30,8 @@ export const DataProvider = ({children}) =>{
        favoriteApi: FavoritesApi(token, UserApi(token)),
        categoriesApi: CategoriesApi(),
        addressesApi: AddressApi(token, UserApi(token)),
-       ordersApi: OrdersApi(token, UserApi(token))
+       ordersApi: OrdersApi(token, UserApi(token)),
+       discountsApi: DiscountsApi(token)
 
    }
 
