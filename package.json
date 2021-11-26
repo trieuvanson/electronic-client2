@@ -12,7 +12,8 @@
     "react-glider": "^2.2.1",
     "react-paypal-express-checkout": "^1.0.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-toastify": "^8.1.0"
   },
   "scripts": {
     "start": "(set PORT=3000 || export PORT=3000) && react-scripts start",
