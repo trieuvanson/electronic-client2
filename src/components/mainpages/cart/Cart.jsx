@@ -77,8 +77,8 @@ function Cart() {
                                     <tr>
                                         <th>Sản phẩm</th>
                                         <th>Giá thành</th>
-                                        <th>Số lượng</th>
-                                        <th>Tổng</th>
+                                        <th className="text-center">Số lượng</th>
+                                        <th className="text-center">Tổng</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -111,11 +111,11 @@ function Cart() {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div className="order-total">
+                                                        <div className="order-total text-center">
                                                             <span>{formatCash(cart.product?.sale_price * cart.quantity)} <sup>đ</sup></span>
                                                         </div>
                                                     </td>
-                                                    <td className="order__close">
+                                                    <td className="order__close text-center">
                                                         <button
                                                             onClick={() => actionCart.deleteCartItem(cart.id, cart.user?.username)}>
                                                             <i className="ti-close"/>

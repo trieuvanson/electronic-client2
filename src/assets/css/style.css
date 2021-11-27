@@ -149,6 +149,7 @@ ul.devided>li:last-child {
     margin-top: -1px;
     border-radius: 30px;
     box-shadow: 1px 1px 2px rgb(255 255 255 / 50%);
+    color: var(--background-color-main);
 }
 
 /* end Mid header */
@@ -290,10 +291,12 @@ ul.devided>li:last-child {
 .info-content h2 {
     font-size: 7rem;
     margin: 10px 0 35px;
+    line-height: 7rem;
 }
 
 .info-content p {
     font-size: 1.4rem;
+    margin-bottom: 20px;
 }
 
 .info-content button {
@@ -450,6 +453,9 @@ ul.devided>li:last-child {
 
 .product-card:hover {
     background-color: var(--background-color-second);
+    box-shadow: 0 8px 60px 0 rgba(103, 151, 255, .11), 0 12px 90px 0 rgba(103, 151, 255, .11);
+
+
 }
 
 .product-card-img {
@@ -974,12 +980,12 @@ footer ul li a {
 .order-img img {
     width: 45px;
     height: 45px;
-    border-radius: 50%;
     margin-right: 15px;
 }
 
 .order-quantity {
     display: flex;
+    justify-content: center;
 }
 
 .pro-qty {
@@ -987,16 +993,28 @@ footer ul li a {
     height: 46px;
     border: 2px solid #ebebeb;
     padding: 0 15px;
-    float: left;
+}
+
+/*input[type="number"] {*/
+/*    -webkit-appearance: textfield;*/
+/*    -moz-appearance: textfield;*/
+/*    appearance: textfield;*/
+/*}*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
 }
 
 .qtybtn {
     font-size: 24px;
+    height: 40px;
     color: #b2b2b2;
     float: left;
     line-height: 38px;
     cursor: pointer;
     width: 18px;
+    display: flex;
+    align-items: center;
 }
 
 .order-quantity input {
