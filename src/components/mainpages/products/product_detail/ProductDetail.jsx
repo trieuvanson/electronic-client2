@@ -16,7 +16,7 @@ function ProductDetail() {
     let [value, setValue] = useState(cart.quantity || 1)
     useEffect(() => {
         if (products) {
-            action.getProducts()
+            action.getProductsByLink("/products/")
         }
         getDetails();
         getCart()
