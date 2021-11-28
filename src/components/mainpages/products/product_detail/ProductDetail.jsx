@@ -161,12 +161,12 @@ function ProductDetail() {
                             </div>
                         </div>
                     </div>
-                    {/*<div className="box">
+                    <div className="box">
                         <div className="box-header">
-                            review
+                            Bình luận
                         </div>
                         <div>
-                            <div className="user-rate">
+                                <div className="user-rate">
                                 <div className="user-info">
                                     <div className="user-avt">
                                         <img src="./images/product11.jpg" alt=""/>
@@ -293,7 +293,7 @@ function ProductDetail() {
                                 </ul>
                             </div>
                         </div>
-                    </div>*/}
+                    </div>
                     <div className="box">
                         <div className="box-header">
                             Sản phẩm liên quan
