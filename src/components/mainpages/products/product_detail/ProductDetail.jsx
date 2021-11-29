@@ -3,16 +3,19 @@ import {useParams} from "react-router-dom";
 import Product from "../product/Product";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
+import Pagination from "../../../../api/Pagination";
 
 function ProductDetail() {
     const state = useContext(GlobalState)
     const params = useParams();
     const action = state.productsApi.productAction
     const [products] = state.productsApi.products
-    var [detail, setDetail] = useState([])
+    const [detail, setDetail] = useState([])
     const [carts, setCarts] = state.cartApi.cart
     const [cart, setCart] = useState([]);
-    const actionCart = state.cartApi.actionCart
+    const cartAction = state.cartApi.actionCart
+    const [comments] = state.commentsApi.comments
+    const commentsAction = state.commentsApi.action
     let [value, setValue] = useState(cart.quantity || 1)
     useEffect(() => {
         if (products) {
@@ -22,22 +25,20 @@ function ProductDetail() {
         getCart()
     }, [params.id, products, carts])
 
-
-
-
     async function getDetails() {
         await products.forEach(product => {
             if (product.id == params.id) {
+                commentsAction.getCommentsByProductId(product.id)
                 setDetail(product)
             }
         })
     }
 
-    const increment = () =>{
-        setValue(value+=1)
+    const increment = () => {
+        setValue(value += 1)
     }
 
-    const decrement = () =>{
+    const decrement = () => {
         if (value > 1) {
         }
     }
@@ -45,15 +46,10 @@ function ProductDetail() {
     async function getCart() {
         await carts.forEach(cart => {
             if (cart.product?.id == params.id) {
-                console.log(cart)
                 setCart(cart)
             }
         })
     }
-
-
-
-
 
     return (
         <>
@@ -112,10 +108,12 @@ function ProductDetail() {
                                 {/*    veritatis*/}
                                 {/*    asperiores soluta, nisi atque quae illum. Ipsum.*/}
                                 {/*</p>*/}
-                                <div className="product-info-price">{detail.sale_price?formatCash(detail.sale_price):null} <sup>đ</sup></div>
+                                <div
+                                    className="product-info-price">{detail.sale_price ? formatCash(detail.sale_price) : null}
+                                    <sup>đ</sup></div>
                                 <div className="product-quantity-wrapper">
                             <span className="product-quantity-btn">
-                                <i className='ti-minus' onClick={() => decrement()} />
+                                <i className='ti-minus' onClick={() => decrement()}/>
                             </span>
                                     <span className="product-quantity">{value}</span>
                                     <span className="product-quantity-btn">
@@ -130,7 +128,7 @@ function ProductDetail() {
                     </div>
                     <div className="box">
                         <div className="box-header">
-                            description
+                            Mô tả
                         </div>
                         <div className="product-detail-description">
                             <button className="btn-flat btn-hover btn-view-description" id="view-all-description">
@@ -166,121 +164,31 @@ function ProductDetail() {
                             Bình luận
                         </div>
                         <div>
-                                <div className="user-rate">
-                                <div className="user-info">
-                                    <div className="user-avt">
-                                        <img src="./images/product11.jpg" alt=""/>
-                                    </div>
-                                    <div className="user-name">
-                                        <span className="name">Đại tiền tỉ</span>
-                                        <span className="rating">
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                </span>
-                                    </div>
-                                </div>
-                                <div className="user-rate-content">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste,
-                                    veritatis
-                                    nobis amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa
-                                    voluptatibus natus voluptas vero? Aspernatur!
-                                </div>
-                            </div>
-                            <div className="user-rate">
-                                <div className="user-info">
-                                    <div className="user-avt">
-                                        <img src="./images/product13.jpg" alt=""/>
-                                    </div>
-                                    <div className="user-name">
-                                        <span className="name">Đại tiền tỉ</span>
-                                        <span className="rating">
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                </span>
-                                    </div>
-                                </div>
-                                <div className="user-rate-content">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste,
-                                    veritatis
-                                    nobis amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa
-                                    voluptatibus natus voluptas vero? Aspernatur!
-                                </div>
-                            </div>
-                            <div className="user-rate">
-                                <div className="user-info">
-                                    <div className="user-avt">
-                                        <img src="./images/product13.jpg" alt=""/>
-                                    </div>
-                                    <div className="user-name">
-                                        <span className="name">Đại tiền tỉ</span>
-                                        <span className="rating">
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                </span>
-                                    </div>
-                                </div>
-                                <div className="user-rate-content">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste,
-                                    veritatis
-                                    nobis amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa
-                                    voluptatibus natus voluptas vero? Aspernatur!
-                                </div>
-                            </div>
-                            <div className="user-rate">
-                                <div className="user-info">
-                                    <div className="user-avt">
-                                        <img src="./images/product13.jpg" alt=""/>
-                                    </div>
-                                    <div className="user-name">
-                                        <span className="name">Đại tiền tỉ</span>
-                                        <span className="rating">
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                </span>
-                                    </div>
-                                </div>
-                                <div className="user-rate-content">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste,
-                                    veritatis
-                                    nobis amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa
-                                    voluptatibus natus voluptas vero? Aspernatur!
-                                </div>
-                            </div>
-                            <div className="user-rate">
-                                <div className="user-info">
-                                    <div className="user-avt">
-                                        <img src="./images/product13.jpg" alt=""/>
-                                    </div>
-                                    <div className="user-name">
-                                        <span className="name">Đại tiền tỉ</span>
-                                        <span className="rating">
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                    <i className='bx bxs-star'></i>
-                                </span>
-                                    </div>
-                                </div>
-                                <div className="user-rate-content">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste,
-                                    veritatis
-                                    nobis amet illum, cum alias magni dolores odio, eius quo excepturi veniam ipsa
-                                    voluptatibus natus voluptas vero? Aspernatur!
-                                </div>
-                            </div>
+                            {
+                                comments && comments.map((comment, index) => {
+                                    return (
+                                        <div className="user-rate">
+                                            <div className="user-info">
+                                                <div className="user-avt">
+                                                    <img src="./images/product11.jpg" alt=""/>
+                                                </div>
+                                                <div className="user-name">
+                                                    <span className="name">{comment?.user?.fullname}</span>
+                                                    <span className="rating">
+                                                        <i className='bx bxs-star'/>
+                                                        <i className='bx bxs-star'/>
+                                                        <i className='bx bxs-star'/>
+                                                        <i className='bx bxs-star'/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="user-rate-content">
+                                                {index}
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                             <div className="box">
                                 <ul className="pagination">
                                     <li><a href="#"><i className='ti-angle-left'></i></a></li>
@@ -293,6 +201,7 @@ function ProductDetail() {
                                 </ul>
                             </div>
                         </div>
+
                     </div>
                     <div className="box">
                         <div className="box-header">
