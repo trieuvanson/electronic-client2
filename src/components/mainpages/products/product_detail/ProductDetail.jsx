@@ -94,7 +94,7 @@ function ProductDetail() {
                                     {detail.name}
                                 </h1>
                                 <div className="product-info-detail">
-                                    <span className="product-info-detail-title">Hãng:</span>
+                                    <span className="product-info-detail-title">Hãng: </span>
                                     <a href="#">{detail.category?.name}</a>
                                 </div>
                                 <div className="product-info-detail">
@@ -173,12 +173,6 @@ function ProductDetail() {
                                                 </div>
                                                 <div className="user-name">
                                                     <span className="name">{comment?.user?.fullname}</span>
-                                                    <span className="rating">
-                                                        <i className='bx bxs-star'/>
-                                                        <i className='bx bxs-star'/>
-                                                        <i className='bx bxs-star'/>
-                                                        <i className='bx bxs-star'/>
-                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="user-rate-content">
@@ -186,7 +180,7 @@ function ProductDetail() {
                                             </div>
                                         </div>
                                     )
-                                })
+                                }) || <div>Chưa có bình luận nào</div>
                             }
                             {
                                 pagination.renderPageNumbers.length > 0 ?
