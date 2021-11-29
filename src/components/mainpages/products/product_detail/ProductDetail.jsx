@@ -160,7 +160,7 @@ function ProductDetail() {
                     </div>
                     <div className="box">
                         <div className="box-header">
-                            Bình luận
+                            Bình luận ({comments.length})
                         </div>
                         <div>
                             {
@@ -169,7 +169,7 @@ function ProductDetail() {
                                         <div className="user-rate">
                                             <div className="user-info">
                                                 <div className="user-avt">
-                                                    <img src="./images/product11.jpg" alt=""/>
+                                                    <img src={comment?.user?.avatar} alt=""/>
                                                 </div>
                                                 <div className="user-name">
                                                     <span className="name">{comment?.user?.fullname}</span>
@@ -180,8 +180,9 @@ function ProductDetail() {
                                             </div>
                                         </div>
                                     )
-                                }) || <div>Chưa có bình luận nào</div>
+                                })
                             }
+                            {comments.length===0 && <div className="no-comment">Chưa có bình luận nào</div>}
                             {
                                 pagination.renderPageNumbers.length > 0 ?
                                     <div className="box">

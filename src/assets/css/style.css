@@ -920,6 +920,12 @@ footer ul li a {
     left: 50%;
     transform: translateX(-50%);
 }
+.no-comment {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 50px;
+}
+
 
 .user-rate {
     margin-bottom: 40px;
