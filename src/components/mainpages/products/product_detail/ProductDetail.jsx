@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Product from "../product/Product";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
@@ -17,6 +17,9 @@ function ProductDetail() {
     const [comments] = state.commentsApi.comments
     const commentsAction = state.commentsApi.action
     let [value, setValue] = useState(cart.quantity || 1)
+
+
+    const pagination = new Pagination(comments)
     useEffect(() => {
         if (products) {
             action.getProductsByLink("/products/")
@@ -28,7 +31,7 @@ function ProductDetail() {
     async function getDetails() {
         await products.forEach(product => {
             if (product.id == params.id) {
-                commentsAction.getCommentsByProductId(product.id)
+                    commentsAction.getCommentsByProductId(product.id)
                 setDetail(product)
             }
         })
@@ -165,7 +168,7 @@ function ProductDetail() {
                         </div>
                         <div>
                             {
-                                comments && comments.map((comment, index) => {
+                                pagination.currentItems.map((comment, index) => {
                                     return (
                                         <div className="user-rate">
                                             <div className="user-info">
@@ -189,17 +192,22 @@ function ProductDetail() {
                                     )
                                 })
                             }
-                            <div className="box">
-                                <ul className="pagination">
-                                    <li><a href="#"><i className='ti-angle-left'></i></a></li>
-                                    <li><a href="#" className="active">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><i className='ti-angle-right'></i></a></li>
-                                </ul>
-                            </div>
+                            {
+                                pagination.renderPageNumbers.length > 0 ?
+                                    <div className="box">
+                                        <ul className="pagination">
+                                            <li><Link to="#"
+                                                      onClick={() => pagination.prev()}><i
+                                                className='ti-angle-left'/></Link></li>
+                                            {pagination.renderPageNumbers}
+                                            <li><Link to="#"
+                                                      onClick={() => pagination.next()}><i
+                                                className='ti-angle-right'/></Link></li>
+                                        </ul>
+                                    </div>
+                                    :
+                                    null
+                            }
                         </div>
 
                     </div>
