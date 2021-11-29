@@ -4,6 +4,8 @@ import Product from "../product/Product";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
 import Pagination from "../../../../api/Pagination";
+import StarRating from 'react-star-rating'
+
 
 function ProductDetail() {
     const state = useContext(GlobalState)
@@ -96,14 +98,8 @@ function ProductDetail() {
                                     <a href="#">{detail.category?.name}</a>
                                 </div>
                                 <div className="product-info-detail">
-                                    <span className="product-info-detail-title">Rated:</span>
-                                    <span className="rating">
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                            </span>
+                                    {/*<StarRating name="react-star-rating" caption="Rate this component!" totalStars={5}/>*/}
+                                    <span className="product-info-detail-title">Rated: </span>
                                 </div>
                                 {/*<p className="product-description">*/}
                                 {/*    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo libero alias officiis*/}
