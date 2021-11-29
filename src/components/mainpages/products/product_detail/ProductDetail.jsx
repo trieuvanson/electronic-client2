@@ -92,18 +92,26 @@ function ProductDetail() {
                                     {detail.name}
                                 </h1>
                                 <div className="product-info-detail">
-                                    <span className="product-info-detail-title">Hãng:</span>
-                                    <a href="#">{detail.category?.name}</a>
-                                </div>
-                                <div className="product-info-detail">
-                                    <span className="product-info-detail-title">Rated:</span>
-                                    <span className="rating">
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                                <i className='ti-star'/>
-                            </span>
+                                    <div className="product-detail__star">
+                                        <u className="product-info-detail-title">4.9</u>
+                                        <span className="rating">
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                </span>
+                                    </div>
+                                    <div className="product-evaluate">
+                                        <u className="product-evaluate-number">4.9k</u>
+                                        <span>Đánh giá</span>
+                                    </div>
+                                    <div className="product-sold">
+                                        <p className="product-sold-number">4.9</p>
+                                        <span>Đã bán</span>
+                                    </div>
+
+
                                 </div>
                                 {/*<p className="product-description">*/}
                                 {/*    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo libero alias officiis*/}
@@ -111,9 +119,11 @@ function ProductDetail() {
                                 {/*    veritatis*/}
                                 {/*    asperiores soluta, nisi atque quae illum. Ipsum.*/}
                                 {/*</p>*/}
-                                <div
-                                    className="product-info-price">{detail.sale_price ? formatCash(detail.sale_price) : null}
-                                    <sup>đ</sup></div>
+                                <div className="product-info-price">
+                                    <del className="product-info-price__old">30.990.000 <sup>đ</sup> </del>
+                                    <span className="product-info-minu">-</span>
+                                    {detail.sale_price?formatCash(detail.sale_price):null} <sup>đ</sup>
+                                </div>
                                 <div className="product-quantity-wrapper">
                             <span className="product-quantity-btn">
                                 <i className='ti-minus' onClick={() => decrement()}/>
