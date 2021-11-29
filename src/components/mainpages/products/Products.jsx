@@ -4,6 +4,7 @@ import {Link, useHistory, useLocation, useParams} from "react-router-dom";
 import {GlobalState} from "../../../GlobalState";
 import Loading from "../utils/loading/Loading";
 import {updateQueryString} from "../../../utils/updateQueryString";
+import Pagination from "../../../api/Pagination";
 
 function Products() {
     const state = useContext(GlobalState)
@@ -27,55 +28,13 @@ function Products() {
         }
 
     }, [location, search, filter])
+    const pagination = Pagination(products)
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [itemsPerPage, setItemsPerPage] = useState(12)
-
-    const pages = [];
-    const productslength = Math.ceil(products.length / itemsPerPage);
-
-    for (let i = 0; i < productslength; i++) {
-        pages.push(i + 1);
-    }
     const filterProductsByPrice = (e) => {
         const {name, value} = e.target
         history.push(updateQueryString(history, name, value))
     }
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    const renderPageNumbers = pages && pages.map(number => {
-        return (
-            <li key={number}>
-                <Link to={updateQueryString(history, "filter", filter)} id={number}
-                      className={number === currentPage ? "active" : ""}
-                      onClick={(e) => handleClickSetCurrentPage(e)}>{number}</Link>
-            </li>
-        )
-    })
-    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-
-    console.log(currentItems)
-
-    const handleClickSetCurrentPage = (e) => {
-        setCurrentPage(Number(e.target.id))
-        window.scroll(0, 0)
-    }
-
-    const next = () => {
-        if (currentPage <= renderPageNumbers.length - 1) {
-            setCurrentPage(currentPage + 1)
-            window.scroll(0, 0)
-        }
-    }
-
-    const prev = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1)
-            window.scroll(0, 0)
-        }
-    }
 
     const findBetweenPrice = (e) => {
         history.push(`/products?min=${min}&max=${max}`)
@@ -214,49 +173,49 @@ function Products() {
                                     </li>
                                 </ul>
                             </div>
-                            {/*<div className="box">*/}
-                            {/*<span className="filter-header">*/}
-                            {/*    Màu sắc*/}
-                            {/*</span>*/}
-                            {/*    <ul className="filter-list">*/}
-                            {/*        <li>*/}
-                            {/*            <div className="group-checkbox">*/}
-                            {/*                <input type="checkbox" id="remember6"/>*/}
-                            {/*                <label htmlFor="remember6">*/}
-                            {/*                    Đỏ*/}
-                            {/*                    <i className='ti-check'></i>*/}
-                            {/*                </label>*/}
-                            {/*            </div>*/}
-                            {/*        </li>*/}
-                            {/*        <li>*/}
-                            {/*            <div className="group-checkbox">*/}
-                            {/*                <input type="checkbox" id="remember7"/>*/}
-                            {/*                <label htmlFor="remember7">*/}
-                            {/*                    Xanh*/}
-                            {/*                    <i className='ti-check'></i>*/}
-                            {/*                </label>*/}
-                            {/*            </div>*/}
-                            {/*        </li>*/}
-                            {/*        <li>*/}
-                            {/*            <div className="group-checkbox">*/}
-                            {/*                <input type="checkbox" id="remember8"/>*/}
-                            {/*                <label htmlFor="remember8">*/}
-                            {/*                    Trắng*/}
-                            {/*                    <i className='ti-check'></i>*/}
-                            {/*                </label>*/}
-                            {/*            </div>*/}
-                            {/*        </li>*/}
-                            {/*        <li>*/}
-                            {/*            <div className="group-checkbox">*/}
-                            {/*                <input type="checkbox" id="remember9"/>*/}
-                            {/*                <label htmlFor="remember9">*/}
-                            {/*                    Vàng*/}
-                            {/*                    <i className='ti-check'></i>*/}
-                            {/*                </label>*/}
-                            {/*            </div>*/}
-                            {/*        </li>*/}
-                            {/*    </ul>*/}
-                            {/*</div>*/}
+                            <div className="box">
+                            <span className="filter-header">
+                                Màu sắc
+                            </span>
+                                <ul className="filter-list">
+                                    <li>
+                                        <div className="group-checkbox">
+                                            <input type="checkbox" id="remember6"/>
+                                            <label htmlFor="remember6">
+                                                Đỏ
+                                                <i className='ti-check'></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="group-checkbox">
+                                            <input type="checkbox" id="remember7"/>
+                                            <label htmlFor="remember7">
+                                                Xanh
+                                                <i className='ti-check'></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="group-checkbox">
+                                            <input type="checkbox" id="remember8"/>
+                                            <label htmlFor="remember8">
+                                                Trắng
+                                                <i className='ti-check'></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="group-checkbox">
+                                            <input type="checkbox" id="remember9"/>
+                                            <label htmlFor="remember9">
+                                                Vàng
+                                                <i className='ti-check'></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div className="col-9 col-md-12">
                             <div className="box filter-toggle-box">
@@ -265,24 +224,24 @@ function Products() {
                             <div className="box">
                                 <div className="row" id="products">
                                     {
-                                        currentItems && currentItems.map((product) => (
+                                        pagination && pagination.currentItems.map((product) => (
                                                 <Product key={product.id} product={product}/>
                                             )
                                         )
                                     }
-                                    {currentItems.length === 0 && <Loading/>}
+                                    {pagination.length === 0 && <Loading/>}
                                 </div>
                             </div>
                             {
-                                renderPageNumbers.length > 0 ?
+                                pagination.renderPageNumbers.length > 0 ?
                                     <div className="box">
                                         <ul className="pagination">
                                             <li><Link to="#"
-                                                      onClick={() => prev()}><i
+                                                      onClick={() => pagination.prev()}><i
                                                 className='ti-angle-left'/></Link></li>
-                                            {renderPageNumbers}
+                                            {pagination.renderPageNumbers}
                                             <li><Link to="#"
-                                                      onClick={() => next()}><i
+                                                      onClick={() => pagination.next()}><i
                                                 className='ti-angle-right'/></Link></li>
                                         </ul>
                                     </div>

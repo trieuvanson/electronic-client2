@@ -28,7 +28,7 @@ function Product ({product}) {
                 </div>
                 <div className="product-card-info">
                     <div className="product-btn">
-                        <Link to={`/product/detail/${product.id}`}
+                        <Link to={`/product/detail/${product.id}`} onClick={() => window.scroll(0, 0)}
                               className="btn-flat btn-hover btn-shop-now">shop now
                         </Link>
                         <button className="btn-flat btn-hover btn-cart-add" onClick={() => addToCart()}>
@@ -38,7 +38,6 @@ function Product ({product}) {
                             <i className='ti-heart'/>
                         </button>
                     </div>
-                    {/**/}
                     <div className="product-card-name">
                         {product.name}
                     </div>
