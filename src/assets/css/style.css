@@ -841,16 +841,68 @@ footer ul li a {
 
 .product-info>*~* {
     font-size: 2rem;
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 .product-info h1 {
     font-size: 3rem;
 }
 
+.product-info-detail {
+    display: flex;
+}
+
+.product-detail__star {
+    width: 150px;
+    border-right: 1px solid #e5e5e5;
+    margin-right: 20px;
+}
+
 .product-info-detail-title {
     font-weight: 600;
-    color: gray;
+    color: var(--red);
+}
+
+.product-sold {
+    display: flex;
+    align-items: center;
+}
+
+.product-sold-number {
+    margin-right:5px
+}
+
+.product-evaluate,
+.product-sold {
+    width: 130px;
+}
+
+.product-detail__star u,
+.product-evaluate u,
+.product-sold p {
+    font-size: 1.6rem;
+    margin-right: 5px;
+}
+
+.product-evaluate span,
+.product-sold span {
+    font-size: 1.4rem;
+    color: #767676;
+}
+
+.product-evaluate {
+    border-right: 1px solid #e5e5e5;
+    margin-right: 20px;
+}
+
+.product-info-price__old {
+    font-size: 1.8rem;
+    color: var(--black);
+}
+
+.product-info-minu {
+    margin: 0 15px;
+    color: var(--black);
 }
 
 .product-description {
