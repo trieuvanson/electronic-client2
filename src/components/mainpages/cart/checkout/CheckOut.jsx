@@ -59,6 +59,7 @@ const CheckOut = () => {
     const getDiscount = (e) => {
         e.preventDefault()
         actionDiscount.getDiscountByCode()
+
     }
 
 

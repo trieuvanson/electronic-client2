@@ -5,12 +5,14 @@ import {Link} from "react-router-dom";
 import {updateQueryString} from "../utils/updateQueryString";
 
 function Pagination(data) {
+    const dataPagination = data.filter(p => p.status)
+
 
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(12)
 
     const pages = [];
-    const dataLength = Math.ceil(data.length / itemsPerPage);
+    const dataLength = Math.ceil(dataPagination.length / itemsPerPage);
     for (let i = 0; i < dataLength; i++) {
         pages.push(i + 1);
     }
@@ -31,8 +33,9 @@ function Pagination(data) {
     }
 
 
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
+    const currentItems = dataPagination
+        .filter(p => p.status)
+        .slice(indexOfFirstItem, indexOfLastItem);
 
     const next = () => {
         if (currentPage <= renderPageNumbers.length - 1) {

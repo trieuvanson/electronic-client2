@@ -22,20 +22,17 @@ function Products() {
             action.getProductsByLink(location.pathname)
         } else if (min && max) {
             action.getProductsBetweenPrice(min, max)
-        }
-        else {
+        } else {
             action.findProductsByKeywordsAndFilter(search, filter)
         }
 
     }, [location, search, filter])
-    const pagination = Pagination(products)
+    const pagination = new Pagination(products)
 
     const filterProductsByPrice = (e) => {
         const {name, value} = e.target
         history.push(updateQueryString(history, name, value))
     }
-
-
     const findBetweenPrice = (e) => {
         history.push(`/products?min=${min}&max=${max}`)
     }
@@ -75,32 +72,16 @@ function Products() {
                                 Khoảng giá
                             </span>
                                 <div className="price-range">
-                                    <input type="number" value={min} onChange={(e) => setMin(e.target.value)} name = "min"/>
+                                    <input type="number" value={min} onChange={(e) => setMin(e.target.value)}
+                                           name="min"/>
                                     <span>-</span>
-                                    <input type="number" value={max} onChange={(e) => setMax(e.target.value)} name = "max"/>
+                                    <input type="number" value={max} onChange={(e) => setMax(e.target.value)}
+                                           name="max"/>
                                 </div>
                                 <button className="btn mt-10" onClick={findBetweenPrice}>Áp dụng</button>
                             </div>
                             <div className="box">
                                 <ul className="filter-list">
-                                    {/*<li>*/}
-                                    {/*    <div className="group-checkbox">*/}
-                                    {/*        <input type="checkbox" id="status1"/>*/}
-                                    {/*        <label htmlFor="status1">*/}
-                                    {/*            Sale nhiều*/}
-                                    {/*            <i className='ti-check'></i>*/}
-                                    {/*        </label>*/}
-                                    {/*    </div>*/}
-                                    {/*</li>*/}
-                                    {/*<li>*/}
-                                    {/*    <div className="group-checkbox">*/}
-                                    {/*        <input type="checkbox" id="status2"/>*/}
-                                    {/*        <label htmlFor="status2">*/}
-                                    {/*            Còn hàng*/}
-                                    {/*            <i className='ti-check'></i>*/}
-                                    {/*        </label>*/}
-                                    {/*    </div>*/}
-                                    {/*</li>*/}
                                     <li>
                                         <div className="group-checkbox">
                                             <input type="checkbox" id="status3"/>
