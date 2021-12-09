@@ -11,12 +11,21 @@ function Product ({product}) {
     const actionFavorite = state.favoriteApi.actionFavorite
 
     const addToCart = () => {
-        actionCart.addCart(product, 1)
-        toast.success(`${product.name} được thêm vào giỏ hàng`)
+        actionCart.addCart(product, 1).then(res => {
+            toast.success(`${product.name} được thêm vào giỏ hàng`,{
+                autoClose: 1500
+            })
+        }).catch(err => {
+            toast.error(`Thêm vào giỏ hàng không thành công!`,{
+                autoClose: 1500
+            })
+        })
     }
     const addToFavorite = () => {
         actionFavorite.addFavorite(product)
-        toast.success(`${product.name} được thêm vào yêu thích`)
+        toast.success(`${product.name} được thêm vào yêu thích`,{
+            autoClose: 1500
+        })
     }
 
     return (

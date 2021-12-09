@@ -3,38 +3,72 @@ import Product from "./product/Product";
 import {Link, useHistory, useLocation, useParams} from "react-router-dom";
 import {GlobalState} from "../../../GlobalState";
 import Loading from "../utils/loading/Loading";
-import {updateQueryString} from "../../../utils/updateQueryString";
 import Pagination from "../../../api/Pagination";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Products() {
     const state = useContext(GlobalState)
     const location = useLocation()
     const action = state.productsApi.productAction;
-    const [products, setProducts] = state.productsApi.products;
+    const [products] = state.productsApi.products;
     const query = new URLSearchParams(location.search);
     const search = query.get("timkiem") || "";
-    const filter = query.get("filter") || ""
-    const history = useHistory();
-    const [min, setMin] = useState(query.get("min") || "");
-    const [max, setMax] = useState(query.get("max") || "");
+    const colors = []
+    products.map(product => product.color).forEach(c => {
+        if (!colors.includes(c)) {
+            colors.push(c)
+        }
+    })
+    const [filters, setFilters] = useState({
+        search: query.get("timkiem") || "",
+        min: "", max: "",
+        features: false,
+        bestSeller: false,
+        category: [],
+        colors: [],
+        sort: ""
+    })
+
     useEffect(() => {
         if (!location.search) {
             action.getProductsByLink(location.pathname)
-        } else if (min && max) {
-            action.getProductsBetweenPrice(min, max)
         } else {
-            action.findProductsByKeywordsAndFilter(search, filter)
+            action.getProductsByFilterUserUi(filters)
         }
 
-    }, [location, search, filter])
+    }, [location, search])
     const pagination = new Pagination(products)
-
-    const filterProductsByPrice = (e) => {
+    const inputChange = (e) => {
         const {name, value} = e.target
-        history.push(updateQueryString(history, name, value))
+        console.log(value)
+        if (name === "colors") {
+            let newArray = [...filters.colors, value];
+            if (filters.colors.includes(value)) {
+                newArray = newArray.filter(c => c !== value)
+            }
+            setFilters({...filters, [name]: newArray})
+        } else if (name === "category") {
+            let newArray = [...filters.category, value];
+            if (filters.category.includes(value)) {
+                newArray = newArray.filter(c => c !== value)
+            }
+            setFilters({...filters, [name]: newArray})
+        } else {
+                setFilters({...filters, [name]: value})
+        }
     }
-    const findBetweenPrice = (e) => {
-        history.push(`/products?min=${min}&max=${max}`)
+
+    const onclickChange = (e) => {
+        const {name} = e.target
+        setFilters({...filters, [name]: !filters[name]})
+    }
+
+    const submitFilter = (e) => {
+        e.preventDefault()
+        action.getProductsByFilterUserUi(filters)
+        toast.success("Đã lọc sản phẩm!", {
+            autoClose: 1000
+        })
     }
     return (
         <div className="bg-light">
@@ -57,13 +91,13 @@ function Products() {
                                     Sắp xếp
                                 </span>
                                 <div className="form-group">
-                                    <select name="filter" value={filter}
-                                            onChange={filterProductsByPrice} className="form-select">
+                                    <select name="sort" value={filters.sort}
+                                            onChange={inputChange} className="form-select">
                                         <option value="">Tất cả</option>
-                                        <option value="newest">Mới nhất</option>
-                                        <option value="oldest">Cũ nhất</option>
-                                        <option value="lowest">Giá thấp tới cao</option>
-                                        <option value="highest">Giá cao tới thấp</option>
+                                        <option value="Mới nhất">Mới nhất</option>
+                                        <option value="Cũ nhất">Cũ nhất</option>
+                                        <option value="Giá thấp nhất">Giá thấp nhất</option>
+                                        <option value="Giá cao nhất">Giá cao nhất</option>
                                     </select>
                                 </div>
                             </div>
@@ -72,19 +106,21 @@ function Products() {
                                 Khoảng giá
                             </span>
                                 <div className="price-range">
-                                    <input type="number" value={min} onChange={(e) => setMin(e.target.value)}
+                                    <input type="number" value={filters.min} onChange={inputChange}
                                            name="min"/>
                                     <span>-</span>
-                                    <input type="number" value={max} onChange={(e) => setMax(e.target.value)}
+                                    <input type="number" value={filters.max} onChange={inputChange}
                                            name="max"/>
                                 </div>
-                                <button className="btn mt-10" onClick={findBetweenPrice}>Áp dụng</button>
+                                <button className="btn mt-10" onClick={submitFilter}>Áp dụng</button>
                             </div>
                             <div className="box">
                                 <ul className="filter-list">
                                     <li>
                                         <div className="group-checkbox">
-                                            <input type="checkbox" id="status3"/>
+                                            <input type="checkbox" id="status3"
+                                                   name={"features"} value={filters.features}
+                                                   onChange={onclickChange}/>
                                             <label htmlFor="status3">
                                                 Nổi bật
                                                 <i className='ti-check'></i>
@@ -93,8 +129,10 @@ function Products() {
                                     </li>
                                     <li>
                                         <div className="group-checkbox">
-                                            <input type="checkbox" id="status3"/>
-                                            <label htmlFor="status3">
+                                            <input type="checkbox" id="status4"
+                                                   name={"bestSeller"} value={filters.bestSeller}
+                                                   onChange={onclickChange}/>
+                                            <label htmlFor="status4">
                                                 Bán chạy
                                                 <i className='ti-check'></i>
                                             </label>
@@ -109,7 +147,9 @@ function Products() {
                                 <ul className="filter-list">
                                     <li>
                                         <div className="group-checkbox">
-                                            <input type="checkbox" id="remember1"/>
+                                            <input type="checkbox" id="remember1"
+                                                   name={"category"} value={"Samsung"}
+                                                   onChange={inputChange}/>
                                             <label htmlFor="remember1">
                                                 Samsung
                                                 <i className='ti-check'></i>
@@ -118,7 +158,9 @@ function Products() {
                                     </li>
                                     <li>
                                         <div className="group-checkbox">
-                                            <input type="checkbox" id="remember2"/>
+                                            <input type="checkbox" id="remember2"
+                                                   name={"category"} value={"Iphone"}
+                                                   onChange={inputChange}/>
                                             <label htmlFor="remember2">
                                                 iPhone
                                                 <i className='ti-check'></i>
@@ -127,7 +169,9 @@ function Products() {
                                     </li>
                                     <li>
                                         <div className="group-checkbox">
-                                            <input type="checkbox" id="remember3"/>
+                                            <input type="checkbox" id="remember3"
+                                                   name={"category"} value={"Xiaomi"}
+                                                   onChange={inputChange}/>
                                             <label htmlFor="remember3">
                                                 Xiaomi
                                                 <i className='ti-check'></i>
@@ -136,7 +180,9 @@ function Products() {
                                     </li>
                                     <li>
                                         <div className="group-checkbox">
-                                            <input type="checkbox" id="remember4"/>
+                                            <input type="checkbox" id="remember4"
+                                                   name={"category"} value={"Huawei"}
+                                                   onChange={inputChange}/>
                                             <label htmlFor="remember4">
                                                 Huawei
                                                 <i className='ti-check'></i>
@@ -145,7 +191,9 @@ function Products() {
                                     </li>
                                     <li>
                                         <div className="group-checkbox">
-                                            <input type="checkbox" id="remember5"/>
+                                            <input type="checkbox" id="remember5"
+                                                   name={"category"} value={"Sony"}
+                                                   onChange={inputChange}/>
                                             <label htmlFor="remember5">
                                                 Sony
                                                 <i className='ti-check'></i>
@@ -159,42 +207,25 @@ function Products() {
                                 Màu sắc
                             </span>
                                 <ul className="filter-list">
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember6"/>
-                                            <label htmlFor="remember6">
-                                                Đỏ
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember7"/>
-                                            <label htmlFor="remember7">
-                                                Xanh
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember8"/>
-                                            <label htmlFor="remember8">
-                                                Trắng
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="group-checkbox">
-                                            <input type="checkbox" id="remember9"/>
-                                            <label htmlFor="remember9">
-                                                Vàng
-                                                <i className='ti-check'></i>
-                                            </label>
-                                        </div>
-                                    </li>
+                                    {
+                                        colors.map((color, index) => {
+                                            return (
+                                                <li key={index}>
+                                                    <div className="group-checkbox">
+                                                        <input type="checkbox"
+                                                               id={`color${index + 1}`}
+                                                               value={color} name={"colors"}
+                                                               onChange={inputChange}/>
+                                                        <label htmlFor={`color${index + 1}`}>
+                                                            <span className="color-filter"
+                                                                  style={{backgroundColor: color}}>{color}</span>
+                                                            <i className='ti-check'></i>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            )
+                                        })
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -234,6 +265,7 @@ function Products() {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

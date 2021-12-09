@@ -7,7 +7,7 @@ const Promotion = (props) => {
     const {item} = props
     const history = useHistory()
     const viewAll = () => {
-        history.push(`/products/`)
+        history.push(`/products`)
         window.location.reload()
         window.scroll(0, 0)
     }

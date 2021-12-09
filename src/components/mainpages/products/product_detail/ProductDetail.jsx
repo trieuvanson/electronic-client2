@@ -4,8 +4,9 @@ import Product from "../product/Product";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
 import Pagination from "../../../../api/Pagination";
-import StarRating from 'react-star-rating'
-
+import StarRatings from "react-star-ratings";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ProductDetail() {
     const state = useContext(GlobalState)
@@ -13,27 +14,28 @@ function ProductDetail() {
     const action = state.productsApi.productAction
     const [products] = state.productsApi.products
     const [detail, setDetail] = useState([])
-    const [carts, setCarts] = state.cartApi.cart
-    const [cart, setCart] = useState([]);
     const cartAction = state.cartApi.actionCart
-    const [comments] = state.commentsApi.comments
+    const [comments] = state.commentsApi.commentsBy
+    const [ratingByProductId] = state.commentsApi.ratingByProductId
     const commentsAction = state.commentsApi.action
-    let [value, setValue] = useState(cart.quantity || 1)
-
-
+    let [value, setValue] = useState(1)
+    const rating = ratingByProductId.reduce((acc, item) => {
+        acc += item.star
+        return acc
+    }, 0)/ratingByProductId.length || 0
     const pagination = new Pagination(comments)
     useEffect(() => {
         if (products) {
             action.getProductsByLink("/products/")
         }
         getDetails();
-        getCart()
-    }, [params.id, products, carts])
+    }, [params.id, products])
 
     async function getDetails() {
         await products.forEach(product => {
             if (product.id == params.id) {
-                    commentsAction.getCommentsByProductId(product.id)
+                commentsAction.getCommentsByProductId(product.id)
+                commentsAction.getRatingByProductId(product.id)
                 setDetail(product)
             }
         })
@@ -48,12 +50,23 @@ function ProductDetail() {
         }
     }
 
-    async function getCart() {
-        await carts.forEach(cart => {
-            if (cart.product?.id == params.id) {
-                setCart(cart)
-            }
-        })
+    function addToCart(e) {
+        e.preventDefault()
+        console.log(value)
+        cartAction.addCart(detail, value)
+            .then(res => {
+                toast.success(`Thêm ${detail.name} vào giỏ hàng thành công`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1500
+                })
+            })
+            .catch(err => {
+                toast.error(`Thêm ${detail.name} vào giỏ hàng thất bại`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1500
+                })
+            })
+
     }
 
     return (
@@ -62,11 +75,11 @@ function ProductDetail() {
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="./index.html">home</a>
+                            <Link to="/">Trang chủ</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="./products.html">all products</a>
+                            <Link to="/products">Tất cả sản phẩm</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="./product-detail.html">Điện thoại</a>
+                            <Link to="#">Chi tiết</Link>
                         </div>
                     </div>
                     <div className="row product-row">
@@ -95,18 +108,21 @@ function ProductDetail() {
                                 </h1>
                                 <div className="product-info-detail">
                                     <span className="product-info-detail-title">Hãng: </span>
-                                    <a href="#">{detail.category?.name}</a>
+                                    <Link to={`/products/category/${detail?.category?.id}`}>{detail.category?.name}</Link>
                                 </div>
                                 <div className="product-info-detail">
                                     {/*<StarRating name="react-star-rating" caption="Rate this component!" totalStars={5}/>*/}
-                                    <span className="product-info-detail-title">Rated: </span>
+                                    <span className="product-info-detail-title"><u style={{color: "red", margin: "10px", fontSize: "25px"}}>{rating>0?rating.toFixed(1):rating}</u>
+                                        <StarRatings
+                                            rating={rating||0}
+                                            starRatedColor="orange"
+                                            starDimension="25px"
+                                            starSpacing="15px"
+                                            numberOfStars={5}
+                                            name="rating"
+                                        /></span>
                                 </div>
-                                {/*<p className="product-description">*/}
-                                {/*    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo libero alias officiis*/}
-                                {/*    dolore doloremque eveniet culpa dignissimos, itaque, cum animi excepturi sed*/}
-                                {/*    veritatis*/}
-                                {/*    asperiores soluta, nisi atque quae illum. Ipsum.*/}
-                                {/*</p>*/}
+
                                 <div
                                     className="product-info-price">{detail.sale_price ? formatCash(detail.sale_price) : null}
                                     <sup>đ</sup></div>
@@ -120,7 +136,7 @@ function ProductDetail() {
                             </span>
                                 </div>
                                 <div>
-                                    <button className="btn-flat btn-hover">Thêm vào giỏ</button>
+                                    <button className="btn-flat btn-hover" onClick={addToCart}>Thêm vào giỏ</button>
                                 </div>
                             </div>
                         </div>
@@ -138,23 +154,6 @@ function ProductDetail() {
                                     {detail.description}
                                 </p>
                                 <img src={detail.thumbnail} alt=""/>
-                                {/*<p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis accusantium officia,
-                                    quae fuga in exercitationem aliquam labore ex doloribus repellendus beatae facilis
-                                    ipsam. Veritatis vero obcaecati iste atque aspernatur ducimus.
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat quam praesentium
-                                    id sit amet magnam ad, dolorum, cumque iste optio itaque expedita eius similique, ab
-                                    adipisci dicta. Quod, quibusdam quas. Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Odit, in corrupti ipsam sint error possimus commodi incidunt
-                                    suscipit sit voluptatum quibusdam enim eligendi animi deserunt recusandae earum
-                                    natus voluptas blanditiis?
-                                </p>
-                                <img src="./images/product12.jpg" alt=""/>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi ullam quam fugit
-                                    veniam ipsum recusandae incidunt, ex ratione, magnam labore ad tenetur officia!
-                                    In, totam. Molestias sapiente deserunt animi porro?
-                                </p>*/}
                             </div>
                         </div>
                     </div>
@@ -182,7 +181,7 @@ function ProductDetail() {
                                     )
                                 })
                             }
-                            {comments.length===0 && <div className="no-comment">Chưa có bình luận nào</div>}
+                            {comments.length === 0 && <div className="no-comment">Chưa có bình luận nào</div>}
                             {
                                 pagination.renderPageNumbers.length > 0 ?
                                     <div className="box">

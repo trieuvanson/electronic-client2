@@ -3,8 +3,6 @@ import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
-import {updateQueryString} from "../../../../utils/updateQueryString";
-
 
 const Orders = (props) => {
     const state = useContext(GlobalState)

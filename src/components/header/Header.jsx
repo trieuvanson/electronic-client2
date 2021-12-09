@@ -22,7 +22,7 @@ function Header()  {
 
         history.push({
             pathname: `/products`,
-            search: `?timkiem=${search}&filter_time=newsest&price=price-desc`,
+            search: `?timkiem=${search}`,
         });
         window.location.reload()
     };
@@ -125,7 +125,7 @@ function Header()  {
                             <li><Link to="">Trang Chủ</Link></li>
                             {/*mega menu*/}
                             <li className="mega-dropdown">
-                                <Link to="/products/">
+                                <Link to="/products">
                                     Sản Phẩm
                                     <i className='ti-angle-down'/>
                                 </Link>

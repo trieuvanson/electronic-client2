@@ -2,7 +2,6 @@ import React, {createContext, useEffect, useState} from "react";
 import {LOCAL_LINK} from "../utils/hyperlink";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import {updateQueryString} from "../utils/updateQueryString";
 
 function Pagination(data) {
     const dataPagination = data.filter(p => p.status)
