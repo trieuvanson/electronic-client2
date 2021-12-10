@@ -5,6 +5,7 @@ import {Link, Redirect, useHistory} from "react-router-dom";
 import {formatCash} from "../../../../utils/CurrencyCommon";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Helmet} from "react-helmet";
 
 
 const CheckOut = () => {
@@ -124,6 +125,9 @@ const CheckOut = () => {
 
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Xác nhận thanh toán</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

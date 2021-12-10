@@ -6,6 +6,7 @@ import {formatCash} from "../../../../utils/CurrencyCommon";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import StarRatings from "react-star-ratings";
+import {Helmet} from "react-helmet";
 
 const Favorite = () => {
     const state = useContext(GlobalState)
@@ -33,6 +34,9 @@ const Favorite = () => {
     }
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Yêu thích</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

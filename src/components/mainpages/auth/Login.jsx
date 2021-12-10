@@ -5,6 +5,7 @@ import {setLogin, setToken} from "../../../utils/Common";
 import {Link} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Helmet} from "react-helmet";
 
 
 function Login() {
@@ -34,6 +35,9 @@ function Login() {
 
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Đăng nhập</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

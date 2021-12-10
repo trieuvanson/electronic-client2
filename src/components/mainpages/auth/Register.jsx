@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import axios from "axios";
 import {LOCAL_LINK} from "../../../utils/hyperlink";
 import {Link} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 function Register() {
     const [user, setUser] = useState({
@@ -28,6 +29,9 @@ function Register() {
 
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Đăng ký</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

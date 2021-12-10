@@ -5,6 +5,7 @@ import BestSeller from "./BestSeller";
 import {GlobalState} from "../../../GlobalState";
 import Feature from "./Feature";
 import {useLocation} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 export default function Home() {
     const state = useContext(GlobalState)
@@ -25,6 +26,9 @@ export default function Home() {
 
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Trang chủ</title>
+            </Helmet>
             <Slides item={slides}/>
             <Promotion item={getPromotion}/>
             <Feature item={getFeature}/>

@@ -7,6 +7,7 @@ import Pagination from "../../../../api/Pagination";
 import StarRatings from "react-star-ratings";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Helmet} from "react-helmet";
 
 function ProductDetail() {
     const state = useContext(GlobalState)
@@ -71,6 +72,9 @@ function ProductDetail() {
 
     return (
         <>
+                <Helmet>
+                    <title>SmartThings - Chi tiết sản phẩm</title>
+                </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

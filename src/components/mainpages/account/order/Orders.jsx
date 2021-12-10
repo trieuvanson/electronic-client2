@@ -3,6 +3,8 @@ import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
+import {Helmet} from "react-helmet";
+import Pagination from "../../../../api/Pagination";
 
 const Orders = (props) => {
     const state = useContext(GlobalState)
@@ -13,54 +15,12 @@ const Orders = (props) => {
             return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         })
     }
-
-
-    const [currentPage, setCurrentPage] = useState(1)
-    const [itemsPerPage, setItemsPerPage] = useState(10)
-
-    const pages = [];
-    const productslength = Math.ceil(sortOrderByUpdate_at().length / itemsPerPage);
-
-    for (let i = 0; i < productslength; i++) {
-        pages.push(i + 1);
-    }
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    const renderPageNumbers = pages && pages.map(number => {
-        return (
-            <li key={number}>
-                <Link to={"#"} id={number}
-                      className={number === currentPage ? "active" : ""}
-                      onClick={(e) => handleClickSetCurrentPage(e)}>{number}</Link>
-            </li>
-        )
-    })
-    const currentItems = sortOrderByUpdate_at().slice(indexOfFirstItem, indexOfLastItem);
-
-    console.log(currentItems)
-
-    const handleClickSetCurrentPage = (e) => {
-        setCurrentPage(Number(e.target.id))
-        window.scroll(0, 0)
-    }
-
-    const next = () => {
-        if (currentPage <= renderPageNumbers.length - 1) {
-            setCurrentPage(currentPage + 1)
-            window.scroll(0, 0)
-        }
-    }
-
-    const prev = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1)
-            window.scroll(0, 0)
-        }
-    }
+    const pagination = new Pagination(sortOrderByUpdate_at())
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Quản lý đơn hàng</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">
@@ -93,7 +53,7 @@ const Orders = (props) => {
                                         <tbody>
 
                                         {
-                                            order && currentItems.map((o, index) => (
+                                            order && pagination.currentItems.map((o, index) => (
                                                 <tr key={o.id}>
                                                     <td>
                                                         <Link to={`orders/${o.id}`}
@@ -118,79 +78,18 @@ const Orders = (props) => {
                                                 </tr>
                                             ))
                                         }
-
-
-                                        {/*<tr>*/}
-                                        {/*    <td>*/}
-                                        {/*        <Link to="orders/detail" className="order-link">987456</Link>*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>*/}
-                                        {/*        <div className="order-owner">*/}
-                                        {/*            <span>Tên sản pham</span>*/}
-                                        {/*        </div>*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>2021-05-09</td>*/}
-                                        {/*    <td>*/}
-                                        {/*        123*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>*/}
-                                        {/*        <span className="order-status order-ready">*/}
-                                        {/*            Đã giao*/}
-                                        {/*        </span>*/}
-                                        {/*    </td>*/}
-                                        {/*</tr>*/}
-
-                                        {/*<tr>*/}
-                                        {/*    <td>*/}
-                                        {/*        <a href="order-details.html" className="order-link">987456</a>*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>*/}
-                                        {/*        <div className="order-owner">*/}
-                                        {/*            <span>Tên sản phẩm</span>*/}
-                                        {/*        </div>*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>2021-05-09</td>*/}
-                                        {/*    <td>*/}
-                                        {/*        123*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>*/}
-                                        {/*        <span className="order-status order-shipped">*/}
-                                        {/*            chưa giao*/}
-                                        {/*        </span>*/}
-                                        {/*    </td>*/}
-                                        {/*</tr>*/}
-
-                                        {/*<tr>*/}
-                                        {/*    <td>*/}
-                                        {/*        <a href="order-details.html" className="order-link">987456</a>*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>*/}
-                                        {/*        <div className="order-owner">*/}
-                                        {/*            <span>Tên sản phẩm</span>*/}
-                                        {/*        </div>*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>2021-05-09</td>*/}
-                                        {/*    <td>*/}
-                                        {/*        123*/}
-                                        {/*    </td>*/}
-                                        {/*    <td>*/}
-                                        {/*        <span className="order-status order-cancel">*/}
-                                        {/*            đã hủy*/}
-                                        {/*        </span>*/}
-                                        {/*    </td>*/}
-                                        {/*</tr>*/}
                                         </tbody>
                                     </table>
                                     {
-                                        renderPageNumbers.length > 0 ?
+                                        pagination.renderPageNumbers.length > 0 ?
                                             <div className="box">
                                                 <ul className="pagination">
                                                     <li><Link to="#"
-                                                              onClick={() => prev()}><i
+                                                              onClick={() => pagination.prev()}><i
                                                         className='ti-angle-left'/></Link></li>
-                                                    {renderPageNumbers}
+                                                    {pagination.renderPageNumbers}
                                                     <li><Link to="#"
-                                                              onClick={() => next()}><i
+                                                              onClick={() => pagination.next()}><i
                                                         className='ti-angle-right'/></Link></li>
                                                 </ul>
                                             </div>

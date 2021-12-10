@@ -3,6 +3,7 @@ import Menu from "../../Menu";
 import {Link, useParams} from "react-router-dom";
 import {GlobalState} from "../../../../../GlobalState";
 import {formatCash} from "../../../../../utils/CurrencyCommon";
+import {Helmet} from "react-helmet";
 
 const OrderDetail = (props) => {
     const params = useParams();
@@ -39,6 +40,9 @@ const OrderDetail = (props) => {
 
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Chi tiết hoá đơn</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">
