@@ -113,6 +113,24 @@ function ProductDetail() {
                                 <div className="product-info-detail">
                                     <span className="product-info-detail-title">Hãng: </span>
                                     <Link to={`/products/category/${detail?.category?.id}`}>{detail.category?.name}</Link>
+                                    <div className="product-detail__star">
+                                        <u className="product-info-detail-title">4.9</u>
+                                        <span className="rating">
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                    <i className='ti-star'></i>
+                                </span>
+                                    </div>
+                                    <div className="product-evaluate">
+                                        <u className="product-evaluate-number">4.9k</u>
+                                        <span>Đánh giá</span>
+                                    </div>
+                                    <div className="product-sold">
+                                        <p className="product-sold-number">4.9</p>
+                                        <span>Đã bán</span>
+                                    </div>
                                 </div>
                                 <div className="product-info-detail">
                                     {/*<StarRating name="react-star-rating" caption="Rate this component!" totalStars={5}/>*/}
