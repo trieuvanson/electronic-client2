@@ -1,22 +1,42 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
-import { ToastContainer, toast } from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import StarRatings from "react-star-ratings";
+import {Helmet} from "react-helmet";
+
 const Favorite = () => {
     const state = useContext(GlobalState)
     const [favorites] = state.favoriteApi.favorites
     const actionFavorite = state.favoriteApi.actionFavorite;
-
+    const [ratings] = state.commentsApi.ratings;
+    const [comments] = state.commentsApi.comments;
     const removeFavorite = (e, favorite) => {
         e.preventDefault();
         actionFavorite.deleteFavorite(favorite.id, favorite?.user?.username)
-            .then(toast.success(`Đã xoá ${favorite.product?.name} khỏi danh sách yêu thích`))
+            .then(toast.success(`Đã xoá ${favorite.product?.name} khỏi danh sách yêu thích`),{
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1500
+            })
+    }
+
+    const getRatingByProductId = (productId) => {
+        const rating = ratings.filter(rating => rating.product?.id === productId)
+        return rating.reduce((total, current) => total + current.star, 0) / rating.length || 0
+    }
+
+    const getCommentByProductId = (productId) => {
+        const comment = comments.filter(comment => comment.product?.id === productId)
+        return comment.length
     }
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Yêu thích</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">
@@ -37,6 +57,7 @@ const Favorite = () => {
                                     <h1>Sản phẩm yêu thích ({favorites.length})</h1>
                                     <ul className="wish-list">
                                         {
+
                                             favorites && favorites.map(favorite => {
                                                 return (
                                                     <li className="wish-item">
@@ -49,14 +70,15 @@ const Favorite = () => {
                                                         <div className="wish-body">
                                                             <Link to={`/product/detail/${favorite.product?.id}`} className="wish-name">{favorite.product?.name}</Link>
                                                             <div className="wish-rating">
-                                                                <div className="wish-rating__base">
-                                                                    <i className="ti-heart"></i>
-                                                                    <i className="ti-heart"></i>
-                                                                    <i className="ti-heart"></i>
-                                                                    <i className="ti-heart"></i>
-                                                                    <i className="ti-heart"></i>
-                                                                </div>
-                                                                <span className="review-count">(1156 nhận xét)</span>
+                                                                <StarRatings
+                                                                    rating={getRatingByProductId(favorite.product?.id)||0}
+                                                                    starRatedColor="orange"
+                                                                    starDimension="20px"
+                                                                    starSpacing="5px"
+                                                                    numberOfStars={5}
+                                                                    name="rating"
+                                                                />
+                                                                <span className="review-count">({getCommentByProductId(favorite?.product?.id)} nhận xét)</span>
                                                             </div>
                                                             <div className="wish-description">
                                                                 {favorite.product?.description}

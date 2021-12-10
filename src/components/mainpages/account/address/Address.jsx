@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../Menu";
 import {Link} from "react-router-dom";
 import {GlobalState} from "../../../../GlobalState";
+import { Helmet } from 'react-helmet'
 
 const Address = (props) => {
     const state = useContext(GlobalState)
@@ -9,7 +10,9 @@ const Address = (props) => {
 
     return (
         <>
-
+            <Helmet>
+                <title>SmartThings - Sổ địa chỉ</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

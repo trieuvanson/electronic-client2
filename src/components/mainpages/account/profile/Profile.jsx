@@ -4,6 +4,7 @@ import {GlobalState} from "../../../../GlobalState";
 import {Link, useHistory} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Helmet} from "react-helmet";
 
 const Profile = (props) => {
     const state = useContext(GlobalState)
@@ -31,6 +32,9 @@ const Profile = (props) => {
     const [loading, setLoading] = useState(false);
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Thông tin cá nhân</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

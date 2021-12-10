@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import Menu from "../../Menu";
 import {GlobalState} from "../../../../../GlobalState";
 import {useHistory, useLocation, useParams} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 const AddressController = () => {
     const state = useContext(GlobalState)
@@ -10,13 +11,6 @@ const AddressController = () => {
     const [addresses] = state.addressesApi.address
     const action = state.addressesApi.action
     const history = useHistory();
-
-    // const [fullname, setFullname] = useState("");
-    // const [phone, setPhone] = useState("");
-    // const [address, setAddress] = useState("");
-    // const [type, setType] = useState(true);
-    // const [status, setStatus] = useState(false);
-
 
     const [detail, setDetail] = useState({fullname: "", phone: "", address: "", type: true, status: false})
 
@@ -28,7 +22,6 @@ const AddressController = () => {
 
     function getAddress() {
             addresses.forEach(add => {
-                console.log(add.id)
                 if (add.id == params.id) {
                     setDetail(add)
                 }
@@ -75,6 +68,9 @@ const AddressController = () => {
 
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Chi tiết địa chỉ</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">

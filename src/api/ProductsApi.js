@@ -34,9 +34,18 @@ function ProductsApi() {
         const res = await axios.get(`${LOCAL_LINK}/api/products/price?min=${min}&max=${max}`)
         setProducts(res.data)
     }
+
+    const getProductsByFilterUserUi = async (filters) => {
+        console.log(filters)
+        const res = await axios.get(`${LOCAL_LINK}/api/products/filters-ui?search=${filters.search}&pcname=${filters.category}&colors=${filters.colors}&minPrice=${filters.min||0}&maxPrice=${filters.max||Number.MAX_SAFE_INTEGER}&features=${filters.features}&bestSeller=${filters.bestSeller}&sort=${filters.sort}`)
+        setProducts(res.data)
+    }
+
+
+
     return {
         products: [products, setProducts],
-        productAction: {getProductsBetweenPrice, findProductsByKeywordsAndFilter, getProductsByLink}
+        productAction: {getProductsBetweenPrice, findProductsByKeywordsAndFilter, getProductsByLink, getProductsByFilterUserUi}
     }
 }
 

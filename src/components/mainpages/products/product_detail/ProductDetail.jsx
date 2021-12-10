@@ -4,6 +4,10 @@ import Product from "../product/Product";
 import {GlobalState} from "../../../../GlobalState";
 import {formatCash} from "../../../../utils/CurrencyCommon";
 import Pagination from "../../../../api/Pagination";
+import StarRatings from "react-star-ratings";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {Helmet} from "react-helmet";
 
 function ProductDetail() {
     const state = useContext(GlobalState)
@@ -11,27 +15,28 @@ function ProductDetail() {
     const action = state.productsApi.productAction
     const [products] = state.productsApi.products
     const [detail, setDetail] = useState([])
-    const [carts, setCarts] = state.cartApi.cart
-    const [cart, setCart] = useState([]);
     const cartAction = state.cartApi.actionCart
-    const [comments] = state.commentsApi.comments
+    const [comments] = state.commentsApi.commentsBy
+    const [ratingByProductId] = state.commentsApi.ratingByProductId
     const commentsAction = state.commentsApi.action
-    let [value, setValue] = useState(cart.quantity || 1)
-
-
+    let [value, setValue] = useState(1)
+    const rating = ratingByProductId.reduce((acc, item) => {
+        acc += item.star
+        return acc
+    }, 0) / ratingByProductId.length || 0
     const pagination = new Pagination(comments)
     useEffect(() => {
         if (products) {
             action.getProductsByLink("/products/")
         }
         getDetails();
-        getCart()
-    }, [params.id, products, carts])
+    }, [params.id, products])
 
     async function getDetails() {
         await products.forEach(product => {
             if (product.id == params.id) {
-                    commentsAction.getCommentsByProductId(product.id)
+                commentsAction.getCommentsByProductId(product.id)
+                commentsAction.getRatingByProductId(product.id)
                 setDetail(product)
             }
         })
@@ -46,25 +51,39 @@ function ProductDetail() {
         }
     }
 
-    async function getCart() {
-        await carts.forEach(cart => {
-            if (cart.product?.id == params.id) {
-                setCart(cart)
-            }
-        })
-    }
+    function addToCart(e) {
+        e.preventDefault()
+        console.log(value)
+        cartAction.addCart(detail, value)
+            .then(res => {
+                toast.success(`Thêm ${detail.name} vào giỏ hàng thành công`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1500
+                })
+            })
+            .catch(err => {
+                toast.error(`Thêm ${detail.name} vào giỏ hàng thất bại`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1500
+                })
+            })
 
+    }
+    console.log(detail)
     return (
         <>
+            <Helmet>
+                <title>SmartThings - Chi tiết sản phẩm</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">
                         <div className="breadcumb">
-                            <a href="./index.html">home</a>
+                            <Link to="/">Trang chủ</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="./products.html">all products</a>
+                            <Link to="/products">Tất cả sản phẩm</Link>
                             <span><i className='ti-angle-right'/></span>
-                            <a href="./product-detail.html">Điện thoại</a>
+                            <Link to="#">Chi tiết</Link>
                         </div>
                     </div>
                     <div className="row product-row">
@@ -88,42 +107,47 @@ function ProductDetail() {
                         </div>
                         <div className="col-7 col-md-12">
                             <div className="product-info">
-                                <h1 className="product-info__title">
+                                <h1>
                                     {detail.name}
                                 </h1>
                                 <div className="product-info-detail">
+
                                     <div className="product-detail__star">
-                                        <u className="product-info-detail-title">4.9</u>
+                                        <u className="product-info-detail-title">{rating > 0 ? rating.toFixed(1) : rating}</u>
                                         <span className="rating">
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                </span>
+                                    <StarRatings
+                                        rating={rating || 0}
+                                        starRatedColor="orange"
+                                        starDimension="20px"
+                                        starSpacing="0"
+                                        numberOfStars={5}
+                                        name="rating"
+                                    />
+                                    </span>
                                     </div>
                                     <div className="product-evaluate">
-                                        <u className="product-evaluate-number">4.9k</u>
+                                        <u className="product-evaluate-number">{comments.length}</u>
                                         <span>Đánh giá</span>
                                     </div>
                                     <div className="product-sold">
                                         <p className="product-sold-number">4.9</p>
                                         <span>Đã bán</span>
                                     </div>
-
-
                                 </div>
-                                {/*<p className="product-description">*/}
-                                {/*    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo libero alias officiis*/}
-                                {/*    dolore doloremque eveniet culpa dignissimos, itaque, cum animi excepturi sed*/}
-                                {/*    veritatis*/}
-                                {/*    asperiores soluta, nisi atque quae illum. Ipsum.*/}
-                                {/*</p>*/}
-                                <div className="product-info-price">
-                                    <del className="product-info-price__old">30.990.000 <sup>đ</sup> </del>
-                                    <span className="product-info-minu">-</span>
-                                    {detail.sale_price?formatCash(detail.sale_price):null} <sup>đ</sup>
+                                <div className="product-info-detail">
+                                    <span className="product-info-detail-title">Hãng: </span>
+                                    <Link
+                                        to={`/products/category/${detail?.category?.id}`}>{detail.category?.name}</Link>
                                 </div>
+                                <div className="product-info-detail">
+                                    <span className="product-info-detail-title">Màu sắc: </span>
+                                    <Link
+                                        to={`#`}>{detail?.color}</Link>
+                                </div>
+
+                                <div
+                                    className="product-info-price">{detail.sale_price ? formatCash(detail.sale_price) : null}
+                                    <sup>đ</sup></div>
                                 <div className="product-quantity-wrapper">
                             <span className="product-quantity-btn">
                                 <i className='ti-minus' onClick={() => decrement()}/>
@@ -134,7 +158,7 @@ function ProductDetail() {
                             </span>
                                 </div>
                                 <div>
-                                    <button className="btn-flat btn-hover">Thêm vào giỏ</button>
+                                    <button className="btn-flat btn-hover" onClick={addToCart}>Thêm vào giỏ</button>
                                 </div>
                             </div>
                         </div>
@@ -152,23 +176,6 @@ function ProductDetail() {
                                     {detail.description}
                                 </p>
                                 <img src={detail.thumbnail} alt=""/>
-                                {/*<p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis accusantium officia,
-                                    quae fuga in exercitationem aliquam labore ex doloribus repellendus beatae facilis
-                                    ipsam. Veritatis vero obcaecati iste atque aspernatur ducimus.
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat quam praesentium
-                                    id sit amet magnam ad, dolorum, cumque iste optio itaque expedita eius similique, ab
-                                    adipisci dicta. Quod, quibusdam quas. Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Odit, in corrupti ipsam sint error possimus commodi incidunt
-                                    suscipit sit voluptatum quibusdam enim eligendi animi deserunt recusandae earum
-                                    natus voluptas blanditiis?
-                                </p>
-                                <img src="./images/product12.jpg" alt=""/>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi ullam quam fugit
-                                    veniam ipsum recusandae incidunt, ex ratione, magnam labore ad tenetur officia!
-                                    In, totam. Molestias sapiente deserunt animi porro?
-                                </p>*/}
                             </div>
                         </div>
                     </div>
@@ -200,7 +207,7 @@ function ProductDetail() {
                     </div>
                     <div className="box">
                         <div className="box-header">
-                            Tất cả bình luận
+                            Tất cả bình luận ({comments.length})
                         </div>
                         <div>
                             {
@@ -209,16 +216,10 @@ function ProductDetail() {
                                         <div className="user-rate">
                                             <div className="user-info">
                                                 <div className="user-avt">
-                                                    <img src="./images/product11.jpg" alt=""/>
+                                                    <img src={comment?.user?.avatar} alt=""/>
                                                 </div>
                                                 <div className="user-name">
                                                     <span className="name">{comment?.user?.fullname}</span>
-                                                    <span className="rating">
-                                                        <i className='bx bxs-star'/>
-                                                        <i className='bx bxs-star'/>
-                                                        <i className='bx bxs-star'/>
-                                                        <i className='bx bxs-star'/>
-                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="user-rate-content">
@@ -228,6 +229,7 @@ function ProductDetail() {
                                     )
                                 })
                             }
+                            {comments.length === 0 && <div className="no-comment">Chưa có bình luận nào</div>}
                             {
                                 pagination.renderPageNumbers.length > 0 ?
                                     <div className="box">
