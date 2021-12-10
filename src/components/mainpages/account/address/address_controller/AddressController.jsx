@@ -12,13 +12,6 @@ const AddressController = () => {
     const action = state.addressesApi.action
     const history = useHistory();
 
-    // const [fullname, setFullname] = useState("");
-    // const [phone, setPhone] = useState("");
-    // const [address, setAddress] = useState("");
-    // const [type, setType] = useState(true);
-    // const [status, setStatus] = useState(false);
-
-
     const [detail, setDetail] = useState({fullname: "", phone: "", address: "", type: true, status: false})
 
     useEffect(() => {
@@ -29,7 +22,6 @@ const AddressController = () => {
 
     function getAddress() {
             addresses.forEach(add => {
-                console.log(add.id)
                 if (add.id == params.id) {
                     setDetail(add)
                 }
