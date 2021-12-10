@@ -23,7 +23,7 @@ function ProductDetail() {
     const rating = ratingByProductId.reduce((acc, item) => {
         acc += item.star
         return acc
-    }, 0)/ratingByProductId.length || 0
+    }, 0) / ratingByProductId.length || 0
     const pagination = new Pagination(comments)
     useEffect(() => {
         if (products) {
@@ -69,12 +69,12 @@ function ProductDetail() {
             })
 
     }
-
+    console.log(detail)
     return (
         <>
-                <Helmet>
-                    <title>SmartThings - Chi tiết sản phẩm</title>
-                </Helmet>
+            <Helmet>
+                <title>SmartThings - Chi tiết sản phẩm</title>
+            </Helmet>
             <div className="bg-light">
                 <div className="container">
                     <div className="box">
@@ -111,20 +111,22 @@ function ProductDetail() {
                                     {detail.name}
                                 </h1>
                                 <div className="product-info-detail">
-                                    <span className="product-info-detail-title">Hãng: </span>
-                                    <Link to={`/products/category/${detail?.category?.id}`}>{detail.category?.name}</Link>
+
                                     <div className="product-detail__star">
-                                        <u className="product-info-detail-title">4.9</u>
+                                        <u className="product-info-detail-title">{rating > 0 ? rating.toFixed(1) : rating}</u>
                                         <span className="rating">
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                    <i className='ti-star'></i>
-                                </span>
+                                    <StarRatings
+                                        rating={rating || 0}
+                                        starRatedColor="orange"
+                                        starDimension="20px"
+                                        starSpacing="0"
+                                        numberOfStars={5}
+                                        name="rating"
+                                    />
+                                    </span>
                                     </div>
                                     <div className="product-evaluate">
-                                        <u className="product-evaluate-number">4.9k</u>
+                                        <u className="product-evaluate-number">{comments.length}</u>
                                         <span>Đánh giá</span>
                                     </div>
                                     <div className="product-sold">
@@ -133,16 +135,14 @@ function ProductDetail() {
                                     </div>
                                 </div>
                                 <div className="product-info-detail">
-                                    {/*<StarRating name="react-star-rating" caption="Rate this component!" totalStars={5}/>*/}
-                                    <span className="product-info-detail-title"><u style={{color: "red", margin: "10px", fontSize: "25px"}}>{rating>0?rating.toFixed(1):rating}</u>
-                                        <StarRatings
-                                            rating={rating||0}
-                                            starRatedColor="orange"
-                                            starDimension="25px"
-                                            starSpacing="15px"
-                                            numberOfStars={5}
-                                            name="rating"
-                                        /></span>
+                                    <span className="product-info-detail-title">Hãng: </span>
+                                    <Link
+                                        to={`/products/category/${detail?.category?.id}`}>{detail.category?.name}</Link>
+                                </div>
+                                <div className="product-info-detail">
+                                    <span className="product-info-detail-title">Màu sắc: </span>
+                                    <Link
+                                        to={`#`}>{detail?.color}</Link>
                                 </div>
 
                                 <div
@@ -181,7 +181,33 @@ function ProductDetail() {
                     </div>
                     <div className="box">
                         <div className="box-header">
-                            Bình luận ({comments.length})
+                            Bình luận
+                        </div>
+                        <div className="product-detail-cmt">
+                            <div className="product-detail-info">
+                                <div className="product-detail-user-avt">
+                                    <img src="./images/product11.jpg" alt=""/>
+                                </div>
+                            </div>
+                            <div className="product-detail-rate-cmt">
+                            <span className="rating">
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                            </span>
+                                <div className="cmt">
+                                    <textarea placeholder="Chia sẽ một số cảm nhận về sản phẩm" cols="30"
+                                              rows="10"></textarea>
+                                    <button>Bình luận</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="box">
+                        <div className="box-header">
+                            Tất cả bình luận ({comments.length})
                         </div>
                         <div>
                             {
