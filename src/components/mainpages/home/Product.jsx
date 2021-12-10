@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {Link} from "react-router-dom";
-import {GlobalState} from "../../../../GlobalState";
-import {formatCash} from "../../../../utils/CurrencyCommon";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {GlobalState} from "../../../GlobalState";
+import {formatCash} from "../../../utils/CurrencyCommon";
 
 function Product ({product}) {
     const state = useContext(GlobalState)
@@ -29,7 +29,7 @@ function Product ({product}) {
     }
 
     return (
-        <div className="col-4 col-md-6 col-sm-12">
+        <div className="col-3 col-md-6 col-sm-12">
             <div className="product-card">
                 <div className="product-card-img">
                     <img src={product?.thumbnail} alt=""/>
