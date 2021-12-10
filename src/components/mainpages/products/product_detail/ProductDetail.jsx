@@ -88,7 +88,7 @@ function ProductDetail() {
                         </div>
                         <div className="col-7 col-md-12">
                             <div className="product-info">
-                                <h1>
+                                <h1 className="product-info__title">
                                     {detail.name}
                                 </h1>
                                 <div className="product-info-detail">
@@ -175,6 +175,32 @@ function ProductDetail() {
                     <div className="box">
                         <div className="box-header">
                             Bình luận
+                        </div>
+                        <div className="product-detail-cmt">
+                            <div className="product-detail-info">
+                                <div className="product-detail-user-avt">
+                                    <img src="./images/product11.jpg" alt=""/>
+                                </div>
+                            </div>
+                            <div className="product-detail-rate-cmt">
+                            <span className="rating">
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                                <i className='ti-heart'></i>
+                            </span>
+                                <div className="cmt">
+                                    <textarea placeholder="Chia sẽ một số cảm nhận về sản phẩm" cols="30"
+                                              rows="10"></textarea>
+                                    <button>Bình luận</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="box">
+                        <div className="box-header">
+                            Tất cả bình luận
                         </div>
                         <div>
                             {
