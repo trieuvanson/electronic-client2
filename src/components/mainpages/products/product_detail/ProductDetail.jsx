@@ -25,6 +25,7 @@ function ProductDetail() {
         return acc
     }, 0) / ratingByProductId.length || 0
     const pagination = new Pagination(comments)
+    const [user] = state.userAPI.personal
     useEffect(() => {
         if (products) {
             action.getProductsByLink("/products/")
@@ -69,6 +70,7 @@ function ProductDetail() {
             })
 
     }
+
     console.log(detail)
     return (
         <>
@@ -186,20 +188,24 @@ function ProductDetail() {
                         <div className="product-detail-cmt">
                             <div className="product-detail-info">
                                 <div className="product-detail-user-avt">
-                                    <img src="./images/product11.jpg" alt=""/>
+                                    <img src={`${user.avatar}`} alt=""/>
                                 </div>
                             </div>
                             <div className="product-detail-rate-cmt">
                             <span className="rating">
-                                <i className='ti-heart'></i>
-                                <i className='ti-heart'></i>
-                                <i className='ti-heart'></i>
-                                <i className='ti-heart'></i>
-                                <i className='ti-heart'></i>
+                                <StarRatings
+                                    rating={0}
+                                    starRatedColor="orange"
+                                    starDimension="25px"
+                                    starSpacing="0"
+                                    numberOfStars={5}
+                                    changeRating={""}
+                                    name="rating"
+                                />
                             </span>
                                 <div className="cmt">
                                     <textarea placeholder="Chia sẽ một số cảm nhận về sản phẩm" cols="30"
-                                              rows="10"></textarea>
+                                              rows="10"/>
                                     <button>Bình luận</button>
                                 </div>
                             </div>
@@ -211,7 +217,10 @@ function ProductDetail() {
                         </div>
                         <div>
                             {
-                                pagination.currentItems.map((comment, index) => {
+                                pagination.currentItems.sort((a,b) => {
+                                    return new Date(b.update_at).getTime() -
+                                        new Date(a.update_at).getTime()
+                                }).map((comment, index) => {
                                     return (
                                         <div className="user-rate">
                                             <div className="user-info">
@@ -223,7 +232,7 @@ function ProductDetail() {
                                                 </div>
                                             </div>
                                             <div className="user-rate-content">
-                                                {index}
+                                                {comment?.comment}
                                             </div>
                                         </div>
                                     )
