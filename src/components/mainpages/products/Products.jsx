@@ -117,7 +117,6 @@ function Products() {
                                         <input type="number" value={filters.max} onChange={inputChange}
                                                name="max"/>
                                     </div>
-                                    <button className="btn mt-10" onClick={submitFilter}>Áp dụng</button>
                                 </div>
                                 <div className="box">
                                     <ul className="filter-list">
@@ -232,6 +231,9 @@ function Products() {
                                             })
                                         }
                                     </ul>
+                                </div>
+                                <div className="box">
+                                    <button className="btn mt-10" onClick={submitFilter}>Áp dụng</button>
                                 </div>
                             </div>
                             <div className="col-9 col-md-12">

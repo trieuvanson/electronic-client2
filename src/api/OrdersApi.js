@@ -14,7 +14,6 @@ function OrdersApi(token, info) {
     }, [token, user])
 
     const getOrdersByUsername = async () => {
-        console.log(`${LOCAL_LINK}/api/order?username=${user.username}`)
         try {
             const res = await axios.get(`${LOCAL_LINK}/api/order?username=${user.username}`, {
                     headers: {Authorization: `Bearer ${token}`}

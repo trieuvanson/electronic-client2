@@ -15,10 +15,10 @@ export default function Home() {
     const productAction = state.productsApi.productAction
     const location = useLocation()
     useEffect(() => {
-        if (location.pathname.match("/") || location.pathname.match("/home")) {
-            productAction.getProductsByLink("/products/")
-        }
-    }, [products, location])
+        setTimeout(() => {
+            productAction.getProductsByLink("/products")
+        }, 3000)
+    }, [products])
     const getPromotion = brands.filter(brand => brand.name.match("Điện Thoại") || brand.name.match("Laptop") || brand.name.match("Máy tính bảng"))
     const getBestSeller = products.filter(product => product.best_seller === true)
     const getFeature = products.filter(product => product.features === true)

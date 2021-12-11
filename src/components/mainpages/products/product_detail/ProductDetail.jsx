@@ -19,18 +19,36 @@ function ProductDetail() {
     const [comments] = state.commentsApi.commentsBy
     const [ratingByProductId] = state.commentsApi.ratingByProductId
     const commentsAction = state.commentsApi.action
+    const [ratings] = state.commentsApi.ratings
     let [value, setValue] = useState(1)
-    const rating = ratingByProductId.reduce((acc, item) => {
+    const star = ratingByProductId.reduce((acc, item) => {
         acc += item.star
         return acc
     }, 0) / ratingByProductId.length || 0
     const pagination = new Pagination(comments)
     const [user] = state.userAPI.personal
+
+
+    const [ratingByUser, setRatingByUser] = useState({
+        star: 0,
+        user: user,
+        product: detail
+    })
+
+    const [commentByUser, setCommentByUser] = useState({
+        comment: '',
+        user: user,
+        product: detail
+
+    })
+
     useEffect(() => {
-        if (products) {
-            action.getProductsByLink("/products/")
+        if (products.length < 1) {
+            action.getProductsByLink("/products")
         }
-        getDetails();
+        if (params.id) {
+            getDetails();
+        }
     }, [params.id, products])
 
     async function getDetails() {
@@ -52,9 +70,67 @@ function ProductDetail() {
         }
     }
 
+
+    const changeRatingComments = (newRating) => {
+        setRatingByUser({
+            ...ratingByUser,
+            star: newRating,
+            user: user,
+            product: detail,
+            status: true
+        })
+    }
+
+    const changeComment = (e) => {
+        setCommentByUser({
+            ...commentByUser,
+            comment: e.target.value,
+            user: user,
+            product: detail,
+            status: true
+        })
+    }
+
+    const submitCommentsRating = async () => {
+        try {
+            if (ratingByUser.star > 0 && commentByUser.comment.length > 0) {
+                toast.success("Đánh giá thành công", {
+                    bodyStyle: {
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                    }
+                })
+                await commentsAction.addRatingByUser(ratingByUser)
+                await commentsAction.addCommentByUser(commentByUser)
+
+                setRatingByUser({
+                    star: 0,
+                    user: user,
+                    product: detail
+                })
+                setCommentByUser({
+                    comment: '',
+                    user: user,
+                    product: detail
+                })
+                window.location.reload()
+            } else {
+                toast.error("Vui lòng đánh giá và bình luận cho sản phẩm", {
+                    bodyStyle: {
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                    }
+                })
+            }
+        } catch (err) {
+            console.log(err)
+            toast.error("Đánh giá thất bại")
+        }
+
+    }
+
     function addToCart(e) {
         e.preventDefault()
-        console.log(value)
         cartAction.addCart(detail, value)
             .then(res => {
                 toast.success(`Thêm ${detail.name} vào giỏ hàng thành công`, {
@@ -71,7 +147,54 @@ function ProductDetail() {
 
     }
 
-    console.log(detail)
+
+    const commentComponent = (
+        <div className="box">
+            <div className="box-header">
+                Bình luận
+            </div>
+            <div className="product-detail-cmt">
+                <div className="product-detail-info">
+                    <div className="product-detail-user-avt">
+                        <img src={`${user.avatar}`} alt=""/>
+                    </div>
+                </div>
+                <div className="product-detail-rate-cmt">
+                            <span className="rating">
+                                <StarRatings
+                                    rating={ratingByUser.star || 0}
+                                    starRatedColor="orange"
+                                    starDimension="25px"
+                                    starSpacing="0"
+                                    numberOfStars={5}
+                                    changeRating={changeRatingComments}
+                                    name="rating"
+                                />
+                            </span>
+                    <div className="cmt">
+                                    <textarea placeholder="Chia sẽ một số cảm nhận về sản phẩm" cols="30"
+                                              value={commentByUser.comment} onChange={changeComment}
+                                              rows="10"/>
+                        <button onClick={() => submitCommentsRating()}>Bình luận</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+
+    const renderCommentComponent = () => {
+        if (user) {
+            const checkRating = ratings.filter(rating => rating.product?.id == detail.id && rating.user?.id == user.id).length > 0
+            const checkComment = comments.filter(comment => comment.product?.id == detail.id && comment.user?.id == user.id).length > 0
+            if (!checkRating && !checkComment) {
+                return commentComponent
+            } else {
+                return null
+            }
+        }
+    }
+
     return (
         <>
             <Helmet>
@@ -115,10 +238,10 @@ function ProductDetail() {
                                 <div className="product-info-detail">
 
                                     <div className="product-detail__star">
-                                        <u className="product-info-detail-title">{rating > 0 ? rating.toFixed(1) : rating}</u>
+                                        <u className="product-info-detail-title">{star > 0 ? star.toFixed(1) : star}</u>
                                         <span className="rating">
                                     <StarRatings
-                                        rating={rating || 0}
+                                        rating={star || 0}
                                         starRatedColor="orange"
                                         starDimension="20px"
                                         starSpacing="0"
@@ -181,43 +304,21 @@ function ProductDetail() {
                             </div>
                         </div>
                     </div>
-                    <div className="box">
-                        <div className="box-header">
-                            Bình luận
-                        </div>
-                        <div className="product-detail-cmt">
-                            <div className="product-detail-info">
-                                <div className="product-detail-user-avt">
-                                    <img src={`${user.avatar}`} alt=""/>
-                                </div>
-                            </div>
-                            <div className="product-detail-rate-cmt">
-                            <span className="rating">
-                                <StarRatings
-                                    rating={0}
-                                    starRatedColor="orange"
-                                    starDimension="25px"
-                                    starSpacing="0"
-                                    numberOfStars={5}
-                                    changeRating={""}
-                                    name="rating"
-                                />
-                            </span>
-                                <div className="cmt">
-                                    <textarea placeholder="Chia sẽ một số cảm nhận về sản phẩm" cols="30"
-                                              rows="10"/>
-                                    <button>Bình luận</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/*{
+                        !user ? //Đoạn này kiểm tra coi user có tồn tại không
+                            checkUserCurrentComments ? //Đoạn này kiểm tra xem user đã đánh giá sản phẩm này chưa
+
+                                : null //Nếu như đánh giá sản phẩm này rồi thì không hiển thị nữa
+                            : null //Nếu như không có user thì không hiển thị nữa
+                    }*/}
+                    {renderCommentComponent()}
                     <div className="box">
                         <div className="box-header">
                             Tất cả bình luận ({comments.length})
                         </div>
                         <div>
                             {
-                                pagination.currentItems.sort((a,b) => {
+                                pagination.currentItems.sort((a, b) => {
                                     return new Date(b.update_at).getTime() -
                                         new Date(a.update_at).getTime()
                                 }).map((comment, index) => {

@@ -20,7 +20,6 @@ const OrderDetail = (props) => {
 
     async function getOrderDetailsByOrderId() {
         const newArray = [];
-        console.log(orderDetails)
         await orderDetails.forEach(oddt => {
             if (oddt.order.id == params.id) {
                 newArray.push(oddt)

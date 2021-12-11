@@ -7,13 +7,14 @@ function CommentsApi(token, info) {
     const [comments, setComments] = useState([])
     const [ratingByProductId, setRatingByProductId] = useState([])
     const [ratings, setRatings] = useState([])
+    const [ratingByUsernameAndProductId, setRatingByUsernameAndProductId] = useState([])
     const user = info.personal[0]
 
     useEffect(() => {
         getAllRating().then()
         getAllComments().then()
     }, [])
-
+    //Comments
     const getAllComments = async () => {
         await axios.get(`${LOCAL_LINK}/api/comments/all`)
             .then(res => setComments(res.data))
@@ -50,8 +51,18 @@ function CommentsApi(token, info) {
             .then(res => setCommentsBy(res.data))
             .catch(err => console.log(err))
     }
-    //Rating
 
+
+    const addCommentByUser = async (comment) => {
+        console.log(comment)
+        await axios.post(`${LOCAL_LINK}/api/comments/`, comment, {
+            headers: {Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'}
+        })
+            .then(res => getAllComments())
+            .catch(err => console.log(err))
+    }
+    //Rating
     const getAllRating = async () => {
         await axios.get(`${LOCAL_LINK}/api/rating/all`)
             .then(res => setRatings(res.data))
@@ -65,6 +76,27 @@ function CommentsApi(token, info) {
             .then(res => setRatingByProductId(res.data))
             .catch(err => console.log(err))
     }
+
+    const getRatingByUserUsernameAndProductId = async (username, productId) => {
+        await axios.get(`${LOCAL_LINK}/api/rating/get-by?username=${username}&productId=${productId}`, {
+            headers: {Authorization: `Bearer ${token}`}
+        })
+            .then(res => setRatingByUsernameAndProductId(res.data))
+            .catch(err => console.log(err))
+    }
+
+    const addRatingByUser = async (rating) => {
+        console.log(rating)
+        await axios.post(`${LOCAL_LINK}/api/rating/`, rating, {
+            headers: {Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'}
+        })
+            .then(res => getAllRating())
+            .catch(err => console.log(err))
+    }
+
+
+
     return {
         commentsBy: [commentsBy, setCommentsBy],
         comments: [comments, setComments],
@@ -75,7 +107,9 @@ function CommentsApi(token, info) {
             getCommentsByProductId,
             getCommentsById,
             getCommentsByUserUsernameAndProductId,
-            getRatingByProductId
+            getRatingByProductId,
+            addCommentByUser,
+            addRatingByUser
         }
     }
 

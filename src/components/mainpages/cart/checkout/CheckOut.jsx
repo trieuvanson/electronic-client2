@@ -18,8 +18,8 @@ const CheckOut = () => {
     const [selectPayment, setSelectPayment] = useState("")
     const actionOrder = state.ordersApi.actionOrder;
     const history = useHistory();
-    const [code, setCode] = state.discountsApi.code
     const [discount, setDiscount] = state.discountsApi.discounts
+    const [code, setCode] = state.discountsApi.code
     const actionDiscount = state.discountsApi.action
     useEffect(() => {
         const getTotal = () => {
@@ -41,8 +41,8 @@ const CheckOut = () => {
         "subTotal": total,
         "total": discount?.discount>=0?total - discount?.discount:total,
         "note": note,
-        "discount": discount?discount:null,
-        "payment": "Thanh toán Paypal"
+        "discount": discount.length>0?discount:null,
+        "payment": selectPayment==="paypal"?"Thanh toán Paypal":"Thanh toán tiền mặt"
     }
     let address = "";
     addresses.map(add => {
@@ -52,6 +52,7 @@ const CheckOut = () => {
             }
         }
     });
+    console.log(od)
     const tranSuccess = async (payment) => {
         await actionOrder.addOrder(address, od)
         setCarts([])
@@ -174,7 +175,7 @@ const CheckOut = () => {
                                                 <label className="form-label" htmlFor="OrderNotes">
                                                     Ghi chú hoá đơn
                                                 </label>
-                                                <textarea name="" id="OrderNotes" cols="30" rows="10"
+                                                <textarea name="note" onChange={(e) => setNote(e.target.value) } id="OrderNotes" cols="30" rows="10"
                                                           className="form-textarea"/>
                                             </div>
                                         </div>
