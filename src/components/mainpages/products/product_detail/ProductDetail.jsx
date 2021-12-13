@@ -219,7 +219,12 @@ function ProductDetail() {
                                                     <img src={comment?.user?.avatar} alt=""/>
                                                 </div>
                                                 <div className="user-name">
-                                                    <span className="name">{comment?.user?.fullname}</span>
+                                                    <div className="user-name-rating__group">
+                                                        <span className="name">{comment?.user?.fullname}</span>
+                                                    </div>
+                                                    <span className="user-date">
+                                                        12/02/2001
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="user-rate-content">

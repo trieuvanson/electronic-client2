@@ -976,7 +976,9 @@ footer ul li a {
 }
 
 .user-rate {
-    margin-bottom: 40px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #00000017;
+    padding-bottom: 30px;
 }
 
 .user-info {
@@ -997,8 +999,18 @@ footer ul li a {
     margin-left: 20px;
     display: flex;
     align-items: stretch;
-    flex-direction: column;
     justify-content: space-between;
+    flex: 1;
+}
+
+.user-name-rating__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-date {
+    font-size: 1.2rem;
+    color: #0000008a;
 }
 
 .name {
