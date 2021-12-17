@@ -28,7 +28,7 @@ function ProductDetail() {
     const pagination = new Pagination(comments)
     const [user] = state.userAPI.personal
 
-
+    const getRatingByUser = user => ratings.find(item => item.user.username === user.username && item.product.id === detail.id)
     const [ratingByUser, setRatingByUser] = useState({
         star: 0,
         user: user,
@@ -304,13 +304,6 @@ function ProductDetail() {
                             </div>
                         </div>
                     </div>
-                    {/*{
-                        !user ? //Đoạn này kiểm tra coi user có tồn tại không
-                            checkUserCurrentComments ? //Đoạn này kiểm tra xem user đã đánh giá sản phẩm này chưa
-
-                                : null //Nếu như đánh giá sản phẩm này rồi thì không hiển thị nữa
-                            : null //Nếu như không có user thì không hiển thị nữa
-                    }*/}
                     {renderCommentComponent()}
                     <div className="box">
                         <div className="box-header">
@@ -330,11 +323,25 @@ function ProductDetail() {
                                                 </div>
                                                 <div className="user-name">
                                                     <span className="name">{comment?.user?.fullname}</span>
+                                                    <span className="rating">
+                                                        <StarRatings
+                                                            rating={getRatingByUser(comment?.user)?.star}
+                                                            starRatedColor="orange"
+                                                            starDimension="25px"
+                                                            starSpacing="0"
+                                                            numberOfStars={5}
+                                                            name="rating"
+                                                        />
+                                                    </span>
+                                                    <span className="user-date">
+                                                        {comment?.created_at}
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="user-rate-content">
                                                 {comment?.comment}
                                             </div>
+
                                         </div>
                                     )
                                 })
